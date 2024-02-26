@@ -146,4 +146,5 @@ public class MainActivity extends AppCompatActivity {
     public void replace(Fragment fragment) {
         getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, fragment).commit();
     }
+    //Do_an_music_2h32_27.2
 }
