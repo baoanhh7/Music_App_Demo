@@ -4,8 +4,8 @@
     android:layout_height="100dp"
     android:background="#2B2B2B"
     android:gravity="center|left"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark"
-    android:padding="10dp">
+    android:padding="10dp"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="40dp"
