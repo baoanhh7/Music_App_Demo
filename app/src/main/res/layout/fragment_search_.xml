@@ -54,7 +54,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/rounded_custom"
+                android:background="@drawable/rounded_search"
                 android:drawableLeft="@drawable/ic_search"
                 android:drawablePadding="10dp"
                 android:drawableTint="@color/black"

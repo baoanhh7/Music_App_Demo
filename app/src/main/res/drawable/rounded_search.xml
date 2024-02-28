@@ -2,5 +2,7 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <solid android:color="#FFFFFF" /> <!-- Màu nền của EditText -->
     <corners android:radius="10dp" /> <!-- Bán kính bo tròn, có thể điều chỉnh giá trị để thay đổi độ cong -->
-    <stroke android:color="#000000" android:width="2dp" /> <!-- Viền của EditText -->
+    <stroke
+        android:width="2dp"
+        android:color="#000000" /> <!-- Viền của EditText -->
 </shape>

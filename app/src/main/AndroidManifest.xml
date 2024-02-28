@@ -12,7 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DoAn_Music"
         tools:targetApi="31">
-
+        <activity
+            android:name=".SongListActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -29,11 +31,8 @@
             android:exported="false" />
 
         <activity
-            android:name=".music.PlayMusic"
-            android:exported="true">
-
-        </activity>
-
+            android:name=".music.PlayMusicActivity"
+            android:exported="true"></activity>
     </application>
 
 </manifest>

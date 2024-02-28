@@ -7,10 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
-import com.example.doan_music.MainActivity;
 import com.example.doan_music.R;
 
-public class PlayMusic extends AppCompatActivity {
+public class PlayMusicActivity extends AppCompatActivity {
 
     ImageButton btn_play, btn_pause, btn_back;
     Boolean flag = true;
@@ -29,7 +28,7 @@ public class PlayMusic extends AppCompatActivity {
             public void onClick(View v) {
 
                 // Khai báo Intent công khai để khởi động Service
-                Intent intent1 = new Intent(PlayMusic.this, MyService_Music.class);
+                Intent intent1 = new Intent(PlayMusicActivity.this, MyService_Music.class);
                 startService(intent1);
 
                 if (flag == true) {
@@ -48,7 +47,7 @@ public class PlayMusic extends AppCompatActivity {
 //            @Override
 //            public void onClick(View v) {
 //                // Khai báo Intent công khai để khởi động Service
-//                Intent intent2 = new Intent(PlayMusic.this, MyService_Music.class);
+//                Intent intent2 = new Intent(PlayMusicActivity.this, MyService_Music.class);
 //                stopService(intent2);
 //                // Nhấn vào Stop chuyển ảnh của play sang pause
 //                btn_play.setImageResource(R.drawable.ic_play);

@@ -7,7 +7,7 @@
     android:background="#070707"
     android:orientation="vertical"
     android:padding="10dp"
-    tools:context=".music.PlayMusic">
+    tools:context=".music.PlayMusicActivity">
 
     <ImageButton
         android:id="@id/btn_back"
@@ -79,7 +79,7 @@
             android:layout_height="45dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:background="@drawable/rounded_custom"
+            android:background="@drawable/rounded_button"
             android:backgroundTint="@color/white"
             android:src="@drawable/ic_play" />
 

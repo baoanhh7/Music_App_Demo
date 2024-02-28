@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.example.doan_music.R;
-import com.example.doan_music.music.PlayMusic;
+import com.example.doan_music.music.PlayMusicActivity;
 
 public class Song_Fragment extends Fragment {
 
@@ -29,7 +29,7 @@ public class Song_Fragment extends Fragment {
         linear_nhungloihuaboquen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getActivity(), PlayMusic.class);
+                Intent i = new Intent(getActivity(), PlayMusicActivity.class);
                 startActivity(i);
             }
         });
