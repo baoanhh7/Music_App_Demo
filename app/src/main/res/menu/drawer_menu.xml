@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
+<!--    chi cho phép một phần tử(item) được kiểm tra, các phần từ còn lại sẽ bị bỏ kiểm tra-->
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/home"
