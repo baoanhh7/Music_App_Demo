@@ -12,7 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.doan_music.R;
+import com.example.doan_music.adapter.home.CategoryAdapter;
 import com.example.doan_music.adapter.home.HomeAdapter;
+import com.example.doan_music.model.Category;
 import com.example.doan_music.model.User;
 
 import java.util.ArrayList;
@@ -20,7 +22,8 @@ import java.util.List;
 
 public class All_Fragment extends Fragment {
     private RecyclerView rcv_all_header, rcv_all_bottom;
-    private HomeAdapter allAdapter_header, allAdapter_bottom;
+    private HomeAdapter allAdapter_header;
+    private CategoryAdapter allAdapter_bottom;
     View view;
 
 
@@ -37,7 +40,7 @@ public class All_Fragment extends Fragment {
         rcv_all_header.setLayoutManager(gridLayoutManager);
 
         // set layout của recyclerView theo hướng ngang
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false);
         rcv_all_bottom.setLayoutManager(linearLayoutManager);
 
         // set data cho recyclerView
@@ -63,7 +66,7 @@ public class All_Fragment extends Fragment {
         return list;
     }
 
-    private List<User> getlistuserBottom() {
+    private List<Category> getlistuserBottom() {
         List<User> list = new ArrayList<>();
 
         list.add(new User(R.drawable.avt_vu, "Vũ.Radio", false));
@@ -76,7 +79,13 @@ public class All_Fragment extends Fragment {
         list.add(new User(R.drawable.avt_obito, "Obito", false));
         list.add(new User(R.drawable.avt_dalab, "Dalab Radio", false));
 
-        return list;
+        List<Category> categoryList = new ArrayList<>();
+        categoryList.add(new Category("Cate1",list));
+        categoryList.add(new Category("Cate2",list));
+        categoryList.add(new Category("Cate3",list));
+        categoryList.add(new Category("Cate4",list));
+
+        return categoryList;
     }
 
     private void addControls() {
@@ -84,7 +93,7 @@ public class All_Fragment extends Fragment {
         rcv_all_bottom = view.findViewById(R.id.rcv_all_bottom);
 
         allAdapter_header = new HomeAdapter();
-        allAdapter_bottom = new HomeAdapter();
+        allAdapter_bottom = new CategoryAdapter();
 
         rcv_all_header.setAdapter(allAdapter_header);
         rcv_all_bottom.setAdapter(allAdapter_bottom);
