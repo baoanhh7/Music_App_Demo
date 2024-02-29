@@ -6,8 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 
-import com.example.doan_music.adapter.SearchAdapter;
-import com.example.doan_music.adapter.SongListAdapter;
+import com.example.doan_music.adapter.home.SongListAdapter;
 import com.example.doan_music.model.User;
 
 import java.util.ArrayList;

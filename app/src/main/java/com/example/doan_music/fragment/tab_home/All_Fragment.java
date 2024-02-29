@@ -12,8 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.doan_music.R;
-import com.example.doan_music.adapter.HomeAdapter;
-import com.example.doan_music.adapter.SearchAdapter;
+import com.example.doan_music.adapter.home.HomeAdapter;
 import com.example.doan_music.model.User;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.example.doan_music.adapter;
+package com.example.doan_music.adapter.home;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,8 +10,8 @@ import com.example.doan_music.fragment.tab_home.All_Fragment;
 import com.example.doan_music.fragment.tab_home.Podcasts_Fragment;
 import com.example.doan_music.fragment.tab_home.Song_Fragment;
 
-public class Tab_ViewPagerAdapter extends FragmentStatePagerAdapter {
-    public Tab_ViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {
+public class TabLayoutAdapter extends FragmentStatePagerAdapter {
+    public TabLayoutAdapter(@NonNull FragmentManager fm, int behavior) {
         super(fm, behavior);
     }
 

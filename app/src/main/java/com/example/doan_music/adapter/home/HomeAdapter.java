@@ -1,4 +1,4 @@
-package com.example.doan_music.adapter;
+package com.example.doan_music.adapter.home;
 
 import android.view.LayoutInflater;
 import android.view.View;

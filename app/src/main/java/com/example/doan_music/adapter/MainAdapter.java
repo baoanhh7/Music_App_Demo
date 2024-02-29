@@ -10,9 +10,9 @@ import com.example.doan_music.fragment.main.Library_Fragment;
 import com.example.doan_music.fragment.main.Search_Fragment;
 import com.example.doan_music.fragment.main.Spotify_Fragment;
 
-public class ViewPagerAdapter extends FragmentStatePagerAdapter {
+public class MainAdapter extends FragmentStatePagerAdapter {
 
-    public ViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {
+    public MainAdapter(@NonNull FragmentManager fm, int behavior) {
         super(fm, behavior);
     }
 

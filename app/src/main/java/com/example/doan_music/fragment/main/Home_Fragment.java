@@ -11,7 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.doan_music.adapter.Tab_ViewPagerAdapter;
+import com.example.doan_music.adapter.home.TabLayoutAdapter;
 import com.example.doan_music.R;
 import com.google.android.material.tabs.TabLayout;
 
@@ -19,7 +19,7 @@ public class Home_Fragment extends Fragment {
 
     TabLayout tabLayout;
     ViewPager home_viewpager;
-    Tab_ViewPagerAdapter adapter;
+    TabLayoutAdapter adapter;
     // Trong Fragment khi muốn ánh xạ thì khai báo qua đối tượng trung gian là View
     View mView;
 
@@ -48,9 +48,9 @@ public class Home_Fragment extends Fragment {
         home_viewpager = mView.findViewById(R.id.home_viewpager);
 
         // Khác với khai báo Adapter trong Activity, trong Fragment khai báo Adapter theo kiểu sau
-        adapter = new Tab_ViewPagerAdapter(getChildFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        adapter = new TabLayoutAdapter(getChildFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
 
-        // Cung cấp dữ liệu cho viewpager bằng ViewPagerAdapter như bth
+        // Cung cấp dữ liệu cho viewpager bằng MainAdapter như bth
         home_viewpager.setAdapter(adapter);
     }
 }

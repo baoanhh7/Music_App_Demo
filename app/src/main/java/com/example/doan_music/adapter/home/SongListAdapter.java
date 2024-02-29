@@ -1,4 +1,4 @@
-package com.example.doan_music.adapter;
+package com.example.doan_music.adapter.home;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_music.R;
-import com.example.doan_music.SongListActivity;
 import com.example.doan_music.model.User;
 
 import java.util.List;

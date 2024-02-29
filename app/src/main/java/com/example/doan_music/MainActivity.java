@@ -14,14 +14,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.doan_music.adapter.MainAdapter;
 import com.example.doan_music.fragment.drawer.ListenedContent_Fragment;
 import com.example.doan_music.fragment.drawer.NewContent_Fragment;
 import com.example.doan_music.fragment.drawer.Settings_Fragment;
-import com.example.doan_music.adapter.ViewPagerAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 //public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 public class MainActivity extends AppCompatActivity {
@@ -31,8 +29,8 @@ public class MainActivity extends AppCompatActivity {
     NavigationView navigationView;
     ViewPager view_pager;
 
-    // Tạo class ViewPagerAdapter đã làm trước đó
-    ViewPagerAdapter adapter;
+    // Tạo class MainAdapter đã làm trước đó
+    MainAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +46,9 @@ public class MainActivity extends AppCompatActivity {
         toggle.syncState();
 
         // Tạo 1 adapter theo viewpager
-        adapter = new ViewPagerAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        adapter = new MainAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
 
-        // Cung cấp dữ liệu cho viewpager bằng ViewPagerAdapter
+        // Cung cấp dữ liệu cho viewpager bằng MainAdapter
         view_pager.setAdapter(adapter);
 
         // Quản lý hiển thị các trang (viewPager)
