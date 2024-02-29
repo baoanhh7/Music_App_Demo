@@ -80,10 +80,14 @@ public class All_Fragment extends Fragment {
         list.add(new User(R.drawable.avt_dalab, "Dalab Radio", false));
 
         List<Category> categoryList = new ArrayList<>();
-        categoryList.add(new Category("Cate1",list));
-        categoryList.add(new Category("Cate2",list));
-        categoryList.add(new Category("Cate3",list));
-        categoryList.add(new Category("Cate4",list));
+        categoryList.add(new Category("Radio phổ biến", list));
+        categoryList.add(new Category("Tuyển tập hàng đầu của bạn", list));
+        categoryList.add(new Category("Lựa chọn của Spotify", list));
+        categoryList.add(new Category("Tâm trạng", list));
+        categoryList.add(new Category("Tập dành cho bạn", list));
+        categoryList.add(new Category("Khám phá đề xuất dành cho bạn", list));
+        categoryList.add(new Category("Tập được yêu thích", list));
+        categoryList.add(new Category("Hoài niệm", list));
 
         return categoryList;
     }
