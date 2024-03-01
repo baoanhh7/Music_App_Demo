@@ -1,4 +1,4 @@
-package com.example.doan_music.adapter;
+package com.example.doan_music.adapter.thuvien;
 
 import android.view.LayoutInflater;
 import android.view.View;

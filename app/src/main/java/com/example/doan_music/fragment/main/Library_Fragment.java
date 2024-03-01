@@ -1,10 +1,12 @@
 package com.example.doan_music.fragment.main;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -12,8 +14,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_music.R;
-import com.example.doan_music.adapter.ThuVienAdapter;
+import com.example.doan_music.adapter.thuvien.ThuVienAdapter;
 import com.example.doan_music.model.ThuVien;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 
@@ -24,6 +27,7 @@ public class Library_Fragment extends Fragment {
     ArrayList<ThuVien> arr;
     Button btnDoi;
     View view;
+    ImageButton btn_thuvien_add,btn_thuvien_search;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,6 +41,19 @@ public class Library_Fragment extends Fragment {
     }
 
     private void addEvents() {
+        btn_thuvien_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clickOpenBottomSheetDialog();
+            }
+        });
+    }
+
+    private void clickOpenBottomSheetDialog() {
+        View viewdialog = getLayoutInflater().inflate(R.layout.bottom_sheet_thuvien, null);
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireContext());
+        bottomSheetDialog.setContentView(viewdialog);
+        bottomSheetDialog.show();
     }
 
     private void loadData() {
@@ -44,8 +61,10 @@ public class Library_Fragment extends Fragment {
         arr.add(new ThuVien(R.drawable.podcastchualanh, "Viết chữa lành", "Podcast - Writing therapy"));
     }
 
+
     private void addControl() {
         recyclerView = view.findViewById(R.id.recyclerviewTV);
+        btn_thuvien_add = view.findViewById(R.id.btn_thuvien_add);
         btnDoi = view.findViewById(R.id.btnDoi);
         arr = new ArrayList<>();
         thuVienAdapter = new ThuVienAdapter(this, arr);
