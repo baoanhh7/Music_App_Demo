@@ -53,11 +53,13 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             userBottomViewHolder.txt_search_bottom.setText(user.getName());
         }
     }
+
     @Override
     public int getItemCount() {
         if (listUser != null) return listUser.size();
         return 0;
     }
+
     @Override
     public int getItemViewType(int position) {
         User user = listUser.get(position);
