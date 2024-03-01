@@ -58,7 +58,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             userHeaderViewHolder.img_home_header.setImageResource(user.getResourceImage());
             userHeaderViewHolder.txt_home_header.setText(user.getName());
 
-            //onClickItem header in RecyclerView
+            //onClickItem in RecyclerView
             userHeaderViewHolder.card_home_header.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -70,14 +70,6 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             UserBottomViewHolder userBottomViewHolder = (UserBottomViewHolder) holder;
             userBottomViewHolder.img_home_bottom.setImageResource(user.getResourceImage());
             userBottomViewHolder.txt_home_bottom.setText(user.getName());
-
-            //onClickItem bottom in RecyclerView
-            userBottomViewHolder.card_home_bottom.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    iClickItemUser.onClickItemUser(user);
-                }
-            });
         }
     }
 
@@ -113,15 +105,11 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         private ImageView img_home_bottom;
         private TextView txt_home_bottom;
 
-        private CardView card_home_bottom;
-
         public UserBottomViewHolder(@NonNull View itemView) {
             super(itemView);
 
             img_home_bottom = itemView.findViewById(R.id.img_home_bottom);
             txt_home_bottom = itemView.findViewById(R.id.txt_home_bottom);
-
-            card_home_bottom = itemView.findViewById(R.id.card_home_bottom);
         }
     }
 }
