@@ -9,16 +9,15 @@
         android:id="@+id/txt_home_cate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
         android:text="Radio phổ biến"
         android:textColor="@color/white"
+        android:layout_marginBottom="15dp"
         android:textSize="23sp"
         android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcv_home_cate"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp" />
+        android:layout_height="wrap_content" />
 
 </LinearLayout>
