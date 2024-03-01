@@ -36,6 +36,7 @@ public class All_Fragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_all_, container, false);
 
         addControls();
+        addEvents();
 
         // set layout của recyclerView thành 2 cột
         GridLayoutManager gridLayoutManager = new GridLayoutManager(requireContext(), 2);
@@ -50,6 +51,38 @@ public class All_Fragment extends Fragment {
         allAdapter_bottom.setData(getlistuserBottom());
 
         return view;
+    }
+
+    private void addControls() {
+        rcv_all_header = view.findViewById(R.id.rcv_all_header);
+        rcv_all_bottom = view.findViewById(R.id.rcv_all_bottom);
+
+
+        allAdapter_bottom = new CategoryAdapter();
+
+        rcv_all_header.setAdapter(allAdapter_header);
+        rcv_all_bottom.setAdapter(allAdapter_bottom);
+    }
+
+    private void addEvents() {
+        //put dữ liệu header có key là u, place get SongListActivity
+        allAdapter_header = new HomeAdapter(new IClickItemUser() {
+            @Override
+            public void onClickItemUser(User user) {
+                Intent i = new Intent(requireContext(), SongListActivity.class);
+                i.putExtra("u", user);
+                startActivity(i);
+            }
+        });
+        //put dữ liệu bottom có key là u, place get SongListActivity
+        allAdapter_header = new HomeAdapter(new IClickItemUser() {
+            @Override
+            public void onClickItemUser(User user) {
+                Intent i = new Intent(requireContext(), SongListActivity.class);
+                i.putExtra("u", user);
+                startActivity(i);
+            }
+        });
     }
 
     private List<User> getlistuserHeader() {
@@ -92,25 +125,5 @@ public class All_Fragment extends Fragment {
         categoryList.add(new Category("Hoài niệm", list));
 
         return categoryList;
-    }
-
-    private void addControls() {
-        rcv_all_header = view.findViewById(R.id.rcv_all_header);
-        rcv_all_bottom = view.findViewById(R.id.rcv_all_bottom);
-
-
-        //put dữ liệu header có key là u, place get SongListActivity
-        allAdapter_header = new HomeAdapter(new IClickItemUser() {
-            @Override
-            public void onClickItemUser(User user) {
-                Intent i = new Intent(requireContext(), SongListActivity.class);
-                i.putExtra("u", user);
-                startActivity(i);
-            }
-        });
-        allAdapter_bottom = new CategoryAdapter();
-
-        rcv_all_header.setAdapter(allAdapter_header);
-        rcv_all_bottom.setAdapter(allAdapter_bottom);
     }
 }
