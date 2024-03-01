@@ -14,7 +14,9 @@ import com.example.doan_music.R;
 import com.example.doan_music.adapter.home.TabLayoutAdapter;
 import com.google.android.material.tabs.TabLayout;
 
-public class Home_Fragment extends Fragment {
+public class
+
+Home_Fragment extends Fragment {
 
     TabLayout tabLayout;
     ViewPager home_viewpager;
