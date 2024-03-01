@@ -11,13 +11,23 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_music.R;
+import com.example.doan_music.m_interface.IClickItemUser;
 import com.example.doan_music.model.Category;
+import com.example.doan_music.model.User;
 
 import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
     Context context;
     List<Category> list;
+    private IClickItemUser iClickItemUser;
+
+    public CategoryAdapter() {
+    }
+
+    public CategoryAdapter(IClickItemUser iClickItemUser) {
+        this.iClickItemUser = iClickItemUser;
+    }
 
     public void setData(List<Category> list) {
         this.list = list;

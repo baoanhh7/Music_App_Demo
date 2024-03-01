@@ -25,7 +25,7 @@ import java.util.List;
 public class All_Fragment extends Fragment {
     private RecyclerView rcv_all_header, rcv_all_bottom;
     private HomeAdapter allAdapter_header;
-    private CategoryAdapter allAdapter_bottom;
+    private CategoryAdapter allCateAdapter_bottom;
     View view;
 
 
@@ -47,7 +47,7 @@ public class All_Fragment extends Fragment {
 
         // set data cho recyclerView
         allAdapter_header.setData(getlistuserHeader());
-        allAdapter_bottom.setData(getlistuserBottom());
+        allCateAdapter_bottom.setData(getlistuserBottom());
 
         return view;
     }
@@ -108,9 +108,10 @@ public class All_Fragment extends Fragment {
                 startActivity(i);
             }
         });
-        allAdapter_bottom = new CategoryAdapter();
+
+        allCateAdapter_bottom = new CategoryAdapter();
 
         rcv_all_header.setAdapter(allAdapter_header);
-        rcv_all_bottom.setAdapter(allAdapter_bottom);
+        rcv_all_bottom.setAdapter(allCateAdapter_bottom);
     }
 }
