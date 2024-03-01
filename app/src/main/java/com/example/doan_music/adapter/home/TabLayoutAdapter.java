@@ -46,7 +46,7 @@ public class TabLayoutAdapter extends FragmentStatePagerAdapter {
             case 0:
                 return "Tất cả";
             case 1:
-                return "Nhạc";
+                return "Âm Nhạc";
             case 2:
                 return "Podcasts";
             default:
