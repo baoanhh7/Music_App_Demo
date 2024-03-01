@@ -22,10 +22,8 @@ public class SongListActivity extends AppCompatActivity {
     RecyclerView rcv_songlist;
     SongListAdapter songListAdapter;
     ImageButton btn_back;
-
     ImageView img_songlist;
     TextView txt_songlist;
-
     Intent i = null;
 
     @Override
