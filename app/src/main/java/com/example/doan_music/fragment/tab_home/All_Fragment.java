@@ -113,6 +113,5 @@ public class All_Fragment extends Fragment {
 
         rcv_all_header.setAdapter(allAdapter_header);
         rcv_all_bottom.setAdapter(allAdapter_bottom);
-
     }
 }
