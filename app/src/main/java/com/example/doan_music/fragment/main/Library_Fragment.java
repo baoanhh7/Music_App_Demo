@@ -24,6 +24,7 @@ public class Library_Fragment extends Fragment {
     ArrayList<ThuVien> arr;
     Button btnDoi;
     View view;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -39,24 +40,24 @@ public class Library_Fragment extends Fragment {
     }
 
     private void loadData() {
-        arr.add(new ThuVien(R.drawable.obito,"Obito","Nghệ sĩ"));
-        arr.add(new ThuVien(R.drawable.podcastchualanh,"Viết chữa lành","Podcast - Writing therapy"));
+        arr.add(new ThuVien(R.drawable.obito, "Obito", "Nghệ sĩ"));
+        arr.add(new ThuVien(R.drawable.podcastchualanh, "Viết chữa lành", "Podcast - Writing therapy"));
     }
 
     private void addControl() {
         recyclerView = view.findViewById(R.id.recyclerviewTV);
-        btnDoi =    view.findViewById(R.id.btnDoi);
+        btnDoi = view.findViewById(R.id.btnDoi);
         arr = new ArrayList<>();
-        thuVienAdapter = new ThuVienAdapter(this,arr);
+        thuVienAdapter = new ThuVienAdapter(this, arr);
         recyclerView.setAdapter(thuVienAdapter);
         LinearLayoutManager linearLayout = new LinearLayoutManager(requireContext());
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(requireContext(),2);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(requireContext(), 2);
         // recyclerViewNV.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setLayoutManager(linearLayout);
         btnDoi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(recyclerView.getLayoutManager()== linearLayout)
+                if (recyclerView.getLayoutManager() == linearLayout)
                     recyclerView.setLayoutManager(gridLayoutManager);
                 else
                     recyclerView.setLayoutManager(linearLayout);
