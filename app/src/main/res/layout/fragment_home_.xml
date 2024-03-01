@@ -24,6 +24,7 @@
             android:background="@drawable/ic_user"
             android:backgroundTint="@color/white" />
 
+<!--        fill các tab sẽ được phân bồ đều theo chiều rộng, scrollable khi còn chỗ thì sẽ cuộn-->
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
