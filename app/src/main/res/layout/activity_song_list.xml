@@ -19,6 +19,7 @@
             android:layout_height="wrap_content">
 
             <ImageButton
+                android:id="@+id/btn_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/ic_back"
@@ -58,12 +59,11 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/view_songlist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="10dp"
-            android:text="100 lượt xem"
+            android:text="177.004 lượt xem"
             android:textColor="@color/white"
             android:textSize="15sp" />
 
@@ -107,7 +107,7 @@
             android:id="@+id/rcv_songlist"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="15dp" />
 
     </LinearLayout>
 

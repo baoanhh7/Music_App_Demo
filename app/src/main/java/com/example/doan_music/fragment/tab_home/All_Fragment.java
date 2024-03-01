@@ -1,5 +1,6 @@
 package com.example.doan_music.fragment.tab_home;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,8 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.doan_music.R;
+import com.example.doan_music.SongListActivity;
 import com.example.doan_music.adapter.home.CategoryAdapter;
 import com.example.doan_music.adapter.home.HomeAdapter;
+import com.example.doan_music.m_interface.IClickItemUser;
 import com.example.doan_music.model.Category;
 import com.example.doan_music.model.User;
 
@@ -96,7 +99,16 @@ public class All_Fragment extends Fragment {
         rcv_all_header = view.findViewById(R.id.rcv_all_header);
         rcv_all_bottom = view.findViewById(R.id.rcv_all_bottom);
 
-        allAdapter_header = new HomeAdapter();
+
+        //put dữ liệu header có key là u, place get SongListActivity
+        allAdapter_header = new HomeAdapter(new IClickItemUser() {
+            @Override
+            public void onClickItemUser(User user) {
+                Intent i = new Intent(requireContext(), SongListActivity.class);
+                i.putExtra("u", user);
+                startActivity(i);
+            }
+        });
         allAdapter_bottom = new CategoryAdapter();
 
         rcv_all_header.setAdapter(allAdapter_header);
