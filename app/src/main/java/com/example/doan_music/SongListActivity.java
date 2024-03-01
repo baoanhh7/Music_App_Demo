@@ -40,7 +40,6 @@ public class SongListActivity extends AppCompatActivity {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rcv_songlist.setLayoutManager(linearLayoutManager);
-
     }
 
     private void addEvents() {
