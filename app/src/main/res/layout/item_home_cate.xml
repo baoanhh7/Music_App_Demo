@@ -9,6 +9,7 @@
         android:id="@+id/txt_home_cate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:layout_marginBottom="15dp"
         android:text="Radio phổ biến"
         android:textColor="@color/white"

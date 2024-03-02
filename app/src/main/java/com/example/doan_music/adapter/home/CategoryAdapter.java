@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.doan_music.R;
 import com.example.doan_music.m_interface.IClickItemUser;
 import com.example.doan_music.model.Category;
-import com.example.doan_music.model.User;
 
 import java.util.List;
 
