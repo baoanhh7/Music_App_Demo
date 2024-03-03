@@ -46,7 +46,7 @@
             app:menu="@menu/bottom_menu" />
     </RelativeLayout>
 
-<!--    drawer-->
+    <!--    drawer-->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation_drawer"
         android:layout_width="wrap_content"
