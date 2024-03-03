@@ -94,6 +94,7 @@
                 android:backgroundTint="@color/white" />
 
             <ImageButton
+                android:id="@+id/btn_play"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:layout_gravity="center"

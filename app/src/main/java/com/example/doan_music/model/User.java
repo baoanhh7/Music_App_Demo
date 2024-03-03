@@ -13,6 +13,11 @@ public class User implements Serializable {
         this.header = header;
     }
 
+    public User(int resourceImage, String name) {
+        this.resourceImage = resourceImage;
+        this.name = name;
+    }
+
     public Boolean getHeader() {
         return header;
     }

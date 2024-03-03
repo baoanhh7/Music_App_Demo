@@ -21,10 +21,11 @@ public class SongListActivity extends AppCompatActivity {
 
     RecyclerView rcv_songlist;
     SongListAdapter songListAdapter;
-    ImageButton btn_back;
+    ImageButton btn_back, btn_play;
 
     ImageView img_songlist;
     TextView txt_songlist;
+    Boolean flag = true;
 
     Intent i = null;
 
@@ -49,16 +50,29 @@ public class SongListActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        btn_play.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (flag) {
+                    btn_play.setImageResource(R.drawable.ic_pause);
+                    flag = false;
+                } else {
+                    btn_play.setImageResource(R.drawable.ic_play);
+                    flag = true;
+                }
+            }
+        });
     }
 
     private List<User> getList() {
         List<User> list = new ArrayList<>();
-        list.add(new User(R.drawable.avt_vu, "Những lời hứa bỏ quên - Vũ Radio.", true));
-        list.add(new User(R.drawable.avt_vu, "Những lời hứa bỏ quên - Vũ Radio.", true));
-        list.add(new User(R.drawable.avt_vu, "Những lời hứa bỏ quên - Vũ Radio.", true));
-        list.add(new User(R.drawable.avt_vu, "Những lời hứa bỏ quên - Vũ Radio.", true));
-        list.add(new User(R.drawable.avt_vu, "Những lời hứa bỏ quên - Vũ Radio.", true));
-        list.add(new User(R.drawable.avt_vu, "Những lời hứa bỏ quên - Vũ Radio.", true));
+        list.add(new User(R.drawable.avt_vu, "Những lời hứa bỏ quên - Vũ Radio."));
+        list.add(new User(R.drawable.avt_vu, "Những lời hứa bỏ quên - Vũ Radio."));
+        list.add(new User(R.drawable.avt_vu, "Những lời hứa bỏ quên - Vũ Radio."));
+        list.add(new User(R.drawable.avt_vu, "Những lời hứa bỏ quên - Vũ Radio."));
+        list.add(new User(R.drawable.avt_vu, "Những lời hứa bỏ quên - Vũ Radio."));
+        list.add(new User(R.drawable.avt_vu, "Những lời hứa bỏ quên - Vũ Radio."));
 
         return list;
     }
@@ -72,6 +86,7 @@ public class SongListActivity extends AppCompatActivity {
         txt_songlist = findViewById(R.id.txt_songlist);
 
         btn_back = findViewById(R.id.btn_back);
+        btn_play = findViewById(R.id.btn_play);
 
         //get dữ liệu từ All_Fragment
         i = getIntent();

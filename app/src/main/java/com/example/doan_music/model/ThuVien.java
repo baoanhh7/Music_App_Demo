@@ -3,8 +3,8 @@ package com.example.doan_music.model;
 import java.io.Serializable;
 
 public class ThuVien implements Serializable {
-    private  int hinh;
-    private  String tensp;
+    private int hinh;
+    private String tensp;
     private String noidung;
 
     public ThuVien() {

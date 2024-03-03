@@ -31,7 +31,7 @@ public class PlayMusicActivity extends AppCompatActivity {
                 Intent intent1 = new Intent(PlayMusicActivity.this, MyService_Music.class);
                 startService(intent1);
 
-                if (flag == true) {
+                if (flag) {
                     // Chuyển hình ảnh play sang pause
                     btn_play.setImageResource(R.drawable.ic_pause);
                     flag = false;
