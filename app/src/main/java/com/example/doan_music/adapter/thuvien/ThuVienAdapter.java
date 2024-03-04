@@ -15,19 +15,21 @@ import com.example.doan_music.model.ThuVien;
 
 import java.util.ArrayList;
 
-public class ThuVienAdapter extends  RecyclerView.Adapter<ThuVienAdapter.ViewHolder>{
+public class ThuVienAdapter extends RecyclerView.Adapter<ThuVienAdapter.ViewHolder> {
     //khai báo biến
     Fragment context;
     ArrayList<ThuVien> arr;
-    public ThuVienAdapter(Fragment context,ArrayList<ThuVien> arr){
+
+    public ThuVienAdapter(Fragment context, ArrayList<ThuVien> arr) {
         this.context = context;
         this.arr = arr;
     }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.items_thuvien,parent,false);
+        View view = layoutInflater.inflate(R.layout.items_thuvien, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
@@ -45,9 +47,10 @@ public class ThuVienAdapter extends  RecyclerView.Adapter<ThuVienAdapter.ViewHol
         return arr.size();
     }
 
-    public  class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView img;
-        TextView txtTen,txtND;
+        TextView txtTen, txtND;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             img = itemView.findViewById(R.id.img);

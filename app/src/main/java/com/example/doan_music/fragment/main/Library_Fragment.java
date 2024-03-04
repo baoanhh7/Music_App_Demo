@@ -26,7 +26,7 @@ public class Library_Fragment extends Fragment {
     ArrayList<ThuVien> arr;
     Button btnDoi;
     View view;
-    ImageButton btn_thuvien_add,btn_thuvien_search;
+    ImageButton btn_thuvien_add, btn_thuvien_search;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
