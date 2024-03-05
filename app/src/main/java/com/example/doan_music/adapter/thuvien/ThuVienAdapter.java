@@ -3,6 +3,8 @@ package com.example.doan_music.adapter.thuvien;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,14 +17,15 @@ import com.example.doan_music.model.ThuVien;
 
 import java.util.ArrayList;
 
-public class ThuVienAdapter extends RecyclerView.Adapter<ThuVienAdapter.ViewHolder> {
+public class ThuVienAdapter extends RecyclerView.Adapter<ThuVienAdapter.ViewHolder> implements Filterable {
     //khai báo biến
     Fragment context;
-    ArrayList<ThuVien> arr;
+    ArrayList<ThuVien> arr,arr1;
 
     public ThuVienAdapter(Fragment context, ArrayList<ThuVien> arr) {
         this.context = context;
         this.arr = arr;
+        this.arr1 = arr;
     }
 
     @NonNull
@@ -45,6 +48,37 @@ public class ThuVienAdapter extends RecyclerView.Adapter<ThuVienAdapter.ViewHold
     @Override
     public int getItemCount() {
         return arr.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String strSearch = constraint.toString();
+                if(strSearch.isEmpty()){
+                    arr = arr1;
+                }
+                else {
+                    ArrayList<ThuVien> arrayList = new ArrayList<>();
+                    for(ThuVien thuVien : arr1){
+                        if(thuVien.getTensp().toLowerCase().contains(strSearch.toLowerCase())){
+                            arrayList.add(thuVien);
+                        }
+                    }
+                    arr = arrayList;
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = arr;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                arr = (ArrayList<ThuVien>) results.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

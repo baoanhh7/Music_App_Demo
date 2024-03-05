@@ -44,9 +44,8 @@
 
                 <androidx.appcompat.widget.SearchView
                     android:id="@+id/btn_thuvien_search"
-                    android:layout_width="wrap_content"
+                    android:layout_width="220dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="170dp"
                     android:iconifiedByDefault="false"
                     android:queryHint="Search here..."
                     app:searchIcon="@drawable/ic_search"/>
