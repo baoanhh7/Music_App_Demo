@@ -53,16 +53,13 @@ public class PlayMusicActivity extends AppCompatActivity {
         btn_play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int id = v.getId();
-                if (id == R.id.btn_play) {
-                    if (myMusic.isPlaying()) {
-                        myMusic.pause();
-                        btn_play.setImageResource(R.drawable.ic_play);
+                if (myMusic.isPlaying()) {
+                    myMusic.pause();
+                    btn_play.setImageResource(R.drawable.ic_play);
 
-                    } else {
-                        myMusic.start();
-                        btn_play.setImageResource(R.drawable.ic_pause);
-                    }
+                } else {
+                    myMusic.start();
+                    btn_play.setImageResource(R.drawable.ic_pause);
                 }
             }
         });
