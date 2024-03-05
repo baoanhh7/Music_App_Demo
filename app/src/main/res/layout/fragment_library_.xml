@@ -48,7 +48,7 @@
                     android:layout_height="wrap_content"
                     android:iconifiedByDefault="false"
                     android:queryHint="Search here..."
-                    app:searchIcon="@drawable/ic_search"/>
+                    app:searchIcon="@drawable/ic_search" />
 
                 <ImageButton
                     android:id="@+id/btn_thuvien_add"

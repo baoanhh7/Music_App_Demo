@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class ThuVienAdapter extends RecyclerView.Adapter<ThuVienAdapter.ViewHolder> implements Filterable {
     //khai báo biến
     Fragment context;
-    ArrayList<ThuVien> arr,arr1;
+    ArrayList<ThuVien> arr, arr1;
 
     public ThuVienAdapter(Fragment context, ArrayList<ThuVien> arr) {
         this.context = context;
@@ -56,13 +56,12 @@ public class ThuVienAdapter extends RecyclerView.Adapter<ThuVienAdapter.ViewHold
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
                 String strSearch = constraint.toString();
-                if(strSearch.isEmpty()){
+                if (strSearch.isEmpty()) {
                     arr = arr1;
-                }
-                else {
+                } else {
                     ArrayList<ThuVien> arrayList = new ArrayList<>();
-                    for(ThuVien thuVien : arr1){
-                        if(thuVien.getTensp().toLowerCase().contains(strSearch.toLowerCase())){
+                    for (ThuVien thuVien : arr1) {
+                        if (thuVien.getTensp().toLowerCase().contains(strSearch.toLowerCase())) {
                             arrayList.add(thuVien);
                         }
                     }

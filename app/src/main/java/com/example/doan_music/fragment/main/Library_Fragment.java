@@ -54,14 +54,14 @@ public class Library_Fragment extends Fragment {
             public boolean onQueryTextSubmit(String query) {
                 thuVienAdapter.getFilter().filter(query);
                 return false;
-    }
+            }
 
             @Override
             public boolean onQueryTextChange(String newText) {
                 thuVienAdapter.getFilter().filter(newText);
                 return false;
             }
-});
+        });
     }
 
     private void clickOpenBottomSheetDialog() {
