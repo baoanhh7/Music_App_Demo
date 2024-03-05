@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/black"
     tools:context=".fragment.main.Library_Fragment">
 
@@ -41,13 +42,14 @@
                     android:textSize="25sp"
                     android:textStyle="bold" />
 
-                <ImageButton
+                <androidx.appcompat.widget.SearchView
                     android:id="@+id/btn_thuvien_search"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="170dp"
-                    android:backgroundTint="@color/black"
-                    android:src="@drawable/ic_search" />
+                    android:iconifiedByDefault="false"
+                    android:queryHint="Search here..."
+                    app:searchIcon="@drawable/ic_search"/>
 
                 <ImageButton
                     android:id="@+id/btn_thuvien_add"
@@ -84,4 +86,5 @@
             </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
     </LinearLayout>
+
 </FrameLayout>
