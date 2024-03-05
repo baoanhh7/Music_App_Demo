@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.SearchView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -27,8 +26,7 @@ public class Library_Fragment extends Fragment {
     ArrayList<ThuVien> arr;
     Button btnDoi;
     View view;
-    ImageButton btn_thuvien_add;
-    SearchView btn_thuvien_search;
+    ImageButton btn_thuvien_add, btn_thuvien_search;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,7 +46,6 @@ public class Library_Fragment extends Fragment {
                 clickOpenBottomSheetDialog();
             }
         });
-
     }
 
     private void clickOpenBottomSheetDialog() {
@@ -65,7 +62,6 @@ public class Library_Fragment extends Fragment {
 
 
     private void addControl() {
-        btn_thuvien_search = view.findViewById(R.id.btn_thuvien_search);
         recyclerView = view.findViewById(R.id.recyclerviewTV);
         btn_thuvien_add = view.findViewById(R.id.btn_thuvien_add);
         btnDoi = view.findViewById(R.id.btnDoi);
