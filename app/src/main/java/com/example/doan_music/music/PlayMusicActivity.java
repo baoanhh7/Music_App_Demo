@@ -28,8 +28,8 @@ public class PlayMusicActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 // Khai báo Intent công khai để khởi động Service
-                Intent intent1 = new Intent(PlayMusicActivity.this, MyService_Music.class);
-                startService(intent1);
+                Intent i = new Intent(PlayMusicActivity.this, MyService_Music.class);
+                startService(i);
 
                 if (flag) {
                     // Chuyển hình ảnh play sang pause
