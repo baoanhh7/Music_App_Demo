@@ -6,7 +6,7 @@
     android:background="#070707"
     android:orientation="vertical"
     android:padding="10dp"
-    tools:context=".music.PlayMusicActivity">
+    tools:context=".PlayMusicActivity">
 
     <ImageButton
         android:id="@id/btn_back"
