@@ -5,10 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.SearchView;
 
-import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -49,19 +48,7 @@ public class Library_Fragment extends Fragment {
                 clickOpenBottomSheetDialog();
             }
         });
-        btn_thuvien_search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                thuVienAdapter.getFilter().filter(query);
-                return false;
-            }
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                thuVienAdapter.getFilter().filter(newText);
-                return false;
-            }
-        });
     }
 
     private void clickOpenBottomSheetDialog() {
@@ -79,8 +66,6 @@ public class Library_Fragment extends Fragment {
 
     private void addControl() {
         btn_thuvien_search = view.findViewById(R.id.btn_thuvien_search);
-        EditText searchEditText = btn_thuvien_search.findViewById(androidx.appcompat.R.id.search_src_text);
-        searchEditText.setTextColor(getResources().getColor(R.color.white));
         recyclerView = view.findViewById(R.id.recyclerviewTV);
         btn_thuvien_add = view.findViewById(R.id.btn_thuvien_add);
         btnDoi = view.findViewById(R.id.btnDoi);
