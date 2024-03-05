@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_music.R;
-import com.example.doan_music.m_interface.IClickItemUser;
+import com.example.doan_music.m_interface.IClickItemCategory;
 import com.example.doan_music.model.Category;
 
 import java.util.List;
@@ -19,13 +19,13 @@ import java.util.List;
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
     Context context;
     List<Category> list;
-    private IClickItemUser iClickItemUser;
+    private IClickItemCategory iClickItemCategory;
 
     public CategoryAdapter() {
     }
 
-    public CategoryAdapter(IClickItemUser iClickItemUser) {
-        this.iClickItemUser = iClickItemUser;
+    public CategoryAdapter(IClickItemCategory iClickItemCategory) {
+        this.iClickItemCategory = iClickItemCategory;
     }
 
     public void setData(List<Category> list) {
@@ -52,6 +52,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         holder.rcv_home_cate.setLayoutManager(linearLayoutManager);
+
+        holder.txt_home_cate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                iClickItemCategory.onClickItemCategory(category);
+            }
+        });
 
     }
 

@@ -27,7 +27,7 @@ public class SongListActivity extends AppCompatActivity {
     TextView txt_songlist;
     Boolean flag = true;
 
-    Intent i = null;
+    Intent i = null, u = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +94,12 @@ public class SongListActivity extends AppCompatActivity {
         img_songlist.setImageResource(user.getResourceImage());
         txt_songlist.setText(user.getName());
 
-
+//        u = getIntent();
+//        Category category = (Category) u.getSerializableExtra("c");
+////        img_songlist.setImageResource(user.getResourceImage());
+//        txt_songlist.setText(category.getName());
+//
+//        songListAdapter.setData(category.getList());
+//        rcv_songlist.setAdapter(songListAdapter);
     }
 }

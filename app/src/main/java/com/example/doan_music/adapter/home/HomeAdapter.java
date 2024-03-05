@@ -70,14 +70,6 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             UserBottomViewHolder userBottomViewHolder = (UserBottomViewHolder) holder;
             userBottomViewHolder.img_home_bottom.setImageResource(user.getResourceImage());
             userBottomViewHolder.txt_home_bottom.setText(user.getName());
-
-            //onClickItem in RecyclerView
-            userBottomViewHolder.card_home_bottom.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    iClickItemUser.onClickItemUser(user);
-                }
-            });
         }
     }
 

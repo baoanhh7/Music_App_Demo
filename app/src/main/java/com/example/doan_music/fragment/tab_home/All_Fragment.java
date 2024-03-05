@@ -111,6 +111,15 @@ public class All_Fragment extends Fragment {
 
         allCateAdapter_bottom = new CategoryAdapter();
 
+//        allCateAdapter_bottom = new CategoryAdapter(new IClickItemCategory() {
+//            @Override
+//            public void onClickItemCategory(Category category) {
+//                Intent i = new Intent(requireContext(), SongListActivity.class);
+//                i.putExtra("c", category);
+//                startActivity(i);
+//            }
+//        });
+
         rcv_all_header.setAdapter(allAdapter_header);
         rcv_all_bottom.setAdapter(allCateAdapter_bottom);
     }
