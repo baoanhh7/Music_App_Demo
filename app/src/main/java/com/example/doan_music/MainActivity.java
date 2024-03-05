@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         view_pager.setAdapter(adapter);
 
         // Quản lý hiển thị các trang (viewPager)
-        // 1. Vuốt
+        // 1. Vuốt, set trạng thái vuốt để chuyển trang
         view_pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
