@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "123505951112",
+    "project_id": "demofirebase-f4d20",
+    "storage_bucket": "demofirebase-f4d20.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:123505951112:android:9580b303fc60279806fa3d",
+        "android_client_info": {
+          "package_name": "com.example.doan_music"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYZyqhMDaYhMVVYmvmfQP-Z4XyAdONy9Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:123505951112:android:4fc668f28f28e06606fa3d",
+        "android_client_info": {
+          "package_name": "com.example.sqllitedemo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYZyqhMDaYhMVVYmvmfQP-Z4XyAdONy9Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
