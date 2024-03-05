@@ -14,6 +14,8 @@ public class MyService_Music extends Service {
     public IBinder onBind(Intent intent) {
         // TODO: Return the communication channel to the service.
         throw new UnsupportedOperationException("Not yet implemented");
+
+
     }
 
     // Hàm khởi tạo đối tượng mà service quản lý
