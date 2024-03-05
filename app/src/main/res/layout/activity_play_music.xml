@@ -107,15 +107,15 @@
             android:layout_marginRight="20dp"
             android:background="@drawable/rounded_button"
             android:backgroundTint="@color/white"
-            android:src="@drawable/ic_play" />
+            android:src="@drawable/ic_pause" />
 
         <!--        <ImageButton-->
         <!--            android:id="@+id/btn_pause"-->
-        <!--            android:layout_width="50dp"-->
-        <!--            android:layout_height="50dp"-->
+        <!--            android:layout_width="45dp"-->
+        <!--            android:layout_height="45dp"-->
         <!--            android:layout_marginRight="5dp"-->
-        <!--            android:background="@drawable/rounded_custom"-->
-        <!--            android:backgroundTint="@color/lavender"-->
+        <!--            android:background="@drawable/rounded_button"-->
+        <!--            android:backgroundTint="@color/white"-->
         <!--            android:src="@drawable/ic_stop" />-->
 
         <ImageButton

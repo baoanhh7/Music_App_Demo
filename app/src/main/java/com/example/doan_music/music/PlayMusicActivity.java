@@ -1,6 +1,5 @@
 package com.example.doan_music.music;
 
-import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
@@ -15,7 +14,6 @@ import com.example.doan_music.R;
 public class PlayMusicActivity extends AppCompatActivity {
 
     ImageButton btn_play, btn_pause, btn_back;
-    Boolean flag = true;
     SeekBar seekBar;
     TextView txt_time, txt_time_first;
 
@@ -32,13 +30,15 @@ public class PlayMusicActivity extends AppCompatActivity {
         myMusic.setLooping(true);
         myMusic.seekTo(0);
 
+        myMusic.start();
+
         String duration = timeSeekbar(myMusic.getDuration());
         txt_time.setText(duration);
 
         addEvents();
     }
 
-    private String timeSeekbar(int time) {
+    public String timeSeekbar(int time) {
         String mTime = "";
         int minutes = time / 1000 / 60;
         int seconds = time / 1000 % 60;
@@ -55,18 +55,16 @@ public class PlayMusicActivity extends AppCompatActivity {
         btn_play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Khai báo Intent công khai để khởi động Service
-                Intent i = new Intent(PlayMusicActivity.this, MyService_Music.class);
-                startService(i);
+                int id = v.getId();
+                if (id == R.id.btn_play) {
+                    if (myMusic.isPlaying()) {
+                        myMusic.pause();
+                        btn_play.setImageResource(R.drawable.ic_play);
 
-                if (flag) {
-                    // Chuyển hình ảnh play sang pause
-                    btn_play.setImageResource(R.drawable.ic_pause);
-                    flag = false;
-                } else {
-                    // Và ngược lại
-                    btn_play.setImageResource(R.drawable.ic_play);
-                    flag = true;
+                    } else {
+                        myMusic.start();
+                        btn_play.setImageResource(R.drawable.ic_pause);
+                    }
                 }
             }
         });
@@ -89,7 +87,6 @@ public class PlayMusicActivity extends AppCompatActivity {
                 finish();
             }
         });
-
 
         seekBar.setMax(myMusic.getDuration());
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
