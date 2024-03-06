@@ -1,4 +1,4 @@
-package com.example.doan_music;
+package com.example.doan_music.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.doan_music.R;
 import com.example.doan_music.adapter.MainAdapter;
 import com.example.doan_music.fragment.drawer.ListenedContent_Fragment;
 import com.example.doan_music.fragment.drawer.NewContent_Fragment;
@@ -43,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_nav, R.string.close_nav);
         drawerLayout.addDrawerListener(toggle);
 
-       toggle.syncState();
+        toggle.syncState();
 
         // Tạo 1 adapter theo viewpager
         adapter = new MainAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);

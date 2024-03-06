@@ -1,10 +1,12 @@
-package com.example.doan_music;
+package com.example.doan_music.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.doan_music.R;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -20,6 +22,6 @@ public class SplashActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
-        }, 4000);
+        }, 4444);
     }
 }

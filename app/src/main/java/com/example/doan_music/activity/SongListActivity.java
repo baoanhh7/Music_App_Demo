@@ -1,4 +1,4 @@
-package com.example.doan_music;
+package com.example.doan_music.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.doan_music.R;
 import com.example.doan_music.adapter.home.SongListAdapter;
 import com.example.doan_music.model.User;
 

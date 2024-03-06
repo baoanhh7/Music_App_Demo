@@ -17,7 +17,6 @@
         android:paddingStart="10dp">
 
 
-
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/user"
             android:layout_width="wrap_content"

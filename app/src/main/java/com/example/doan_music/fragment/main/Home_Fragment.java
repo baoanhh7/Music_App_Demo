@@ -1,37 +1,24 @@
 package com.example.doan_music.fragment.main;
 
-import static android.text.TextUtils.replace;
-
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.doan_music.MainActivity;
 import com.example.doan_music.R;
 import com.example.doan_music.adapter.home.TabLayoutAdapter;
-import com.example.doan_music.fragment.drawer.ListenedContent_Fragment;
-import com.example.doan_music.fragment.drawer.NewContent_Fragment;
-import com.example.doan_music.fragment.drawer.Settings_Fragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
 public class
 
-Home_Fragment extends Fragment  {
+Home_Fragment extends Fragment {
 
     TabLayout tabLayout;
     NavigationView navigationView;
@@ -39,6 +26,7 @@ Home_Fragment extends Fragment  {
     TabLayoutAdapter adapter;
     // Trong Fragment khi muốn ánh xạ thì khai báo qua đối tượng trung gian là View
     View mView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -59,12 +47,14 @@ Home_Fragment extends Fragment  {
 
         return mView;
     }
+
     private void replaceFragment(Fragment fragment) {
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_container, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }
+
     private void addControls() {
         tabLayout = mView.findViewById(R.id.tab_layout);
         home_viewpager = mView.findViewById(R.id.home_viewpager);

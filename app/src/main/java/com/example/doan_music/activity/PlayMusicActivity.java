@@ -1,4 +1,4 @@
-package com.example.doan_music;
+package com.example.doan_music.activity;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.doan_music.R;
 
 public class PlayMusicActivity extends AppCompatActivity {
 
