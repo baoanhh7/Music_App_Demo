@@ -35,6 +35,7 @@ public class register_email extends AppCompatActivity {
                 startActivity(new Intent(register_email.this, login_user.class));
             }
         });
+
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
