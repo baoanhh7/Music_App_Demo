@@ -33,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
     // Tạo class MainAdapter đã làm trước đó
     MainAdapter adapter;
 
+//    DbHelper dbHelper = new DbHelper(this);
+//    SQLiteDatabase db = dbHelper.getReadableDatabase();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
