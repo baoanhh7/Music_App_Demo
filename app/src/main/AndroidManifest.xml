@@ -13,20 +13,16 @@
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
         tools:targetApi="31">
         <activity
-            android:name=".LoginPackage.login_user"
-            android:exported="false" />
-        <activity
-            android:name=".LoginPackage.register_email"
-            android:exported="false" />
-        <activity
-            android:name=".LoginPackage.Login"
-            android:exported="false" />
-        <activity
             android:name=".activity.SongListActivity"
-            android:exported="false" />
+            android:exported="false">
+
+        </activity>
+
         <activity
             android:name=".activity.MainActivity"
-            android:exported="true" />
+            android:exported="true">
+
+        </activity>
         <activity
             android:name=".activity.SplashActivity"
             android:exported="true"
@@ -37,9 +33,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".activity.PlayMusicActivity"
-            android:exported="true" />
+            android:exported="true">
+
+        </activity>
     </application>
 
 </manifest>
