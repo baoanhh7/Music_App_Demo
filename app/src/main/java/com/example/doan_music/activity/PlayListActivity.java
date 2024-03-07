@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_music.R;
 import com.example.doan_music.adapter.home.PlayListAdapter;
-import com.example.doan_music.model.Category;
 import com.example.doan_music.model.User;
 
 import java.util.ArrayList;
@@ -39,7 +38,6 @@ public class PlayListActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         rcv_playlist.setLayoutManager(linearLayoutManager);
 
-
     }
 
     private List<User> getList() {
@@ -64,17 +62,17 @@ public class PlayListActivity extends AppCompatActivity {
     }
 
     private void addControls() {
-        rcv_playlist = findViewById(R.id.rcv_songlist);
+        rcv_playlist = findViewById(R.id.rcv_playlist);
         playListAdapter = new PlayListAdapter();
         rcv_playlist.setAdapter(playListAdapter);
 
         txt_playlist = findViewById(R.id.txt_playlist);
         btn_back = findViewById(R.id.btn_back);
 
-
-        i = getIntent();
-        Category category = (Category) i.getSerializableExtra("c");
-        txt_playlist.setText(category.getName());
+//        lỗi
+//        i = getIntent();
+//        Category category = (Category) i.getSerializableExtra("c");
+//        txt_playlist.setText(category.getName());
 //
 //        songListAdapter.setData(category.getList());
 //        rcv_songlist.setAdapter(songListAdapter);

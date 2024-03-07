@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -53,7 +54,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         holder.rcv_home_cate.setLayoutManager(linearLayoutManager);
 
-        holder.txt_home_cate.setOnClickListener(new View.OnClickListener() {
+        holder.ll_category.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 iClickItemCategory.onClickItemCategory(category);
@@ -72,11 +73,15 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         TextView txt_home_cate;
         RecyclerView rcv_home_cate;
 
+        LinearLayout ll_category;
+
         public CategoryViewHolder(@NonNull View itemView) {
             super(itemView);
 
             txt_home_cate = itemView.findViewById(R.id.txt_home_cate);
             rcv_home_cate = itemView.findViewById(R.id.rcv_home_cate);
+
+            ll_category = itemView.findViewById(R.id.ll_category);
         }
     }
 }

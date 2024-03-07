@@ -12,9 +12,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_music.R;
+import com.example.doan_music.activity.PlayListActivity;
 import com.example.doan_music.activity.SongsAlbumActivity;
 import com.example.doan_music.adapter.home.CategoryAdapter;
 import com.example.doan_music.adapter.home.HomeAdapter;
+import com.example.doan_music.m_interface.IClickItemCategory;
 import com.example.doan_music.m_interface.IClickItemUser;
 import com.example.doan_music.model.Category;
 import com.example.doan_music.model.User;
@@ -105,16 +107,16 @@ public class All_Fragment extends Fragment {
             }
         });
 
-        allCateAdapter_bottom = new CategoryAdapter();
+//        allCateAdapter_bottom = new CategoryAdapter();
 
-//        allCateAdapter_bottom = new CategoryAdapter(new IClickItemCategory() {
-//            @Override
-//            public void onClickItemCategory(Category category) {
-//                Intent i = new Intent(requireContext(), PlayListActivity.class);
-//                i.putExtra("c", category);
-//                startActivity(i);
-//            }
-//        });
+        allCateAdapter_bottom = new CategoryAdapter(new IClickItemCategory() {
+            @Override
+            public void onClickItemCategory(Category category) {
+                Intent i = new Intent(requireContext(), PlayListActivity.class);
+                i.putExtra("c", category);
+                startActivity(i);
+            }
+        });
 
         rcv_all_header.setAdapter(allAdapter_header);
         rcv_all_bottom.setAdapter(allCateAdapter_bottom);

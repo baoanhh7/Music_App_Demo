@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import androidx.fragment.app.Fragment;
 
 import com.example.doan_music.R;
-import com.example.doan_music.activity.PlayMusicActivity;
+import com.example.doan_music.music.PlayMusicActivity;
 
 public class Song_Fragment extends Fragment {
 

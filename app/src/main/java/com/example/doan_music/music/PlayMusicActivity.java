@@ -1,4 +1,4 @@
-package com.example.doan_music.activity;
+package com.example.doan_music.music;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
