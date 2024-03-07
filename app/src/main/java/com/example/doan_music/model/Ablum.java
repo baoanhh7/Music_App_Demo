@@ -1,14 +1,12 @@
 package com.example.doan_music.model;
 
-import android.widget.ImageView;
-
 import java.io.Serializable;
 
 public class Ablum implements Serializable {
     private Integer AlbumID;
     private String AlbumName;
     private byte[] AlbumImage;
-    private  Integer ArtistID;
+    private Integer ArtistID;
 
     public Ablum() {
     }

@@ -1,17 +1,15 @@
 package com.example.doan_music.admin.ablum;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_music.R;
 import com.example.doan_music.adapter.album.AlbumAdapter;
@@ -27,6 +25,7 @@ public class AblumActivity extends AppCompatActivity {
     Button btn_add_ablum;
     AlbumAdapter albumAdapter;
     ArrayList<Ablum> arrayAdapterAblum;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,18 +36,17 @@ public class AblumActivity extends AppCompatActivity {
         loadData();
     }
 
-
-
     private void loadData() {
         database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
+
         Cursor cursor = database.rawQuery("select * from Albums", null);
         arrayAdapterAblum.clear();
         while (cursor.moveToNext()) {
             Integer ma = Integer.parseInt(cursor.getString(0));
             String ten = cursor.getString(1);
             byte[] img = cursor.getBlob(2);
-            //Integer maartist = Integer.parseInt(cursor.getString(3));
-            Ablum ablum = new Ablum(ma, ten, img,0);
+            //Integer artist = Integer.parseInt(cursor.getString(3));
+            Ablum ablum = new Ablum(ma, ten, img, 0);
             arrayAdapterAblum.add(ablum);
         }
         cursor.close();
@@ -61,7 +59,7 @@ public class AblumActivity extends AppCompatActivity {
         btn_add_ablum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AblumActivity.this,AddAlbumActivity.class);
+                Intent intent = new Intent(AblumActivity.this, AddAlbumActivity.class);
                 startActivity(intent);
             }
         });
@@ -71,7 +69,7 @@ public class AblumActivity extends AppCompatActivity {
         btn_add_ablum = findViewById(R.id.btn_add_ablum);
         reycAlbum = findViewById(R.id.recAblum);
         arrayAdapterAblum = new ArrayList<>();
-        albumAdapter = new AlbumAdapter(this,arrayAdapterAblum);
+        albumAdapter = new AlbumAdapter(this, arrayAdapterAblum);
         reycAlbum.setAdapter(albumAdapter);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         reycAlbum.setLayoutManager(gridLayoutManager);

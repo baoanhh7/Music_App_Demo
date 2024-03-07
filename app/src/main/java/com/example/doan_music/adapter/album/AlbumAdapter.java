@@ -17,13 +17,15 @@ import com.example.doan_music.model.Ablum;
 
 import java.util.ArrayList;
 
-public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder>{
+public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> {
     ArrayList<Ablum> arr;
     Activity context;
+
     public AlbumAdapter(Activity context, ArrayList<Ablum> arr) {
         this.context = context;
         this.arr = arr;
     }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -50,9 +52,9 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder>{
         return arr.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView img;
-        TextView txtID, txtTen,txtIDArtist;
+        TextView txtID, txtTen, txtIDArtist;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

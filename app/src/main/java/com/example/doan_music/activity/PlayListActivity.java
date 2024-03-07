@@ -12,16 +12,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_music.R;
 import com.example.doan_music.adapter.home.PlayListAdapter;
-import com.example.doan_music.model.User;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.example.doan_music.model.Category;
 
 public class PlayListActivity extends AppCompatActivity {
     RecyclerView rcv_playlist;
     PlayListAdapter playListAdapter;
     Button btn_back;
     TextView txt_playlist;
+    Category category;
 
     Intent i = null;
 
@@ -33,23 +31,11 @@ public class PlayListActivity extends AppCompatActivity {
         addControls();
         addEvents();
 
-        playListAdapter.setData(getList());
+        playListAdapter.setData(category.getList());
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         rcv_playlist.setLayoutManager(linearLayoutManager);
 
-    }
-
-    private List<User> getList() {
-        List<User> list = new ArrayList<>();
-        list.add(new User(R.drawable.avt_vu, "Những lời hứa bỏ quên - Vũ Radio."));
-        list.add(new User(R.drawable.avt_vu, "Những lời hứa bỏ quên - Vũ Radio."));
-        list.add(new User(R.drawable.avt_vu, "Những lời hứa bỏ quên - Vũ Radio."));
-        list.add(new User(R.drawable.avt_vu, "Những lời hứa bỏ quên - Vũ Radio."));
-        list.add(new User(R.drawable.avt_vu, "Những lời hứa bỏ quên - Vũ Radio."));
-        list.add(new User(R.drawable.avt_vu, "Những lời hứa bỏ quên - Vũ Radio."));
-
-        return list;
     }
 
     private void addEvents() {
@@ -69,12 +55,9 @@ public class PlayListActivity extends AppCompatActivity {
         txt_playlist = findViewById(R.id.txt_playlist);
         btn_back = findViewById(R.id.btn_back);
 
-//        lỗi
-//        i = getIntent();
-//        Category category = (Category) i.getSerializableExtra("c");
-//        txt_playlist.setText(category.getName());
-//
-//        songListAdapter.setData(category.getList());
-//        rcv_songlist.setAdapter(songListAdapter);
+        i = getIntent();
+        category = (Category) i.getSerializableExtra("c");
+        txt_playlist.setText(category.getName());
+
     }
 }

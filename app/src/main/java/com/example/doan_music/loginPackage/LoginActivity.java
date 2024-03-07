@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.doan_music.R;
 
-public class Login extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     Button LoginID, RegisterID;
 
@@ -21,14 +21,14 @@ public class Login extends AppCompatActivity {
         LoginID.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Login.this, Login_user.class);
+                Intent intent = new Intent(LoginActivity.this, Login_userActivity.class);
                 startActivity(intent);
             }
         });
         RegisterID.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Login.this, Register_email.class);
+                Intent intent = new Intent(LoginActivity.this, Register_emailActivity.class);
                 startActivity(intent);
             }
         });

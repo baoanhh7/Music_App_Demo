@@ -14,7 +14,7 @@ import com.example.doan_music.R;
 import com.example.doan_music.activity.MainActivity;
 import com.example.doan_music.admin.AdminActivity;
 
-public class Login_user extends AppCompatActivity {
+public class Login_userActivity extends AppCompatActivity {
     EditText EdtEmail, EdtPassword;
     TextView tvForgotPass, tvSignup;
     Button btnLogin, btn_back;
@@ -33,13 +33,13 @@ public class Login_user extends AppCompatActivity {
         tvSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Login_user.this, Register_email.class));
+                startActivity(new Intent(Login_userActivity.this, Register_emailActivity.class));
             }
         });
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Login_user.this, Login.class));
+                startActivity(new Intent(Login_userActivity.this, LoginActivity.class));
             }
         });
     }
@@ -48,15 +48,15 @@ public class Login_user extends AppCompatActivity {
         String email = EdtEmail.getText().toString();
         String password = EdtPassword.getText().toString();
         if (email.equals("admin")) {
-            Toast.makeText(Login_user.this, "Login Admin Successful", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(Login_user.this, AdminActivity.class));
+            Toast.makeText(Login_userActivity.this, "Login Admin Successful", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(Login_userActivity.this, AdminActivity.class));
         } else if (password.isEmpty() || password.length() < 7) {
             showError(EdtPassword, "Your password must be 7 character");
         } else if (email.isEmpty() || !email.contains("@")) {
             showError(EdtEmail, "Your email is not valid");
         } else {
-            Toast.makeText(Login_user.this, "Login Successful", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(Login_user.this, MainActivity.class));
+            Toast.makeText(Login_userActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(Login_userActivity.this, MainActivity.class));
         }
     }
 

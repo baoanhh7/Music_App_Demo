@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.doan_music.R;
 
-public class Register_email extends AppCompatActivity {
+public class Register_emailActivity extends AppCompatActivity {
 
     EditText EdtUsername, EdtEmail, EdtPassword, EdtRepassword;
     Button btnRegister, btn_back;
@@ -33,14 +33,14 @@ public class Register_email extends AppCompatActivity {
         tvLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Register_email.this, Login_user.class));
+                startActivity(new Intent(Register_emailActivity.this, Login_userActivity.class));
             }
         });
 
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Register_email.this, Login.class));
+                startActivity(new Intent(Register_emailActivity.this, LoginActivity.class));
             }
         });
     }
@@ -60,7 +60,7 @@ public class Register_email extends AppCompatActivity {
             showError(EdtRepassword, "Your password is not match");
         } else {
             Toast.makeText(this, "Register Successful", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(Register_email.this, Login_user.class));
+            startActivity(new Intent(Register_emailActivity.this, Login_userActivity.class));
         }
     }
 

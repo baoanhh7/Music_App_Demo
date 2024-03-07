@@ -12,32 +12,56 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
         tools:targetApi="31">
+
+        <!--        1-->
         <activity
             android:name=".activity.SongsAlbumActivity"
             android:exported="false">
 
         </activity>
-
+        <!--        2-->
         <activity
-            android:name=".loginPackage.Login"
+            android:name=".admin.AdminActivity"
             android:exported="true">
 
         </activity>
+        <!--        3-->
         <activity
-            android:name=".loginPackage.Register_email"
+            android:name=".admin.ablum.AblumActivity"
             android:exported="true">
 
         </activity>
+        <!--        4-->
         <activity
-            android:name=".loginPackage.Login_user"
+            android:name=".admin.ablum.AddAlbumActivity"
             android:exported="true">
 
         </activity>
+        <!--        5-->
+        <activity
+            android:name=".loginPackage.LoginActivity"
+            android:exported="true">
+
+        </activity>
+        <!--        6-->
+        <activity
+            android:name=".loginPackage.Register_emailActivity"
+            android:exported="true">
+
+        </activity>
+        <!--        7-->
+        <activity
+            android:name=".loginPackage.Login_userActivity"
+            android:exported="true">
+
+        </activity>
+        <!--        8-->
         <activity
             android:name=".activity.MainActivity"
             android:exported="true">
 
         </activity>
+        <!--        9-->
         <activity
             android:name=".activity.SplashActivity"
             android:exported="true"
@@ -48,12 +72,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <!--        10-->
         <activity
             android:name=".music.PlayMusicActivity"
             android:exported="true">
 
         </activity>
+        <!--        11-->
+        <activity
+            android:name=".activity.PlayListActivity"
+            android:exported="true">
+
+        </activity>
+        <!--        12-->
     </application>
 
 </manifest>

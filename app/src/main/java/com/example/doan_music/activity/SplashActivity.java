@@ -7,7 +7,7 @@ import android.os.Handler;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.doan_music.R;
-import com.example.doan_music.loginPackage.Login;
+import com.example.doan_music.loginPackage.LoginActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -19,7 +19,7 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(SplashActivity.this, Login.class));
+                startActivity(new Intent(SplashActivity.this, LoginActivity.class));
                 finish();
             }
         }, 4444);
