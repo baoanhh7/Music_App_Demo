@@ -1,6 +1,5 @@
 package com.example.doan_music.activity;
 
-import android.media.AudioAttributes;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
