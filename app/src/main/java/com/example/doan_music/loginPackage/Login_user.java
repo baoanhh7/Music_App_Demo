@@ -11,8 +11,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.doan_music.R;
-import com.example.doan_music.admin.AdminActivity;
 import com.example.doan_music.activity.MainActivity;
+import com.example.doan_music.admin.AdminActivity;
 
 public class Login_user extends AppCompatActivity {
     EditText EdtEmail, EdtPassword;
@@ -47,15 +47,14 @@ public class Login_user extends AppCompatActivity {
     private void checkCrededentials() {
         String email = EdtEmail.getText().toString();
         String password = EdtPassword.getText().toString();
-        if (email.equals("admin")  ) {
+        if (email.equals("admin")) {
             Toast.makeText(Login_user.this, "Login Admin Successful", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(Login_user.this, AdminActivity.class));
         } else if (password.isEmpty() || password.length() < 7) {
             showError(EdtPassword, "Your password must be 7 character");
-        }else if(email.isEmpty() || !email.contains("@")) {
+        } else if (email.isEmpty() || !email.contains("@")) {
             showError(EdtEmail, "Your email is not valid");
-        }
-        else {
+        } else {
             Toast.makeText(Login_user.this, "Login Successful", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(Login_user.this, MainActivity.class));
         }

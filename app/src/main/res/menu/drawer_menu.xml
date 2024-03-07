@@ -11,19 +11,18 @@
             android:title="Trang chủ" />
 
         <item
-            android:id="@+id/newContent"
-            android:icon="@drawable/ic_flash"
-            android:title="Nội dung mới"></item>
-
-        <item
-            android:id="@+id/listenedContent"
+            android:id="@+id/allSongs"
             android:icon="@drawable/ic_clock"
-            android:title="Nội dung đã nghe"></item>
+            android:title="Tất cả bài hát">
+
+        </item>
 
         <item
             android:id="@+id/settings"
             android:icon="@drawable/ic_settings"
-            android:title="Cài đặt và quyền riêng tư"></item>
+            android:title="Cài đặt và quyền riêng tư">
+
+        </item>
 
     </group>
 </menu>

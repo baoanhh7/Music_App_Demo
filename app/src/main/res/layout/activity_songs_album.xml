@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="#191919"
     android:elevation="10dp"
-    tools:context=".activity.SongListActivity">
+    tools:context=".activity.SongsAlbumActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
