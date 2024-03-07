@@ -5,9 +5,50 @@ import android.widget.ImageView;
 import java.io.Serializable;
 
 public class Ablum implements Serializable {
-    private int AlbumID;
+    private Integer AlbumID;
     private String AlbumName;
     private byte[] AlbumImage;
-    private  int ArtistID;
+    private  Integer ArtistID;
 
+    public Ablum() {
+    }
+
+    public Ablum(Integer albumID, String albumName, byte[] albumImage, Integer artistID) {
+        AlbumID = albumID;
+        AlbumName = albumName;
+        AlbumImage = albumImage;
+        ArtistID = artistID;
+    }
+
+    public Integer getAlbumID() {
+        return AlbumID;
+    }
+
+    public void setAlbumID(Integer albumID) {
+        AlbumID = albumID;
+    }
+
+    public String getAlbumName() {
+        return AlbumName;
+    }
+
+    public void setAlbumName(String albumName) {
+        AlbumName = albumName;
+    }
+
+    public byte[] getAlbumImage() {
+        return AlbumImage;
+    }
+
+    public void setAlbumImage(byte[] albumImage) {
+        AlbumImage = albumImage;
+    }
+
+    public Integer getArtistID() {
+        return ArtistID;
+    }
+
+    public void setArtistID(Integer artistID) {
+        ArtistID = artistID;
+    }
 }
