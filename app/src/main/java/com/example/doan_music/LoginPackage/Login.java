@@ -11,7 +11,7 @@ import com.example.doan_music.R;
 
 public class Login extends AppCompatActivity {
 
-    Button LoginID, LoginPhoneID, RegisterID;
+    Button LoginID, RegisterID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
