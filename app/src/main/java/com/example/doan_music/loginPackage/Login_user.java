@@ -1,4 +1,4 @@
-package com.example.doan_music.LoginPackage;
+package com.example.doan_music.loginPackage;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.doan_music.R;
 import com.example.doan_music.activity.MainActivity;
 
-public class login_user extends AppCompatActivity {
+public class Login_user extends AppCompatActivity {
     EditText EdtEmail, EdtPassword;
     TextView tvForgotPass, tvSignup;
     Button btnLogin, btn_back;
@@ -32,13 +32,13 @@ public class login_user extends AppCompatActivity {
         tvSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(login_user.this, register_email.class));
+                startActivity(new Intent(Login_user.this, Register_email.class));
             }
         });
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(login_user.this, Login.class));
+                startActivity(new Intent(Login_user.this, Login.class));
             }
         });
     }
@@ -51,8 +51,8 @@ public class login_user extends AppCompatActivity {
         } else if (password.isEmpty() || password.length() < 7) {
             showError(EdtPassword, "Your password must be 7 character");
         } else {
-            Toast.makeText(login_user.this, "Login Successful", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(login_user.this, MainActivity.class));
+            Toast.makeText(Login_user.this, "Login Successful", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(Login_user.this, MainActivity.class));
         }
     }
 

@@ -9,15 +9,15 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_music.R;
-import com.example.doan_music.adapter.Spotify.SpotifyAdapter;
-import com.example.doan_music.model.spotifyitem;
+import com.example.doan_music.adapter.spotify.SpotifyAdapter;
+import com.example.doan_music.model.Spotifyitem;
 
 import java.util.ArrayList;
 
 public class Spotify_Fragment extends Fragment {
     RecyclerView recyclerViewSpot;
     SpotifyAdapter spotifyAdapter;
-    ArrayList<spotifyitem> arr_spot;
+    ArrayList<Spotifyitem> arr_spot;
     private RecyclerView premiumscrollview;
 
     @Override
@@ -36,8 +36,8 @@ public class Spotify_Fragment extends Fragment {
     }
 
     private void loadData() {
-        arr_spot.add(new spotifyitem("Individual", "1 tài khoản premium", "Hủy bất cứ lúc nào"));
-        arr_spot.add(new spotifyitem("Student", "1 tài khoản premium", "Giảm giá cho sinh viên đủ điều kiện"));
+        arr_spot.add(new Spotifyitem("Individual", "1 tài khoản premium", "Hủy bất cứ lúc nào"));
+        arr_spot.add(new Spotifyitem("Student", "1 tài khoản premium", "Giảm giá cho sinh viên đủ điều kiện"));
     }
 
 }

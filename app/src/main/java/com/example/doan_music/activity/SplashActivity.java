@@ -6,8 +6,8 @@ import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.doan_music.LoginPackage.Login;
 import com.example.doan_music.R;
+import com.example.doan_music.loginPackage.Login;
 
 public class SplashActivity extends AppCompatActivity {
 

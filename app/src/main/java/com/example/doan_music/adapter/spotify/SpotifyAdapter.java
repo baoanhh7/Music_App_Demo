@@ -1,4 +1,4 @@
-package com.example.doan_music.adapter.Spotify;
+package com.example.doan_music.adapter.spotify;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -10,15 +10,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_music.R;
-import com.example.doan_music.model.spotifyitem;
+import com.example.doan_music.model.Spotifyitem;
 
 import java.util.ArrayList;
 
 public class SpotifyAdapter extends RecyclerView.Adapter<SpotifyAdapter.ViewHolder> {
     Activity context;
-    ArrayList<spotifyitem> arr_spotify;
+    ArrayList<Spotifyitem> arr_spotify;
 
-    public SpotifyAdapter(Activity context, ArrayList<spotifyitem> arr_spotify) {
+    public SpotifyAdapter(Activity context, ArrayList<Spotifyitem> arr_spotify) {
         this.context = context;
         this.arr_spotify = arr_spotify;
     }
@@ -34,7 +34,7 @@ public class SpotifyAdapter extends RecyclerView.Adapter<SpotifyAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        spotifyitem spot = arr_spotify.get(position);
+        Spotifyitem spot = arr_spotify.get(position);
         holder.txtName_spotify.setText(spot.getName());
         holder.txtinfo_spotify_1.setText(spot.getInfo_1());
         holder.txtinfo_spotify_2.setText(spot.getInfo_2());

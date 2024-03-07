@@ -2,15 +2,15 @@ package com.example.doan_music.model;
 
 import java.io.Serializable;
 
-public class spotifyitem implements Serializable {
+public class Spotifyitem implements Serializable {
     private String Name;
     private String info_1;
     private String info_2;
 
-    public spotifyitem() {
+    public Spotifyitem() {
     }
 
-    public spotifyitem(String name, String info_1, String info_2) {
+    public Spotifyitem(String name, String info_1, String info_2) {
         Name = name;
         this.info_1 = info_1;
         this.info_2 = info_2;

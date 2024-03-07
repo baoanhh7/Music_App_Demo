@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context=".LoginPackage.login_user">
+    tools:context=".loginPackage.Login_user">
 
     <Button
         android:id="@+id/btn_back"

@@ -1,4 +1,4 @@
-package com.example.doan_music.LoginPackage;
+package com.example.doan_music.loginPackage;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,14 +21,14 @@ public class Login extends AppCompatActivity {
         LoginID.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Login.this, login_user.class);
+                Intent intent = new Intent(Login.this, Login_user.class);
                 startActivity(intent);
             }
         });
         RegisterID.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Login.this, register_email.class);
+                Intent intent = new Intent(Login.this, Register_email.class);
                 startActivity(intent);
             }
         });
