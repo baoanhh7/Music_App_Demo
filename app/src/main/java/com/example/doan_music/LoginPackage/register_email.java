@@ -1,7 +1,5 @@
 package com.example.doan_music.LoginPackage;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +8,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.doan_music.R;
 
 public class register_email extends AppCompatActivity {
@@ -17,6 +17,7 @@ public class register_email extends AppCompatActivity {
     EditText EdtUsername, EdtEmail, EdtPassword, EdtRepassword;
     Button btnRegister, btn_back;
     TextView tvLogin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,23 +46,19 @@ public class register_email extends AppCompatActivity {
     }
 
     private void checkCredentials() {
-        String username=EdtUsername.getText().toString();
-        String email=EdtEmail.getText().toString();
-        String password=EdtPassword.getText().toString();
-        String repassword=EdtRepassword.getText().toString();
-        if(username.isEmpty()) {
-            showError(EdtUsername,"Your username is not valid!");
-        }
-        else if(email.isEmpty() || !email.contains("@")) {
-            showError(EdtEmail,"Your Email is not valid!");
-        }
-        else if (password.isEmpty() || password.length()<7) {
-            showError(EdtPassword,"Your password must be at least 8 character");
-        }
-        else if (repassword.isEmpty() || !repassword.equals(password)) {
-            showError(EdtRepassword,"Your password is not match");
-        }
-        else {
+        String username = EdtUsername.getText().toString();
+        String email = EdtEmail.getText().toString();
+        String password = EdtPassword.getText().toString();
+        String repassword = EdtRepassword.getText().toString();
+        if (username.isEmpty()) {
+            showError(EdtUsername, "Your username is not valid!");
+        } else if (email.isEmpty() || !email.contains("@")) {
+            showError(EdtEmail, "Your Email is not valid!");
+        } else if (password.isEmpty() || password.length() < 7) {
+            showError(EdtPassword, "Your password must be at least 8 character");
+        } else if (repassword.isEmpty() || !repassword.equals(password)) {
+            showError(EdtRepassword, "Your password is not match");
+        } else {
             Toast.makeText(this, "Register Successful", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(register_email.this, login_user.class));
         }

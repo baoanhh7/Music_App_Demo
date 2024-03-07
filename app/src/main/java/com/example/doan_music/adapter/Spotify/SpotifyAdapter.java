@@ -10,30 +10,31 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_music.R;
-import com.example.doan_music.fragment.main.Spotify_Fragment;
 import com.example.doan_music.model.spotifyitem;
 
 import java.util.ArrayList;
 
-public class SpotifyAdapter extends RecyclerView.Adapter<SpotifyAdapter.ViewHolder>{
+public class SpotifyAdapter extends RecyclerView.Adapter<SpotifyAdapter.ViewHolder> {
     Activity context;
     ArrayList<spotifyitem> arr_spotify;
-    public SpotifyAdapter(Activity context, ArrayList<spotifyitem> arr_spotify){
-        this.context=context;
-        this.arr_spotify=arr_spotify;
+
+    public SpotifyAdapter(Activity context, ArrayList<spotifyitem> arr_spotify) {
+        this.context = context;
+        this.arr_spotify = arr_spotify;
     }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
-        View viewSpotify=layoutInflater.inflate(R.layout.items_spotify,parent,false);
-        ViewHolder viewHolderSpot=new ViewHolder(viewSpotify);
+        View viewSpotify = layoutInflater.inflate(R.layout.items_spotify, parent, false);
+        ViewHolder viewHolderSpot = new ViewHolder(viewSpotify);
         return viewHolderSpot;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        spotifyitem spot=arr_spotify.get(position);
+        spotifyitem spot = arr_spotify.get(position);
         holder.txtName_spotify.setText(spot.getName());
         holder.txtinfo_spotify_1.setText(spot.getInfo_1());
         holder.txtinfo_spotify_2.setText(spot.getInfo_2());
@@ -45,13 +46,14 @@ public class SpotifyAdapter extends RecyclerView.Adapter<SpotifyAdapter.ViewHold
         return arr_spotify.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
-        TextView txtName_spotify,txtinfo_spotify_1, txtinfo_spotify_2;
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        TextView txtName_spotify, txtinfo_spotify_1, txtinfo_spotify_2;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            txtName_spotify=itemView.findViewById(R.id.txtName_spotify);
-            txtinfo_spotify_1=itemView.findViewById(R.id.txtinfo_spotify_1);
-            txtinfo_spotify_2=itemView.findViewById(R.id.txtinfo_spotify_2);
+            txtName_spotify = itemView.findViewById(R.id.txtName_spotify);
+            txtinfo_spotify_1 = itemView.findViewById(R.id.txtinfo_spotify_1);
+            txtinfo_spotify_2 = itemView.findViewById(R.id.txtinfo_spotify_2);
         }
     }
 }

@@ -19,6 +19,7 @@ public class Spotify_Fragment extends Fragment {
     SpotifyAdapter spotifyAdapter;
     ArrayList<spotifyitem> arr_spot;
     private RecyclerView premiumscrollview;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

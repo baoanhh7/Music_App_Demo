@@ -4,11 +4,12 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import androidx.annotation.Nullable;
-
 public class DbHelper extends SQLiteOpenHelper {
-    public DbHelper(@Nullable Context context) {
-        super(context, "musicdb.db", null, 1);
+    private static final String DB_NAME = "doanmusic.db";
+    private static final int DB_VERSION = 1;
+
+    public DbHelper(Context context) {
+        super(context, DB_NAME, null, DB_VERSION);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.example.doan_music.activity;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -16,6 +17,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.doan_music.R;
 import com.example.doan_music.adapter.MainAdapter;
+import com.example.doan_music.data.DbHelper;
 import com.example.doan_music.fragment.drawer.ListenedContent_Fragment;
 import com.example.doan_music.fragment.drawer.NewContent_Fragment;
 import com.example.doan_music.fragment.drawer.Settings_Fragment;
@@ -33,8 +35,7 @@ public class MainActivity extends AppCompatActivity {
     // Tạo class MainAdapter đã làm trước đó
     MainAdapter adapter;
 
-//    DbHelper dbHelper = new DbHelper(this);
-//    SQLiteDatabase db = dbHelper.getReadableDatabase();
+    DbHelper dbHelper = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,6 +134,10 @@ public class MainActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigation_drawer);
+
+        dbHelper = new DbHelper(this);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
     }
 
     // Nhấn nút back device để trở về(sử dụng nút trong device)

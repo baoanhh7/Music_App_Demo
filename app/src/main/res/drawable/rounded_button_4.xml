@@ -4,6 +4,5 @@
     <corners android:radius="50dp" /> <!-- Bán kính bo tròn, có thể điều chỉnh giá trị để thay đổi độ cong -->
     <stroke
         android:width="2dp"
-        android:color="#FDFDFD"
-        /> <!-- Viền của EditText -->
+        android:color="#FDFDFD" /> <!-- Viền của EditText -->
 </shape>
