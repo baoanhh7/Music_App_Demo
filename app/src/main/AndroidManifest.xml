@@ -12,16 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
         tools:targetApi="31">
-
         <activity
-            android:name=".activity.PlayListActivity"
-            android:exported="true">
-
-
-        </activity>
-
-        <activity
-            android:name=".activity.SongsAlbumActivity"
+            android:name=".activity.SongListActivity"
             android:exported="false">
 
         </activity>
@@ -58,7 +50,7 @@
         </activity>
 
         <activity
-            android:name=".music.PlayMusicActivity"
+            android:name=".activity.PlayMusicActivity"
             android:exported="true">
 
         </activity>

@@ -135,13 +135,7 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigation_drawer);
 
-        dbHelper = new DbHelper(this);
-        try {
-            dbHelper.createDatabase();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
 
     }
 
