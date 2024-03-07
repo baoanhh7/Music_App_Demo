@@ -1,5 +1,6 @@
 package com.example.doan_music.activity;
 
+import android.media.AudioAttributes;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.doan_music.R;
+
+import java.io.IOException;
 
 public class PlayMusicActivity extends AppCompatActivity {
 
@@ -25,8 +28,16 @@ public class PlayMusicActivity extends AppCompatActivity {
         setContentView(R.layout.activity_play_music);
 
         addControls();
+        myMusic = new MediaPlayer();
+        //myMusic = MediaPlayer.create(this, R.raw.nhung_loi_hua_bo_quen);
 
-        myMusic = MediaPlayer.create(this, R.raw.nhung_loi_hua_bo_quen);
+        try {
+            myMusic.setDataSource("https://doanmusic.000webhostapp.com/BuonHayVuiFeatRptMckObitoRonboogz-VSOULRPTMCKObitoRonboogz-13159599.mp3");
+            myMusic.prepare();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         myMusic.setLooping(true);
         myMusic.seekTo(0);
 
