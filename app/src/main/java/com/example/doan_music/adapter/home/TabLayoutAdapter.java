@@ -7,7 +7,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.example.doan_music.fragment.tab_home.All_Fragment;
-import com.example.doan_music.fragment.tab_home.Podcasts_Fragment;
 import com.example.doan_music.fragment.tab_home.Song_Fragment;
 
 public class TabLayoutAdapter extends FragmentStatePagerAdapter {
@@ -24,8 +23,6 @@ public class TabLayoutAdapter extends FragmentStatePagerAdapter {
                 return new All_Fragment();
             case 1:
                 return new Song_Fragment();
-            case 2:
-                return new Podcasts_Fragment();
             default:
                 return new All_Fragment();
         }
@@ -34,7 +31,7 @@ public class TabLayoutAdapter extends FragmentStatePagerAdapter {
     // return số lượng item
     @Override
     public int getCount() {
-        return 3;
+        return 2;
     }
 
     // viewpager sử dụng với tablayout phải có hàm xử lý getPageTitle để đặt tên cho tab
@@ -46,11 +43,9 @@ public class TabLayoutAdapter extends FragmentStatePagerAdapter {
             case 0:
                 return "Tất cả";
             case 1:
-                return "Âm Nhạc";
-            case 2:
-                return "Podcasts";
+                return "Âm nhạc yêu thích";
             default:
-                return "Tab 1";
+                return "Tất cả";
         }
     }
 }

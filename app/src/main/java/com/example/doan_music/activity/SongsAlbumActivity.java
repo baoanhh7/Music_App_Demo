@@ -12,28 +12,28 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_music.R;
-import com.example.doan_music.adapter.home.SongListAdapter;
+import com.example.doan_music.adapter.home.SongsAlbumAdapter;
 import com.example.doan_music.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SongListActivity extends AppCompatActivity {
+public class SongsAlbumActivity extends AppCompatActivity {
 
     RecyclerView rcv_songlist;
-    SongListAdapter songListAdapter;
+    SongsAlbumAdapter songListAdapter;
     ImageButton btn_back, btn_play;
 
     ImageView img_songlist;
     TextView txt_songlist;
     Boolean flag = true;
 
-    Intent i = null, u = null;
+    Intent i = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_song_list);
+        setContentView(R.layout.activity_songs_album);
 
         addControls();
         addEvents();
@@ -80,7 +80,7 @@ public class SongListActivity extends AppCompatActivity {
 
     private void addControls() {
         rcv_songlist = findViewById(R.id.rcv_songlist);
-        songListAdapter = new SongListAdapter();
+        songListAdapter = new SongsAlbumAdapter();
         rcv_songlist.setAdapter(songListAdapter);
 
         img_songlist = findViewById(R.id.img_songlist);
@@ -95,12 +95,6 @@ public class SongListActivity extends AppCompatActivity {
         img_songlist.setImageResource(user.getResourceImage());
         txt_songlist.setText(user.getName());
 
-//        u = getIntent();
-//        Category category = (Category) u.getSerializableExtra("c");
-////        img_songlist.setImageResource(user.getResourceImage());
-//        txt_songlist.setText(category.getName());
-//
-//        songListAdapter.setData(category.getList());
-//        rcv_songlist.setAdapter(songListAdapter);
+
     }
 }

@@ -18,8 +18,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.doan_music.R;
 import com.example.doan_music.adapter.MainAdapter;
 import com.example.doan_music.data.DbHelper;
-import com.example.doan_music.fragment.drawer.ListenedContent_Fragment;
-import com.example.doan_music.fragment.drawer.NewContent_Fragment;
+import com.example.doan_music.fragment.drawer.AllSongs_Fragment;
 import com.example.doan_music.fragment.drawer.Settings_Fragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
@@ -112,8 +111,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
-                if (id == R.id.newContent) replace(new NewContent_Fragment());
-                else if (id == R.id.listenedContent) replace(new ListenedContent_Fragment());
+                if (id == R.id.allSongs) replace(new AllSongs_Fragment());
                 else if (id == R.id.settings) replace(new Settings_Fragment());
                 else if (id == R.id.home) {
                     Intent i = new Intent(MainActivity.this, MainActivity.class);

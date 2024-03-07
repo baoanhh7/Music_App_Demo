@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_music.R;
-import com.example.doan_music.activity.SongListActivity;
+import com.example.doan_music.activity.SongsAlbumActivity;
 import com.example.doan_music.adapter.home.CategoryAdapter;
 import com.example.doan_music.adapter.home.HomeAdapter;
 import com.example.doan_music.m_interface.IClickItemUser;
@@ -95,11 +95,11 @@ public class All_Fragment extends Fragment {
         rcv_all_bottom = view.findViewById(R.id.rcv_all_bottom);
 
 
-        //put dữ liệu header có key là u, place get SongListActivity
+        //put dữ liệu header có key là u, place get SongsAlbumActivity
         allAdapter_header = new HomeAdapter(new IClickItemUser() {
             @Override
             public void onClickItemUser(User user) {
-                Intent i = new Intent(requireContext(), SongListActivity.class);
+                Intent i = new Intent(requireContext(), SongsAlbumActivity.class);
                 i.putExtra("u", user);
                 startActivity(i);
             }
@@ -110,7 +110,7 @@ public class All_Fragment extends Fragment {
 //        allCateAdapter_bottom = new CategoryAdapter(new IClickItemCategory() {
 //            @Override
 //            public void onClickItemCategory(Category category) {
-//                Intent i = new Intent(requireContext(), SongListActivity.class);
+//                Intent i = new Intent(requireContext(), PlayListActivity.class);
 //                i.putExtra("c", category);
 //                startActivity(i);
 //            }

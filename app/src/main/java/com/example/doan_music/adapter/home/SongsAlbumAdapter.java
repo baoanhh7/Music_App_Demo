@@ -14,7 +14,7 @@ import com.example.doan_music.model.User;
 
 import java.util.List;
 
-public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.UserViewHolder> {
+public class SongsAlbumAdapter extends RecyclerView.Adapter<SongsAlbumAdapter.UserViewHolder> {
 
     List<User> list;
 
@@ -26,7 +26,7 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.UserVi
     @NonNull
     @Override
     public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_songlist, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_songs_album, parent, false);
         return new UserViewHolder(view);
     }
 
