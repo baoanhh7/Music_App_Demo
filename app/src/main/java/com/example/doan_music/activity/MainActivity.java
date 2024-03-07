@@ -24,6 +24,8 @@ import com.example.doan_music.fragment.drawer.Settings_Fragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
+import java.io.IOException;
+
 //public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 public class MainActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
@@ -136,6 +138,11 @@ public class MainActivity extends AppCompatActivity {
         navigationView = findViewById(R.id.navigation_drawer);
 
         dbHelper = new DbHelper(this);
+        try {
+            dbHelper.createDatabase();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
     }
