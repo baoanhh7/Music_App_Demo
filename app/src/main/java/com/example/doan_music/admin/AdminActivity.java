@@ -15,7 +15,6 @@ import com.example.doan_music.data.DbHelper;
 import java.io.IOException;
 
 public class AdminActivity extends AppCompatActivity {
-    DbHelper dbHelper = null;
     Button btn_add_ablum, btn_add_artists, btn_add_playlists, btn_add_types, btn_add_song, btn_add_lovesongs;
 
     @Override
@@ -44,12 +43,5 @@ public class AdminActivity extends AppCompatActivity {
         btn_add_types = findViewById(R.id.btn_types);
         btn_add_song = findViewById(R.id.btn_song);
 
-        dbHelper = new DbHelper(this);
-        try {
-            dbHelper.createDatabase();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
     }
 }
