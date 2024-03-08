@@ -1,4 +1,4 @@
-package com.example.doan_music.adapter.album;
+package com.example.doan_music.adapter.admin;
 
 import android.app.Activity;
 import android.graphics.Bitmap;

@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_music.R;
-import com.example.doan_music.adapter.album.AlbumAdapter;
+import com.example.doan_music.adapter.admin.AlbumAdapter;
 import com.example.doan_music.model.Ablum;
 
 import java.util.ArrayList;

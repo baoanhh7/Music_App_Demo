@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.doan_music.R;
 import com.example.doan_music.admin.ablum.AblumActivity;
+import com.example.doan_music.admin.playlist.PlayListAdminActivity;
 
 public class AdminActivity extends AppCompatActivity {
     Button btn_add_ablum, btn_add_artists, btn_add_playlists, btn_add_types, btn_add_song, btn_add_lovesongs;
@@ -26,6 +27,14 @@ public class AdminActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AdminActivity.this, AblumActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btn_add_playlists.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AdminActivity.this, PlayListAdminActivity.class);
                 startActivity(intent);
             }
         });

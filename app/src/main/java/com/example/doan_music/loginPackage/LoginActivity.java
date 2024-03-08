@@ -9,14 +9,14 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.doan_music.R;
+import com.example.doan_music.data.DatabaseManager;
 import com.example.doan_music.data.DbHelper;
-
-import java.io.IOException;
 
 public class LoginActivity extends AppCompatActivity {
 
     Button LoginID, RegisterID;
     DbHelper dbHelper = null;
+    SQLiteDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +43,9 @@ public class LoginActivity extends AppCompatActivity {
         LoginID = findViewById(R.id.LoginID);
         RegisterID = findViewById(R.id.RegisterID);
 
-        dbHelper = new DbHelper(this);
-        try {
-            dbHelper.createDatabase();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        // tạo db
+        dbHelper = DatabaseManager.dbHelper(this);
+        // mở cơ sở dữ liệu thực hiên thao tác
+        database = dbHelper.getWritableDatabase();
     }
 }
