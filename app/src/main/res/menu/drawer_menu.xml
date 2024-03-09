@@ -18,9 +18,9 @@
         </item>
 
         <item
-            android:id="@+id/settings"
+            android:id="@+id/logout"
             android:icon="@drawable/ic_settings"
-            android:title="Cài đặt và quyền riêng tư">
+            android:title="Đăng xuất">
 
         </item>
 

@@ -3,53 +3,64 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:orientation="vertical"
-    tools:context=".activity.admin.AdminActivity"
-    android:gravity="center">
+    tools:context=".activity.admin.AdminActivity">
 
     <Button
+        android:id="@+id/btn_ablum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/btn_ablum"
         android:text="Ablum" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/btn_artists"
-        android:text="Artists"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp" />
-
-    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:text="Artists" />
+
+    <Button
         android:id="@+id/btn_playlists"
-        android:text="Playlists"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp" />
-
-    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:text="Playlists" />
+
+    <Button
         android:id="@+id/btn_types"
-        android:text="Types"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp" />
-
-    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:text="Types" />
+
+    <Button
         android:id="@+id/btn_song"
-        android:text="Song"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp" />
-
-    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/btn_lovesongs"
-        android:text="LoveSongs"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="20dp"
+        android:text="Song" />
+
+    <Button
+        android:id="@+id/btn_lovesongs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:text="LoveSongs" />
+
+    <Button
+        android:id="@+id/btn_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/rounded_search"
+        android:backgroundTint="#E4B5B5"
+        android:text="Đăng xuất" />
+
 </LinearLayout>
