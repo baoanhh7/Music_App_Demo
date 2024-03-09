@@ -13,14 +13,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Mã User"
+            android:text="Mã Ablum"
             android:textSize="30sp" />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Mã User"
-            android:id="@+id/edtMa"
+            android:hint="Mã Ablum"
+            android:id="@+id/edt_IDAblum_admin"
             android:textSize="30dp" />
     </LinearLayout>
 
@@ -31,14 +31,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tên User"
+            android:text="Tên Ablum"
             android:textSize="30sp" />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Tên User"
-            android:id="@+id/edtTen"
+            android:hint="Tên Ablum"
+            android:id="@+id/edt_TenAblum_admin"
             android:textSize="30dp" />
     </LinearLayout>
 
@@ -49,14 +49,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Phone User"
+            android:text="Mã Artist"
             android:textSize="30sp" />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Phone User"
-            android:id="@+id/edtPhone"
+            android:hint="Mã Artist"
+            android:id="@+id/edt_IDArtist_Ablum_Admin"
             android:textSize="30dp" />
     </LinearLayout>
 
@@ -64,5 +64,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Save"
-        android:id="@+id/btnSave" />
+        android:id="@+id/btn_Save_Ablum_Admin" />
 </LinearLayout>
