@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_music.R;
-import com.example.doan_music.adapter.SearchAdapter;
+import com.example.doan_music.adapter.search.SearchAdapter;
 import com.example.doan_music.model.User;
 
 import java.util.ArrayList;

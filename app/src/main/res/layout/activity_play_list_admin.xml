@@ -20,8 +20,8 @@
 
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcv_playlist_admin"
+    <ListView
+        android:id="@+id/lv_playlist_admin"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="5dp" />
