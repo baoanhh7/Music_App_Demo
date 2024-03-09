@@ -1,4 +1,4 @@
-package com.example.doan_music.admin.ablum;
+package com.example.doan_music.activity.admin.playlist;
 
 import android.os.Bundle;
 
@@ -6,11 +6,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.doan_music.R;
 
-public class AddAlbumActivity extends AppCompatActivity {
+public class AddPlayListActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_album);
+        setContentView(R.layout.activity_add_play_list);
     }
 }

@@ -15,25 +15,25 @@
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
         tools:targetApi="31">
         <activity
-            android:name=".admin.playlist.UpdatePlayListActivity"
+            android:name=".activity.admin.playlist.UpdatePlayListActivity"
             android:exported="false" />
         <activity
-            android:name=".admin.playlist.AddPlayListActivity"
+            android:name=".activity.admin.playlist.AddPlayListActivity"
             android:exported="false" /> <!-- 13 -->
         <activity
-            android:name=".admin.playlist.PlayListAdminActivity"
+            android:name=".activity.admin.playlist.PlayListAdminActivity"
             android:exported="true" /> <!-- 1 -->
         <activity
             android:name=".activity.SongsAlbumActivity"
             android:exported="false" /> <!-- 2 -->
         <activity
-            android:name=".admin.AdminActivity"
+            android:name=".activity.admin.AdminActivity"
             android:exported="true" /> <!-- 3 -->
         <activity
-            android:name=".admin.ablum.AblumActivity"
+            android:name=".activity.admin.ablum.AblumActivity"
             android:exported="true" /> <!-- 4 -->
         <activity
-            android:name=".admin.ablum.AddAlbumActivity"
+            android:name=".activity.admin.ablum.AddAlbumActivity"
             android:exported="true" /> <!-- 5 -->
         <activity
             android:name=".loginPackage.LoginActivity"

@@ -1,6 +1,5 @@
 package com.example.doan_music.adapter.admin;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -14,9 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.doan_music.R;
-import com.example.doan_music.admin.playlist.AddPlayListActivity;
-import com.example.doan_music.admin.playlist.PlayListAdminActivity;
-import com.example.doan_music.admin.playlist.UpdatePlayListActivity;
+import com.example.doan_music.activity.admin.playlist.UpdatePlayListActivity;
 import com.example.doan_music.model.Playlists;
 
 import java.util.List;
@@ -67,8 +64,8 @@ public class PlayListAdminAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, UpdatePlayListActivity.class);
-                intent.putExtra("id",playlists.getPlaylistID());
-                intent.putExtra("name",playlists.getPlaylistName());
+                intent.putExtra("id", playlists.getPlaylistID());
+                intent.putExtra("name", playlists.getPlaylistName());
                 context.startActivity(intent);
             }
         });

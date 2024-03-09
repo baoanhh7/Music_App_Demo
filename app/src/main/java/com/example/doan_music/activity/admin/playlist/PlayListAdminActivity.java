@@ -1,4 +1,4 @@
-package com.example.doan_music.admin.playlist;
+package com.example.doan_music.activity.admin.playlist;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;

@@ -1,4 +1,4 @@
-package com.example.doan_music.admin.playlist;
+package com.example.doan_music.activity.admin.playlist;
 
 import android.content.Intent;
 import android.database.Cursor;

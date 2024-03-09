@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="10dp"
-    tools:context=".admin.playlist.UpdatePlayListActivity">
+    tools:context=".activity.admin.playlist.UpdatePlayListActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
