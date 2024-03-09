@@ -54,6 +54,12 @@ public class AblumActivity extends AppCompatActivity {
         cursor.close();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
     private void xulaycapnhat() {
     }
 
