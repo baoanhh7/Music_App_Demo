@@ -30,7 +30,7 @@ public class DbHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Cập nhật cơ sở dữ liệu khi phiên bản thay đổi
         //db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
-       // createDatabase(db);
+        // createDatabase(db);
     }
 
     public void copyDatabaseFromAssets() throws IOException {

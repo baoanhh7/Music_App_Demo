@@ -13,11 +13,12 @@ import com.example.doan_music.R;
 import com.example.doan_music.data.DatabaseManager;
 import com.example.doan_music.data.DbHelper;
 
-public class AddAlbumActivity extends AppCompatActivity{
+public class AddAlbumActivity extends AppCompatActivity {
 
     EditText edtMa, edtTen, edtMaArtist;
     DbHelper dbHelper;
     Button btnSave;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,15 +32,15 @@ public class AddAlbumActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 ContentValues values = new ContentValues();
-                values.put("AlbumID",edtMa.getText().toString()+"");
-                values.put("AlbumName",edtTen.getText().toString());
-                values.put("ArtistID",edtMaArtist.getText().toString()+"");
+                values.put("AlbumID", edtMa.getText().toString() + "");
+                values.put("AlbumName", edtTen.getText().toString());
+                values.put("ArtistID", edtMaArtist.getText().toString() + "");
                 dbHelper = DatabaseManager.dbHelper(AddAlbumActivity.this);
-                long kq = dbHelper.getReadableDatabase().insert("Albums",null,values);
-                if(kq>0)
+                long kq = dbHelper.getReadableDatabase().insert("Albums", null, values);
+                if (kq > 0)
                     finish();
                 else
-                    Toast.makeText(AddAlbumActivity.this,"Thêm thất bại",Toast.LENGTH_SHORT);
+                    Toast.makeText(AddAlbumActivity.this, "Thêm thất bại", Toast.LENGTH_SHORT);
             }
         });
     }

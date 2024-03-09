@@ -1,4 +1,4 @@
-package   com.example.doan_music.adapter.admin;
+package com.example.doan_music.adapter.admin;
 
 import android.content.Context;
 import android.content.Intent;

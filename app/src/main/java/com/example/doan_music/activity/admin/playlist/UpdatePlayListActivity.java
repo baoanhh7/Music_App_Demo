@@ -1,6 +1,5 @@
 package com.example.doan_music.activity.admin.playlist;
 
-import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -11,7 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,7 +19,7 @@ import com.example.doan_music.data.DbHelper;
 
 public class UpdatePlayListActivity extends AppCompatActivity {
     ImageView img_update;
-    Button btn_chose_image, btn_update, btn_cancel;
+    Button btn_choose_image, btn_update, btn_cancel;
     EditText edt_id_playlist, edt_name_playlist;
     Intent intent;
 
@@ -37,22 +35,22 @@ public class UpdatePlayListActivity extends AppCompatActivity {
     }
 
     private void addEvent() {
-        btn_update.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ContentValues values = new ContentValues();
-                values.put("id", edt_id_playlist.getText().toString());
-                values.put("name", edt_name_playlist.getText().toString());
-                int id = intent.getIntExtra("id", -1);
-
-                long result = PlayListAdminActivity.database.update("Playlists", values, "PlaylistID=?"
-                        , new String[]{id + ""});
-                if (result > 0) finish();
-                else {
-                    Toast.makeText(UpdatePlayListActivity.this, "Update fail", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
+//        btn_update.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                ContentValues values = new ContentValues();
+//                values.put("id", edt_id_playlist.getText().toString());
+//                values.put("name", edt_name_playlist.getText().toString());
+//                int id = intent.getIntExtra("id", -1);
+//
+//                long result = PlayListAdminActivity.database.update("Playlists", values, "PlaylistID=?"
+//                        , new String[]{id + ""});
+//                if (result > 0) finish();
+//                else {
+//                    Toast.makeText(UpdatePlayListActivity.this, "Update fail", Toast.LENGTH_LONG).show();
+//                }
+//            }
+//        });
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,7 +82,7 @@ public class UpdatePlayListActivity extends AppCompatActivity {
     private void addControls() {
         img_update = findViewById(R.id.img_update);
 
-        btn_chose_image = findViewById(R.id.btn_chose_image);
+        btn_choose_image = findViewById(R.id.btn_choose_image);
         btn_update = findViewById(R.id.btn_update);
         btn_cancel = findViewById(R.id.btn_cancel);
 

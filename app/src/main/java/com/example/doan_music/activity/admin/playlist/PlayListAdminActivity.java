@@ -1,5 +1,6 @@
 package com.example.doan_music.activity.admin.playlist;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -42,6 +43,13 @@ public class PlayListAdminActivity extends AppCompatActivity {
     }
 
     private void addEvents() {
+        btn_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PlayListAdminActivity.this, AddPlayListActivity.class);
+                startActivity(intent);
+            }
+        });
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
