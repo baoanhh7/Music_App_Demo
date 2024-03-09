@@ -1,17 +1,27 @@
 package com.example.doan_music.activity.library;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_music.R;
+import com.example.doan_music.activity.MainActivity;
+import com.example.doan_music.activity.admin.AdminActivity;
 import com.example.doan_music.adapter.thuvien.AddNgheSiAdapter;
+import com.example.doan_music.data.DbHelper;
+import com.example.doan_music.loginPackage.Login_userActivity;
+import com.example.doan_music.model.Ablum;
 import com.example.doan_music.model.AddNgheSi_ThuVien;
 
 import java.util.ArrayList;
@@ -23,15 +33,14 @@ public class AddNgheSiActivity extends AppCompatActivity {
     AddNgheSiAdapter addNgheSiAdapter;
     ArrayList<AddNgheSi_ThuVien> arrayList;
     SQLiteDatabase database = null;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_add_nghe_si);
-        addControls();
-        loadData();
-        addEvents();
+       addControls();
+       loadData();
+       addEvents();
     }
 
     private void addEvents() {
@@ -57,7 +66,7 @@ public class AddNgheSiActivity extends AppCompatActivity {
         while (cursor.moveToNext()) {
             String ten = cursor.getString(1);
             byte[] img = cursor.getBlob(2);
-            AddNgheSi_ThuVien addNgheSiThuVien = new AddNgheSi_ThuVien(img, ten);
+            AddNgheSi_ThuVien addNgheSiThuVien = new AddNgheSi_ThuVien(img,ten);
             arrayList.add(addNgheSiThuVien);
         }
         addNgheSiAdapter.notifyDataSetChanged();
@@ -68,7 +77,7 @@ public class AddNgheSiActivity extends AppCompatActivity {
         search_thuvien_addArtist = findViewById(R.id.search_thuvien_addArtist);
         recycler_Artists_thuvien_add = findViewById(R.id.recycler_Artists_thuvien_add);
         arrayList = new ArrayList<>();
-        addNgheSiAdapter = new AddNgheSiAdapter(this, arrayList);
+        addNgheSiAdapter = new AddNgheSiAdapter(this,arrayList);
         recycler_Artists_thuvien_add.setAdapter(addNgheSiAdapter);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
         recycler_Artists_thuvien_add.setLayoutManager(gridLayoutManager);

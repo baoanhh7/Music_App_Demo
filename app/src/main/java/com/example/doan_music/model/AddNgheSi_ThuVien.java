@@ -2,7 +2,7 @@ package com.example.doan_music.model;
 
 import java.io.Serializable;
 
-public class AddNgheSi_ThuVien implements Serializable {
+public class AddNgheSi_ThuVien extends Artists {
     private byte[] hinh;
     private String tensp;
 

@@ -1,5 +1,7 @@
 package com.example.doan_music.adapter.thuvien;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,9 +42,10 @@ public class ThuVienAdapter extends RecyclerView.Adapter<ThuVienAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ThuVien tv = arr.get(position);
-        holder.img.setImageResource(tv.getHinh());
+        byte[] hinhAlbumByteArray = tv.getHinh();
+        Bitmap bitmap = BitmapFactory.decodeByteArray(hinhAlbumByteArray, 0, hinhAlbumByteArray.length);
+        holder.img.setImageBitmap(bitmap);
         holder.txtTen.setText(tv.getTensp());
-        holder.txtND.setText(tv.getNoidung());
     }
 
     @Override

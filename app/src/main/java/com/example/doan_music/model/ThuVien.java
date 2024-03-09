@@ -3,24 +3,23 @@ package com.example.doan_music.model;
 import java.io.Serializable;
 
 public class ThuVien implements Serializable {
-    private int hinh;
+    private byte[] hinh;
     private String tensp;
-    private String noidung;
+
 
     public ThuVien() {
     }
 
-    public ThuVien(int hinh, String tensp, String noidung) {
+    public ThuVien(byte[] hinh, String tensp) {
         this.hinh = hinh;
         this.tensp = tensp;
-        this.noidung = noidung;
     }
 
-    public int getHinh() {
+    public byte[] getHinh() {
         return hinh;
     }
 
-    public void setHinh(int hinh) {
+    public void setHinh(byte[] hinh) {
         this.hinh = hinh;
     }
 
@@ -30,14 +29,6 @@ public class ThuVien implements Serializable {
 
     public void setTensp(String tensp) {
         this.tensp = tensp;
-    }
-
-    public String getNoidung() {
-        return noidung;
-    }
-
-    public void setNoidung(String noidung) {
-        this.noidung = noidung;
     }
 }
 
