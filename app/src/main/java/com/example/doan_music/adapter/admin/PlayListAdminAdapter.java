@@ -41,8 +41,7 @@ public class PlayListAdminAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.item_playlist_admin, null);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_playlist_admin, parent, false);
 
         ImageView img_playlist_admin = view.findViewById(R.id.img_playlist_admin);
         TextView txt_id_playlist_admin = view.findViewById(R.id.txt_id_playlist_admin);

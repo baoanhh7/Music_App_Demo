@@ -15,9 +15,11 @@
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".admin.playlist.AddPlayListActivity"
+            android:exported="false" />
+        <activity
             android:name=".admin.playlist.PlayListAdminActivity"
-            android:exported="true" />
-        <!-- 1 -->
+            android:exported="true" /> <!-- 1 -->
         <activity
             android:name=".activity.SongsAlbumActivity"
             android:exported="false" /> <!-- 2 -->
