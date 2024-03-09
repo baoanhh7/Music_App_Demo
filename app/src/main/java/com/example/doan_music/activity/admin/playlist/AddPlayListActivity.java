@@ -1,12 +1,8 @@
-package com.example.doan_music.admin.playlist;
+package com.example.doan_music.activity.admin.playlist;
 
 import android.os.Bundle;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.doan_music.R;
 

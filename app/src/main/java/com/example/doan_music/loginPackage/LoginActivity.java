@@ -1,7 +1,6 @@
 package com.example.doan_music.loginPackage;
 
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,7 +15,6 @@ public class LoginActivity extends AppCompatActivity {
 
     Button LoginID, RegisterID;
     DbHelper dbHelper = null;
-    SQLiteDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         LoginID = findViewById(R.id.LoginID);
         RegisterID = findViewById(R.id.RegisterID);
 
-        // tạo db
+        // tạo db trong device
         dbHelper = DatabaseManager.dbHelper(this);
-        // mở cơ sở dữ liệu thực hiên thao tác
-        database = dbHelper.getWritableDatabase();
     }
 }

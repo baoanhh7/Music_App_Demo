@@ -1,6 +1,5 @@
 package com.example.doan_music.adapter.admin;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,7 +14,6 @@ import com.example.doan_music.R;
 import com.example.doan_music.model.Ablum;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class AlbumAdminAdapter extends BaseAdapter {
     ArrayList<Ablum> arr;
@@ -57,9 +55,9 @@ public class AlbumAdminAdapter extends BaseAdapter {
         byte[] hinhAlbumByteArray = album.getAlbumImage();
         Bitmap bitmap = BitmapFactory.decodeByteArray(hinhAlbumByteArray, 0, hinhAlbumByteArray.length);
         img.setImageBitmap(bitmap);
-        txtID.setText(album.getAlbumID()+"");
+        txtID.setText(album.getAlbumID() + "");
         txtTen.setText(album.getAlbumName());
-        txtIDArtist.setText(album.getArtistID()+"");
+        txtIDArtist.setText(album.getArtistID() + "");
         return view;
     }
 

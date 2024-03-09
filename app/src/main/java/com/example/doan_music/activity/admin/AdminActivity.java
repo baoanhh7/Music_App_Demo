@@ -1,4 +1,4 @@
-package com.example.doan_music.admin;
+package com.example.doan_music.activity.admin;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,8 +8,8 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.doan_music.R;
-import com.example.doan_music.admin.ablum.AblumActivity;
-import com.example.doan_music.admin.playlist.PlayListAdminActivity;
+import com.example.doan_music.activity.admin.ablum.AblumActivity;
+import com.example.doan_music.activity.admin.playlist.PlayListAdminActivity;
 
 public class AdminActivity extends AppCompatActivity {
     Button btn_add_ablum, btn_add_artists, btn_add_playlists, btn_add_types, btn_add_song, btn_add_lovesongs;

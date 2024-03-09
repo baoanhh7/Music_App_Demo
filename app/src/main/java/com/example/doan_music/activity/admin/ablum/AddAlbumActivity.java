@@ -1,4 +1,4 @@
-package com.example.doan_music.admin.ablum;
+package com.example.doan_music.activity.admin.ablum;
 
 import android.content.ContentValues;
 import android.os.Bundle;

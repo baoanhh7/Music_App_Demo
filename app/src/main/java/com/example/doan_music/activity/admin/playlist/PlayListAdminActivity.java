@@ -1,8 +1,9 @@
-package com.example.doan_music.admin.playlist;
+package com.example.doan_music.activity.admin.playlist;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -21,8 +22,8 @@ public class PlayListAdminActivity extends AppCompatActivity {
 
     ListView lv_playlist_admin;
     DbHelper dbHelper;
-    SQLiteDatabase database = null;
-    Button btn_add;
+    static SQLiteDatabase database = null;
+    Button btn_add, btn_back;
 
     PlayListAdminAdapter playListAdminAdapter;
     List<Playlists> list;
@@ -34,8 +35,19 @@ public class PlayListAdminActivity extends AppCompatActivity {
         setContentView(R.layout.activity_play_list_admin);
 
         addControl();
+        addEvents();
+
         createData();
 
+    }
+
+    private void addEvents() {
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override
@@ -54,7 +66,7 @@ public class PlayListAdminActivity extends AppCompatActivity {
 
         list.clear();
         while (cursor.moveToNext()) {
-            Integer id = cursor.getInt(0);
+            int id = cursor.getInt(0);
             String name = cursor.getString(1);
             byte[] image = cursor.getBlob(2);
 
@@ -67,13 +79,13 @@ public class PlayListAdminActivity extends AppCompatActivity {
 
     private void addControl() {
         lv_playlist_admin = findViewById(R.id.lv_playlist_admin);
+        btn_back = findViewById(R.id.btn_back);
+        btn_add = findViewById(R.id.btn_add);
 
         list = new ArrayList<>();
 
         playListAdminAdapter = new PlayListAdminAdapter(this, list);
         lv_playlist_admin.setAdapter(playListAdminAdapter);
-
-        btn_add = findViewById(R.id.btn_add);
 
     }
 }

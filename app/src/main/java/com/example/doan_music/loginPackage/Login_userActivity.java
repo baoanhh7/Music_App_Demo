@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.doan_music.R;
 import com.example.doan_music.activity.MainActivity;
-import com.example.doan_music.admin.AdminActivity;
+import com.example.doan_music.activity.admin.AdminActivity;
 
 public class Login_userActivity extends AppCompatActivity {
     EditText EdtEmail, EdtPassword;
