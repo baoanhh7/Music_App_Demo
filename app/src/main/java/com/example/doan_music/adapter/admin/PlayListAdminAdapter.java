@@ -65,7 +65,7 @@ public class PlayListAdminAdapter extends BaseAdapter {
             public void onClick(View v) {
                 Intent intent = new Intent(context, UpdatePlayListActivity.class);
                 intent.putExtra("id", playlists.getPlaylistID());
-                intent.putExtra("name", playlists.getPlaylistName());
+
                 context.startActivity(intent);
             }
         });

@@ -11,6 +11,7 @@ import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.doan_music.R;
+import com.example.doan_music.activity.admin.AdminActivity;
 import com.example.doan_music.adapter.admin.PlayListAdminAdapter;
 import com.example.doan_music.data.DatabaseManager;
 import com.example.doan_music.data.DbHelper;
@@ -38,8 +39,6 @@ public class PlayListAdminActivity extends AppCompatActivity {
         addControl();
         addEvents();
 
-        createData();
-
     }
 
     private void addEvents() {
@@ -53,6 +52,7 @@ public class PlayListAdminActivity extends AppCompatActivity {
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startActivity(new Intent(PlayListAdminActivity.this, AdminActivity.class));
                 finish();
             }
         });
@@ -62,6 +62,7 @@ public class PlayListAdminActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        createData();
     }
 
     private void createData() {
@@ -82,7 +83,9 @@ public class PlayListAdminActivity extends AppCompatActivity {
             list.add(playlists);
         }
         playListAdminAdapter.notifyDataSetChanged();
+
         cursor.close();
+        database.close();
     }
 
     private void addControl() {

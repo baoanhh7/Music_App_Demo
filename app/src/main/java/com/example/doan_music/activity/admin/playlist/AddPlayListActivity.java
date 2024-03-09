@@ -1,8 +1,11 @@
 package com.example.doan_music.activity.admin.playlist;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -14,7 +17,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.doan_music.R;
+import com.example.doan_music.data.DatabaseManager;
+import com.example.doan_music.data.DbHelper;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
@@ -23,6 +29,8 @@ public class AddPlayListActivity extends AppCompatActivity {
     Button btn_choose_image, btn_save, btn_cancel;
     EditText edt_id_playlist, edt_name_playlist;
     final int choose_img = 1;
+    DbHelper dbHelper;
+    SQLiteDatabase database = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +48,40 @@ public class AddPlayListActivity extends AppCompatActivity {
                 choosePhoto();
             }
         });
+        btn_save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String ma = edt_id_playlist.getText().toString();
+                String ten = edt_name_playlist.getText().toString();
+
+                byte[] anh = getByteArrayFromImageView(img_add);
+
+                ContentValues values = new ContentValues();
+                // key phải trùng với tên cột trong table
+                values.put("PlaylistID", ma);
+                values.put("PlaylistName", ten);
+                values.put("PlaylistImage", anh);
+
+                DbHelper dbHelper = DatabaseManager.dbHelper(AddPlayListActivity.this);
+                SQLiteDatabase database = dbHelper.getWritableDatabase();
+
+                database.insert("Playlists", null, values);
+
+                Intent i = new Intent(AddPlayListActivity.this, PlayListAdminActivity.class);
+                startActivity(i);
+                finish();
+            }
+        });
+    }
+
+    private byte[] getByteArrayFromImageView(ImageView img) {
+        BitmapDrawable drawable = (BitmapDrawable) img.getDrawable();
+        Bitmap bitmap = drawable.getBitmap();
+
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        return byteArray;
     }
 
     private void addControls() {

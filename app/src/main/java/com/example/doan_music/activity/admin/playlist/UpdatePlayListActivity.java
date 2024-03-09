@@ -30,7 +30,6 @@ public class UpdatePlayListActivity extends AppCompatActivity {
     Button btn_choose_image, btn_update, btn_cancel;
     EditText edt_id_playlist, edt_name_playlist;
     Intent intent;
-    int id = -1;
     final int choose_img = 1;
 
 
@@ -63,7 +62,8 @@ public class UpdatePlayListActivity extends AppCompatActivity {
                 DbHelper dbHelper = DatabaseManager.dbHelper(UpdatePlayListActivity.this);
                 SQLiteDatabase database = dbHelper.getWritableDatabase();
 
-                database.update("Playlists", values, "PlaylistID=?", new String[]{String.valueOf(id)});
+                int id = intent.getIntExtra("id", -1);
+                database.update("Playlists", values, "PlaylistID=?", new String[]{id + ""});
 
                 Intent i = new Intent(UpdatePlayListActivity.this, PlayListAdminActivity.class);
                 startActivity(i);
@@ -111,7 +111,7 @@ public class UpdatePlayListActivity extends AppCompatActivity {
         DbHelper dbHelper = DatabaseManager.dbHelper(this);
         SQLiteDatabase database = dbHelper.getWritableDatabase();
 
-        id = intent.getIntExtra("id", -1);
+        int id = intent.getIntExtra("id", -1);
         Cursor cursor = database.rawQuery("SELECT * FROM Playlists where PlaylistID=?"
                 , new String[]{id + ""});
         cursor.moveToFirst();
@@ -148,9 +148,6 @@ public class UpdatePlayListActivity extends AppCompatActivity {
         edt_name_playlist = findViewById(R.id.edt_name_playlist);
 
         intent = getIntent();
-
-        edt_id_playlist.setText(intent.getIntExtra("id", -1) + "");
-        edt_name_playlist.setText(intent.getStringExtra("name"));
 
         edt_id_playlist.setEnabled(false);
     }

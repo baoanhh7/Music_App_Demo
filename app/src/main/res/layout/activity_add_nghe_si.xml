@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
@@ -8,24 +7,27 @@
     android:orientation="vertical"
     android:background="@color/black"
     tools:context=".activity.library.AddNgheSiActivity">
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="Chọn thêm các nghệ sĩ \n bạn thích."
         android:textColor="@color/white"
-        android:textSize="35dp"/>
-        <SearchView
-            android:layout_marginTop="15dp"
-            android:id="@+id/search_thuvien_addArtist"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:searchIcon="@drawable/search_icon_black"
-            android:background="@color/white" />
+        android:textSize="35dp" />
+
+    <SearchView
+        android:layout_marginTop="15dp"
+        android:id="@+id/search_thuvien_addArtist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:searchIcon="@drawable/search_icon_black"
+        android:background="@color/white" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/recycler_Artists_thuvien_add"/>
+        android:id="@+id/recycler_Artists_thuvien_add" />
 
 </LinearLayout>

@@ -33,7 +33,7 @@ public class Library_Fragment extends Fragment {
     View view;
     ImageButton btn_thuvien_add;
     SearchView btn_thuvien_search;
-    TableRow tbr_bottom_sheet_thuvien_adddanhsachphat,tbr_bottom_sheet_thuvien_addnghesy;
+    TableRow tbr_bottom_sheet_thuvien_adddanhsachphat, tbr_bottom_sheet_thuvien_addnghesy;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
