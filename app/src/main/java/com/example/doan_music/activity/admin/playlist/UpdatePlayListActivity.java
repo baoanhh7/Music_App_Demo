@@ -1,5 +1,6 @@
 package com.example.doan_music.activity.admin.playlist;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -35,21 +37,22 @@ public class UpdatePlayListActivity extends AppCompatActivity {
     }
 
     private void addEvent() {
-//        btn_update.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                ContentValues values = new ContentValues();
-//                values.put("id", edt_id_playlist.getText().toString());
-//                values.put("name", edt_name_playlist.getText().toString());
-//
-//                long result = PlayListAdminActivity.database.update("Playlists", values, "id=?"
-//                        , new String[]{edt_id_playlist.getText().toString()});
-//                if (result > 0) finish();
-//                else {
-//                    Toast.makeText(UpdatePlayListActivity.this, "Update fail", Toast.LENGTH_LONG).show();
-//                }
-//            }
-//        });
+        btn_update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ContentValues values = new ContentValues();
+                values.put("id", edt_id_playlist.getText().toString());
+                values.put("name", edt_name_playlist.getText().toString());
+                int id = intent.getIntExtra("id", -1);
+
+                long result = PlayListAdminActivity.database.update("Playlists", values, "PlaylistID=?"
+                        , new String[]{id + ""});
+                if (result > 0) finish();
+                else {
+                    Toast.makeText(UpdatePlayListActivity.this, "Update fail", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
