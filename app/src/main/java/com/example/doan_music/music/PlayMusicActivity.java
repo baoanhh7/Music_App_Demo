@@ -28,14 +28,11 @@ public class PlayMusicActivity extends AppCompatActivity {
 
         addControls();
         myMusic = new MediaPlayer();
-//        myMusic = MediaPlayer.create(this, R.raw.nhung_loi_hua_bo_quen);
+        //myMusic = MediaPlayer.create(this, R.raw.nhung_loi_hua_bo_quen);
 
         try {
-            String scr = "https://musiclink666.000webhostapp.com/anhnhoraVu.mp3";
-            myMusic.setDataSource(scr);
+            myMusic.setDataSource("https://doanmusic.000webhostapp.com/BuonHayVuiFeatRptMckObitoRonboogz-VSOULRPTMCKObitoRonboogz-13159599.mp3");
             myMusic.prepare();
-            myMusic.start();
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -43,6 +40,7 @@ public class PlayMusicActivity extends AppCompatActivity {
         myMusic.setLooping(true);
         myMusic.seekTo(0);
 
+        myMusic.start();
 
         String duration = timeSeekbar(myMusic.getDuration());
         txt_time.setText(duration);
