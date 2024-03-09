@@ -1,5 +1,6 @@
 package com.example.doan_music.fragment.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TableRow;
 
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
@@ -15,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_music.R;
+import com.example.doan_music.activity.library.AddNgheSiActivity;
 import com.example.doan_music.adapter.thuvien.ThuVienAdapter;
 import com.example.doan_music.model.ThuVien;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -30,6 +33,7 @@ public class Library_Fragment extends Fragment {
     View view;
     ImageButton btn_thuvien_add;
     SearchView btn_thuvien_search;
+    TableRow tbr_bottom_sheet_thuvien_adddanhsachphat,tbr_bottom_sheet_thuvien_addnghesy;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,12 +66,27 @@ public class Library_Fragment extends Fragment {
                 return false;
             }
         });
+
+
     }
 
     private void clickOpenBottomSheetDialog() {
         View viewdialog = getLayoutInflater().inflate(R.layout.bottom_sheet_thuvien, null);
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireContext());
         bottomSheetDialog.setContentView(viewdialog);
+        // Ánh xạ tablerow trong bottom sheet
+        tbr_bottom_sheet_thuvien_adddanhsachphat = viewdialog.findViewById(R.id.tbr_bottom_sheet_thuvien_adddanhsachphat);
+        tbr_bottom_sheet_thuvien_addnghesy = viewdialog.findViewById(R.id.tbr_bottom_sheet_thuvien_addnghesy);
+        tbr_bottom_sheet_thuvien_addnghesy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(requireContext(), AddNgheSiActivity.class);
+                startActivity(intent);
+                // Đóng bottom sheet dialog sau khi xử lý xong
+                bottomSheetDialog.dismiss();
+            }
+        });
+
         bottomSheetDialog.show();
     }
 
@@ -79,6 +98,7 @@ public class Library_Fragment extends Fragment {
 
     private void addControl() {
         btn_thuvien_search = view.findViewById(R.id.btn_thuvien_search);
+
         EditText editTextSearch = btn_thuvien_search.findViewById(androidx.appcompat.R.id.search_src_text);
         editTextSearch.setTextColor(getResources().getColor(R.color.white));
         recyclerView = view.findViewById(R.id.recyclerviewTV);

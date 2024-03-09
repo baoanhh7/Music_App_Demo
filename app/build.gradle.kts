@@ -43,6 +43,7 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     implementation("de.hdodenhof:circleimageview:2.1.0")
+    implementation("com.makeramen:roundedimageview:2.3.0")
     //bottom sheet
 
 }
