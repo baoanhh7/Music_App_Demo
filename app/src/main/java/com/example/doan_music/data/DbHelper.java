@@ -28,7 +28,9 @@ public class DbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        // Cập nhật cơ sở dữ liệu khi phiên bản thay đổi
+        //db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+       // createDatabase(db);
     }
 
     public void copyDatabaseFromAssets() throws IOException {
