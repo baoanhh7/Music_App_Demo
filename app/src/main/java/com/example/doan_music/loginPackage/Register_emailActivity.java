@@ -1,6 +1,9 @@
 package com.example.doan_music.loginPackage;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,12 +14,17 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.doan_music.R;
+import com.example.doan_music.activity.admin.ablum.AddAlbumActivity;
+import com.example.doan_music.data.DatabaseManager;
+import com.example.doan_music.data.DbHelper;
 
 public class Register_emailActivity extends AppCompatActivity {
 
     EditText EdtUsername, EdtEmail, EdtPassword, EdtRepassword;
     Button btnRegister, btn_back;
     TextView tvLogin;
+    DbHelper dbHelper;
+    SQLiteDatabase database = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +58,8 @@ public class Register_emailActivity extends AppCompatActivity {
         String email = EdtEmail.getText().toString();
         String password = EdtPassword.getText().toString();
         String repassword = EdtRepassword.getText().toString();
+
+
         if (username.isEmpty()) {
             showError(EdtUsername, "Your username is not valid!");
         } else if (email.isEmpty() || !email.contains("@")) {
@@ -59,8 +69,32 @@ public class Register_emailActivity extends AppCompatActivity {
         } else if (repassword.isEmpty() || !repassword.equals(password)) {
             showError(EdtRepassword, "Your password is not match");
         } else {
-            Toast.makeText(this, "Register Successful", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(Register_emailActivity.this, Login_userActivity.class));
+            database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
+            Cursor cursor = database.rawQuery("select * from Users", null);
+            while (cursor.moveToNext()) {
+                String Email = cursor.getString(2);
+                if(email.equals(Email))
+                {
+                    showError(EdtEmail, "This email has been registered");
+                    break;
+                }
+                else {
+                    ContentValues values = new ContentValues();
+                    values.put("Username", username);
+                    values.put("Email", email);
+                    values.put("Password",  password);
+                    dbHelper = DatabaseManager.dbHelper(Register_emailActivity.this);
+                    long kq = dbHelper.getReadableDatabase().insert("Users", null, values);
+                    if (kq > 0) {
+                        Toast.makeText(this, "Register Successful", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(Register_emailActivity.this, Login_userActivity.class));
+                        break;
+                    }
+                    else
+                        Toast.makeText(Register_emailActivity.this, "Register Fail", Toast.LENGTH_SHORT);
+                    break;
+                }
+            }
         }
     }
 
