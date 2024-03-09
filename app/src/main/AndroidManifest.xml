@@ -30,10 +30,10 @@
             android:name=".activity.admin.AdminActivity"
             android:exported="true" /> <!-- 3 -->
         <activity
-            android:name=".activity.admin.ablum.AblumActivity"
+            android:name=".activity.admin.album.AlbumActivity"
             android:exported="true" /> <!-- 4 -->
         <activity
-            android:name=".activity.admin.ablum.AddAlbumActivity"
+            android:name=".activity.admin.album.AddAlbumActivity"
             android:exported="true" /> <!-- 5 -->
         <activity
             android:name=".loginPackage.LoginActivity"

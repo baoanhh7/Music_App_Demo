@@ -8,7 +8,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.doan_music.R;
-import com.example.doan_music.activity.admin.ablum.AblumActivity;
+import com.example.doan_music.activity.admin.album.AlbumActivity;
 import com.example.doan_music.activity.admin.playlist.PlayListAdminActivity;
 
 public class AdminActivity extends AppCompatActivity {
@@ -26,7 +26,7 @@ public class AdminActivity extends AppCompatActivity {
         btn_add_ablum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AdminActivity.this, AblumActivity.class);
+                Intent intent = new Intent(AdminActivity.this, AlbumActivity.class);
                 startActivity(intent);
             }
         });

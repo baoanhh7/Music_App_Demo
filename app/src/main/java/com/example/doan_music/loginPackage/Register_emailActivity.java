@@ -14,7 +14,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.doan_music.R;
-import com.example.doan_music.activity.admin.ablum.AddAlbumActivity;
 import com.example.doan_music.data.DatabaseManager;
 import com.example.doan_music.data.DbHelper;
 
@@ -73,24 +72,21 @@ public class Register_emailActivity extends AppCompatActivity {
             Cursor cursor = database.rawQuery("select * from Users", null);
             while (cursor.moveToNext()) {
                 String Email = cursor.getString(2);
-                if(email.equals(Email))
-                {
+                if (email.equals(Email)) {
                     showError(EdtEmail, "This email has been registered");
                     break;
-                }
-                else {
+                } else {
                     ContentValues values = new ContentValues();
                     values.put("Username", username);
                     values.put("Email", email);
-                    values.put("Password",  password);
+                    values.put("Password", password);
                     dbHelper = DatabaseManager.dbHelper(Register_emailActivity.this);
                     long kq = dbHelper.getReadableDatabase().insert("Users", null, values);
                     if (kq > 0) {
                         Toast.makeText(this, "Register Successful", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(Register_emailActivity.this, Login_userActivity.class));
                         break;
-                    }
-                    else
+                    } else
                         Toast.makeText(Register_emailActivity.this, "Register Fail", Toast.LENGTH_SHORT);
                     break;
                 }

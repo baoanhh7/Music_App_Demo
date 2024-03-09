@@ -1,4 +1,4 @@
-package com.example.doan_music.activity.admin.ablum;
+package com.example.doan_music.activity.admin.album;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -18,7 +18,7 @@ import com.example.doan_music.model.Ablum;
 import java.util.ArrayList;
 
 
-public class AblumActivity extends AppCompatActivity {
+public class AlbumActivity extends AppCompatActivity {
 
     ListView listView;
     SQLiteDatabase database = null;
@@ -67,7 +67,7 @@ public class AblumActivity extends AppCompatActivity {
         btn_add_ablum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AblumActivity.this, AddAlbumActivity.class);
+                Intent intent = new Intent(AlbumActivity.this, AddAlbumActivity.class);
                 startActivity(intent);
             }
         });
@@ -77,7 +77,7 @@ public class AblumActivity extends AppCompatActivity {
         btn_add_ablum = findViewById(R.id.btn_add_ablum);
         listView = findViewById(R.id.lvAblum_admin);
         arrayAblum = new ArrayList<>();
-        albumAdapter = new AlbumAdminAdapter(AblumActivity.this, arrayAblum);
+        albumAdapter = new AlbumAdminAdapter(AlbumActivity.this, arrayAblum);
         listView.setAdapter(albumAdapter);
     }
 }

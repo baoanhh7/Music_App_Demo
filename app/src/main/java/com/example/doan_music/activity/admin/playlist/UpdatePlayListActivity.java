@@ -1,27 +1,38 @@
 package com.example.doan_music.activity.admin.playlist;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.doan_music.R;
 import com.example.doan_music.data.DatabaseManager;
 import com.example.doan_music.data.DbHelper;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+
 public class UpdatePlayListActivity extends AppCompatActivity {
     ImageView img_update;
     Button btn_choose_image, btn_update, btn_cancel;
     EditText edt_id_playlist, edt_name_playlist;
     Intent intent;
+    int id = -1;
+    final int choose_img = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,26 +42,40 @@ public class UpdatePlayListActivity extends AppCompatActivity {
         addControls();
         addEvent();
 
-        updateData();
+        getData();
     }
 
     private void addEvent() {
-//        btn_update.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                ContentValues values = new ContentValues();
-//                values.put("id", edt_id_playlist.getText().toString());
-//                values.put("name", edt_name_playlist.getText().toString());
-//                int id = intent.getIntExtra("id", -1);
-//
-//                long result = PlayListAdminActivity.database.update("Playlists", values, "PlaylistID=?"
-//                        , new String[]{id + ""});
-//                if (result > 0) finish();
-//                else {
-//                    Toast.makeText(UpdatePlayListActivity.this, "Update fail", Toast.LENGTH_LONG).show();
-//                }
-//            }
-//        });
+        btn_update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String ma = edt_id_playlist.getText().toString();
+                String ten = edt_name_playlist.getText().toString();
+
+                byte[] anh = getByteArrayFromImageView(img_update);
+
+                ContentValues values = new ContentValues();
+                // key phải trùng với tên cột trong table
+                values.put("PlaylistID", ma);
+                values.put("PlaylistName", ten);
+                values.put("PlaylistImage", anh);
+
+                DbHelper dbHelper = DatabaseManager.dbHelper(UpdatePlayListActivity.this);
+                SQLiteDatabase database = dbHelper.getWritableDatabase();
+
+                database.update("Playlists", values, "PlaylistID=?", new String[]{String.valueOf(id)});
+
+                Intent i = new Intent(UpdatePlayListActivity.this, PlayListAdminActivity.class);
+                startActivity(i);
+                finish();
+            }
+        });
+        btn_choose_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                choosePhoto();
+            }
+        });
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,11 +84,34 @@ public class UpdatePlayListActivity extends AppCompatActivity {
         });
     }
 
-    private void updateData() {
+    private void choosePhoto() {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        startActivityForResult(intent, choose_img);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == choose_img) {
+                try {
+                    Uri imageUri = data.getData();
+                    InputStream inputStream = getContentResolver().openInputStream(imageUri);
+                    Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                    img_update.setImageBitmap(bitmap);
+                } catch (FileNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void getData() {
         DbHelper dbHelper = DatabaseManager.dbHelper(this);
         SQLiteDatabase database = dbHelper.getWritableDatabase();
 
-        int id = intent.getIntExtra("id", -1);
+        id = intent.getIntExtra("id", -1);
         Cursor cursor = database.rawQuery("SELECT * FROM Playlists where PlaylistID=?"
                 , new String[]{id + ""});
         cursor.moveToFirst();
@@ -77,6 +125,16 @@ public class UpdatePlayListActivity extends AppCompatActivity {
         img_update.setImageBitmap(bitmap);
         edt_id_playlist.setText(ma + "");
         edt_name_playlist.setText(ten);
+    }
+
+    private byte[] getByteArrayFromImageView(ImageView img) {
+        BitmapDrawable drawable = (BitmapDrawable) img.getDrawable();
+        Bitmap bitmap = drawable.getBitmap();
+
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        return byteArray;
     }
 
     private void addControls() {

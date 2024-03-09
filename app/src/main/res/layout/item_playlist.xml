@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginEnd="10dp"
-    android:layout_marginBottom="10dp"
-    android:backgroundTint="#191919"
-    app:cardCornerRadius="10dp">
+    android:layout_marginBottom="11dp"
+    android:backgroundTint="#191919">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/img_playlist"
             android:layout_width="70dp"
             android:layout_height="70dp"
@@ -23,6 +21,7 @@
             android:id="@+id/txt_playlist"
             android:layout_width="match_parent"
             android:layout_height="70dp"
+            android:background="#191919"
             android:gravity="center|left"
             android:paddingLeft="10dp"
             android:text="Nhung loi hua bo quen - Vu"
@@ -32,4 +31,4 @@
 
     </LinearLayout>
 
-</androidx.cardview.widget.CardView>
+</LinearLayout>
