@@ -52,9 +52,7 @@ public class Login_userActivity extends AppCompatActivity {
         String email = EdtEmail.getText().toString();
         String password = EdtPassword.getText().toString();
 
-        if (email.equals("admin")) {
-            startActivity(new Intent(Login_userActivity.this, AdminActivity.class));
-        } else if (password.isEmpty() || password.length() < 7) {
+       if (password.isEmpty() || password.length() < 7) {
             showError(EdtPassword, "Your password must be 7 character");
         } else if (email.isEmpty() || !email.contains("@")) {
             showError(EdtEmail, "Your email is not valid");
@@ -62,23 +60,27 @@ public class Login_userActivity extends AppCompatActivity {
             database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
             Cursor cursor = database.rawQuery("select * from Users", null);
             while (cursor.moveToNext()) {
-                Integer ma = Integer.valueOf(cursor.getString(0) + "");
+                Integer ma = Integer.valueOf(cursor.getString(0)+"");
                 String Email = cursor.getString(2);
                 String Password = cursor.getString(3);
                 String Role = cursor.getString(4);
-                if (email.equals(Email) && password.equals(Password) && Role.equals("admin")) {
-                    Toast.makeText(Login_userActivity.this, "Login Admin Successful", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(Login_userActivity.this, AdminActivity.class));
-                    break;
-                } else if (email.equals(Email) && password.equals(Password) && !Role.equals("admin"))
-                    ;
-                {
-                    Toast.makeText(Login_userActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(Login_userActivity.this, MainActivity.class);
-                    intent.putExtra("maU", ma);
-                    startActivity(intent);
-                    break;
-                }
+                    if (email.equals(Email) && password.equals(Password)) {
+                        // Xử lý đăng nhập thành công
+                        Toast.makeText(Login_userActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+
+                        Intent intent;
+                        if ("admin".equalsIgnoreCase(Role)) {
+                            // Nếu là admin, chuyển đến AdminActivity
+                            intent = new Intent(Login_userActivity.this, AdminActivity.class);
+                        } else {
+                            // Nếu là người dùng thông thường, chuyển đến MainActivity
+                            intent = new Intent(Login_userActivity.this, MainActivity.class);
+                            intent.putExtra("maU", ma);
+                        }
+
+                        startActivity(intent);
+                        break;
+                    }
             }
             cursor.close();
         }
