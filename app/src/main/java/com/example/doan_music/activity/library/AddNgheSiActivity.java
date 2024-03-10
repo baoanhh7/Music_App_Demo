@@ -1,33 +1,20 @@
 package com.example.doan_music.activity.library;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 
 import com.example.doan_music.R;
-import com.example.doan_music.activity.MainActivity;
-import com.example.doan_music.activity.admin.AdminActivity;
-import com.example.doan_music.adapter.MainAdapter;
 import com.example.doan_music.adapter.thuvien.AddNgheSiAdapter;
-import com.example.doan_music.data.DbHelper;
 import com.example.doan_music.fragment.main.Library_Fragment;
-import com.example.doan_music.loginPackage.Login_userActivity;
 import com.example.doan_music.m_interface.OnItemClickListener;
-import com.example.doan_music.model.Ablum;
 import com.example.doan_music.model.AddNgheSi_ThuVien;
 
 import java.util.ArrayList;
@@ -39,14 +26,15 @@ public class AddNgheSiActivity extends AppCompatActivity implements OnItemClickL
     AddNgheSiAdapter addNgheSiAdapter;
     ArrayList<AddNgheSi_ThuVien> arrayList;
     SQLiteDatabase database = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_add_nghe_si);
-       addControls();
-       loadData();
-       addEvents();
+        addControls();
+        loadData();
+        addEvents();
     }
 
     private void addEvents() {
@@ -72,7 +60,7 @@ public class AddNgheSiActivity extends AppCompatActivity implements OnItemClickL
         while (cursor.moveToNext()) {
             String ten = cursor.getString(1);
             byte[] img = cursor.getBlob(2);
-            AddNgheSi_ThuVien addNgheSiThuVien = new AddNgheSi_ThuVien(img,ten);
+            AddNgheSi_ThuVien addNgheSiThuVien = new AddNgheSi_ThuVien(img, ten);
             arrayList.add(addNgheSiThuVien);
         }
         addNgheSiAdapter.notifyDataSetChanged();
@@ -84,7 +72,7 @@ public class AddNgheSiActivity extends AppCompatActivity implements OnItemClickL
         recycler_Artists_thuvien_add = findViewById(R.id.recycler_Artists_thuvien_add);
 
         arrayList = new ArrayList<>();
-        addNgheSiAdapter = new AddNgheSiAdapter(this,arrayList);
+        addNgheSiAdapter = new AddNgheSiAdapter(this, arrayList);
         addNgheSiAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(String data) {
@@ -96,7 +84,7 @@ public class AddNgheSiActivity extends AppCompatActivity implements OnItemClickL
                 Library_Fragment fragment = new Library_Fragment();
                 fragment.setArguments(bundle);
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.view_pager,fragment);
+                fragmentTransaction.replace(R.id.view_pager, fragment);
                 fragmentTransaction.commit();
             }
         });

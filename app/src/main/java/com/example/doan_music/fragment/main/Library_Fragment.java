@@ -1,10 +1,7 @@
 package com.example.doan_music.fragment.main;
 
 import static android.content.Context.MODE_PRIVATE;
-import static android.database.sqlite.SQLiteDatabase.openOrCreateDatabase;
 
-import android.content.ContentValues;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -15,7 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TableRow;
-import android.widget.Toast;
 
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
@@ -26,14 +22,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_music.R;
 import com.example.doan_music.activity.MainActivity;
-import com.example.doan_music.activity.library.AddNgheSiActivity;
 import com.example.doan_music.adapter.thuvien.ThuVienAdapter;
-import com.example.doan_music.data.DatabaseManager;
 import com.example.doan_music.data.DbHelper;
 import com.example.doan_music.fragment.library.AddNgheSiFragment;
-import com.example.doan_music.loginPackage.Login_userActivity;
-import com.example.doan_music.loginPackage.Register_emailActivity;
-import com.example.doan_music.model.AddNgheSi_ThuVien;
 import com.example.doan_music.model.ThuVien;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
@@ -53,8 +44,6 @@ public class Library_Fragment extends Fragment {
     TableRow tbr_bottom_sheet_thuvien_adddanhsachphat, tbr_bottom_sheet_thuvien_addnghesy;
 
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -68,7 +57,7 @@ public class Library_Fragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-      loadData();
+        loadData();
     }
 
     private void addEvents() {
@@ -108,7 +97,7 @@ public class Library_Fragment extends Fragment {
                 //Intent intent = new Intent(requireContext(), AddNgheSiFragment.class);
                 //startActivity(intent);
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.frame_container,new AddNgheSiFragment());
+                fragmentTransaction.replace(R.id.frame_container, new AddNgheSiFragment());
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
                 // Đóng bottom sheet dialog sau khi xử lý xong
@@ -133,9 +122,9 @@ public class Library_Fragment extends Fragment {
                 database = getActivity().openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
                 Cursor cursor = database.rawQuery("select * " +
                                 "from Artists " +
-                        "JOIN User_Artist ON Artists.ArtistsID =User_Artist.User_Artist_ArtistID "+
-                        "JOIN Users ON User_Artist.User_Artist_UserID = Users.UserID "+
-                        "WHERE Users.UserID = maU"
+                                "JOIN User_Artist ON Artists.ArtistsID =User_Artist.User_Artist_ArtistID " +
+                                "JOIN Users ON User_Artist.User_Artist_UserID = Users.UserID " +
+                                "WHERE Users.UserID = maU"
                         , null);
                 arr.clear();
                 while (cursor.moveToNext()) {

@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
         // Kiểm tra xem có dữ liệu "maU" được chuyển không
         if (intent.hasExtra("maU")) {
             // Lấy dữ liệu từ Intent
-            maU = intent.getIntExtra("maU",0);
+            maU = intent.getIntExtra("maU", 0);
         }
 
     }

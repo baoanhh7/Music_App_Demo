@@ -62,13 +62,11 @@ public class AddPlayListActivity extends AppCompatActivity {
                 values.put("PlaylistName", ten);
                 values.put("PlaylistImage", anh);
 
-                DbHelper dbHelper = DatabaseManager.dbHelper(AddPlayListActivity.this);
-                SQLiteDatabase database = dbHelper.getWritableDatabase();
+                dbHelper = DatabaseManager.dbHelper(AddPlayListActivity.this);
+                database = dbHelper.getWritableDatabase();
 
                 database.insert("Playlists", null, values);
 
-                Intent i = new Intent(AddPlayListActivity.this, PlayListAdminActivity.class);
-                startActivity(i);
                 finish();
             }
         });

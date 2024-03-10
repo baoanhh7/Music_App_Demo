@@ -62,7 +62,7 @@ public class Login_userActivity extends AppCompatActivity {
             database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
             Cursor cursor = database.rawQuery("select * from Users", null);
             while (cursor.moveToNext()) {
-                Integer ma = Integer.valueOf(cursor.getString(0)+"");
+                Integer ma = Integer.valueOf(cursor.getString(0) + "");
                 String Email = cursor.getString(2);
                 String Password = cursor.getString(3);
                 String Role = cursor.getString(4);
@@ -70,11 +70,12 @@ public class Login_userActivity extends AppCompatActivity {
                     Toast.makeText(Login_userActivity.this, "Login Admin Successful", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(Login_userActivity.this, AdminActivity.class));
                     break;
-                } else if (email.equals(Email) && password.equals(Password)  && !Role.equals("admin")) ;
+                } else if (email.equals(Email) && password.equals(Password) && !Role.equals("admin"))
+                    ;
                 {
                     Toast.makeText(Login_userActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(Login_userActivity.this, MainActivity.class);
-                    intent.putExtra("maU",ma);
+                    intent.putExtra("maU", ma);
                     startActivity(intent);
                     break;
                 }

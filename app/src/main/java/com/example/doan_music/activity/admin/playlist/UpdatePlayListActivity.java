@@ -65,8 +65,6 @@ public class UpdatePlayListActivity extends AppCompatActivity {
                 int id = intent.getIntExtra("id", -1);
                 database.update("Playlists", values, "PlaylistID=?", new String[]{id + ""});
 
-                Intent i = new Intent(UpdatePlayListActivity.this, PlayListAdminActivity.class);
-                startActivity(i);
                 finish();
             }
         });

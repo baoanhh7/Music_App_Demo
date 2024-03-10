@@ -1,8 +1,6 @@
 package com.example.doan_music.model;
 
-import java.io.Serializable;
-
-public class AddNgheSi_ThuVien{
+public class AddNgheSi_ThuVien {
     private byte[] hinh;
     private String tensp;
 
