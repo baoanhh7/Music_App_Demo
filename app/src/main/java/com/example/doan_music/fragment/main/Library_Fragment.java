@@ -17,6 +17,7 @@ import android.widget.TableRow;
 
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.doan_music.R;
 import com.example.doan_music.activity.library.AddNgheSiActivity;
 import com.example.doan_music.adapter.thuvien.ThuVienAdapter;
+import com.example.doan_music.fragment.library.AddNgheSiFragment;
 import com.example.doan_music.model.AddNgheSi_ThuVien;
 import com.example.doan_music.model.ThuVien;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -51,6 +53,31 @@ public class Library_Fragment extends Fragment {
         loadData();
         addEvents();
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Bundle bundle = getArguments();
+
+        if (bundle != null) {
+            // Trích xuất dữ liệu từ Bundle
+            String data = bundle.getString("key"); // Thay "key" bằng key bạn đã đặt trong Activity
+            database = getActivity().openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
+            Cursor cursor = database.rawQuery("select * from Artists", null);
+            arr.clear();
+            while (cursor.moveToNext()) {
+                String ten = cursor.getString(1);
+                byte[] img = cursor.getBlob(2);
+                if(data.equals(ten)) {
+                    ThuVien thuVien = new ThuVien(img, ten);
+                    arr.add(thuVien);
+                    break;
+                }
+            }
+            thuVienAdapter.notifyDataSetChanged();
+            cursor.close();
+        }
     }
 
     private void addEvents() {
@@ -87,8 +114,12 @@ public class Library_Fragment extends Fragment {
         tbr_bottom_sheet_thuvien_addnghesy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(requireContext(), AddNgheSiActivity.class);
-                startActivity(intent);
+                //Intent intent = new Intent(requireContext(), AddNgheSiFragment.class);
+                //startActivity(intent);
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.frame_container,new AddNgheSiFragment());
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
                 // Đóng bottom sheet dialog sau khi xử lý xong
                 bottomSheetDialog.dismiss();
             }
@@ -131,25 +162,5 @@ public class Library_Fragment extends Fragment {
         });
         //recyclerViewNV.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.HORIZONTAL));
         // Lấy Bundle từ Fragment
-        Bundle bundle = getArguments();
-
-        if (bundle != null) {
-            // Trích xuất dữ liệu từ Bundle
-            String data = bundle.getString("key"); // Thay "key" bằng key bạn đã đặt trong Activity
-            database = getActivity().openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
-            Cursor cursor = database.rawQuery("select * from Artists", null);
-            arr.clear();
-            while (cursor.moveToNext()) {
-                String ten = cursor.getString(1);
-                byte[] img = cursor.getBlob(2);
-                if(data.equals(ten)) {
-                    ThuVien thuVien = new ThuVien(img, ten);
-                    arr.add(thuVien);
-                    break;
-                }
-            }
-            thuVienAdapter.notifyDataSetChanged();
-            cursor.close();
-        }
     }
 }
