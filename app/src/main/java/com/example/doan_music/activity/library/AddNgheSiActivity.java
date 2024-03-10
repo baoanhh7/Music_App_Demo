@@ -12,21 +12,27 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.example.doan_music.R;
 import com.example.doan_music.activity.MainActivity;
 import com.example.doan_music.activity.admin.AdminActivity;
+import com.example.doan_music.adapter.MainAdapter;
 import com.example.doan_music.adapter.thuvien.AddNgheSiAdapter;
 import com.example.doan_music.data.DbHelper;
+import com.example.doan_music.fragment.main.Library_Fragment;
 import com.example.doan_music.loginPackage.Login_userActivity;
+import com.example.doan_music.m_interface.OnItemClickListener;
 import com.example.doan_music.model.Ablum;
 import com.example.doan_music.model.AddNgheSi_ThuVien;
 
 import java.util.ArrayList;
 
-public class AddNgheSiActivity extends AppCompatActivity {
+public class AddNgheSiActivity extends AppCompatActivity implements OnItemClickListener {
 
     SearchView search_thuvien_addArtist;
     RecyclerView recycler_Artists_thuvien_add;
@@ -76,10 +82,33 @@ public class AddNgheSiActivity extends AppCompatActivity {
     private void addControls() {
         search_thuvien_addArtist = findViewById(R.id.search_thuvien_addArtist);
         recycler_Artists_thuvien_add = findViewById(R.id.recycler_Artists_thuvien_add);
+
         arrayList = new ArrayList<>();
         addNgheSiAdapter = new AddNgheSiAdapter(this,arrayList);
+        addNgheSiAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(String data) {
+                // Tạo đối tượng Bundle và đính kèm dữ liệu
+                Bundle bundle = new Bundle();
+                bundle.putString("key", data); // Thay "key" bằng key bạn muốn đặt cho dữ liệu
+
+                // Tạo Fragment và đặt Bundle vào Fragment
+                Library_Fragment fragment = new Library_Fragment();
+                fragment.setArguments(bundle);
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.view_pager,fragment);
+                fragmentTransaction.commit();
+            }
+        });
         recycler_Artists_thuvien_add.setAdapter(addNgheSiAdapter);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
         recycler_Artists_thuvien_add.setLayoutManager(gridLayoutManager);
+
+    }
+
+    @Override
+    public void onItemClick(String data) {
+
+
     }
 }

@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_music.R;
+import com.example.doan_music.m_interface.OnItemClickListener;
 import com.example.doan_music.model.AddNgheSi_ThuVien;
 import com.example.doan_music.model.ThuVien;
 
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 
 public class AddNgheSiAdapter extends RecyclerView.Adapter<AddNgheSiAdapter.ViewHolder> implements Filterable {
     Context context;
+    private OnItemClickListener onItemClickListener;
     ArrayList<AddNgheSi_ThuVien> arr, arr1;
     public AddNgheSiAdapter(Context context, ArrayList<AddNgheSi_ThuVien> arr) {
         this.context = context;
@@ -76,6 +78,18 @@ public class AddNgheSiAdapter extends RecyclerView.Adapter<AddNgheSiAdapter.View
         Bitmap bitmap = BitmapFactory.decodeByteArray(hinhAlbumByteArray, 0, hinhAlbumByteArray.length);
         holder.img.setImageBitmap(bitmap);
         holder.txtTen.setText(tv.getTensp());
+        // Gán giá trị cho item trong RecyclerView và xử lý sự kiện nhấn
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onItemClickListener != null) {
+                    onItemClickListener.onItemClick(arr.get(position).getTensp());
+                }
+            }
+        });
+    }
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.onItemClickListener = listener;
     }
 
     @Override

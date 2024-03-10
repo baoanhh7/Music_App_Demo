@@ -1,6 +1,11 @@
 package com.example.doan_music.fragment.main;
 
+import static android.content.Context.MODE_PRIVATE;
+import static android.database.sqlite.SQLiteDatabase.openOrCreateDatabase;
+
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.doan_music.R;
 import com.example.doan_music.activity.library.AddNgheSiActivity;
 import com.example.doan_music.adapter.thuvien.ThuVienAdapter;
+import com.example.doan_music.model.AddNgheSi_ThuVien;
 import com.example.doan_music.model.ThuVien;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
@@ -29,11 +35,12 @@ public class Library_Fragment extends Fragment {
     RecyclerView recyclerView;
     ThuVienAdapter thuVienAdapter;
     ArrayList<ThuVien> arr;
+    SQLiteDatabase database = null;
     Button btnDoi;
     View view;
     ImageButton btn_thuvien_add;
     SearchView btn_thuvien_search;
-    TableRow tbr_bottom_sheet_thuvien_adddanhsachphat,tbr_bottom_sheet_thuvien_addnghesy;
+    TableRow tbr_bottom_sheet_thuvien_adddanhsachphat, tbr_bottom_sheet_thuvien_addnghesy;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -91,8 +98,10 @@ public class Library_Fragment extends Fragment {
     }
 
     private void loadData() {
-       // arr.add(new ThuVien(R.drawable.obito, "Obito"));
+        // arr.add(new ThuVien(R.drawable.obito, "Obito"));
         //arr.add(new ThuVien(R.drawable.podcastchualanh, "Viết chữa lành"));
+
+
     }
 
 
@@ -121,5 +130,26 @@ public class Library_Fragment extends Fragment {
             }
         });
         //recyclerViewNV.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.HORIZONTAL));
+        // Lấy Bundle từ Fragment
+        Bundle bundle = getArguments();
+
+        if (bundle != null) {
+            // Trích xuất dữ liệu từ Bundle
+            String data = bundle.getString("key"); // Thay "key" bằng key bạn đã đặt trong Activity
+            database = getActivity().openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
+            Cursor cursor = database.rawQuery("select * from Artists", null);
+            arr.clear();
+            while (cursor.moveToNext()) {
+                String ten = cursor.getString(1);
+                byte[] img = cursor.getBlob(2);
+                if(data.equals(ten)) {
+                    ThuVien thuVien = new ThuVien(img, ten);
+                    arr.add(thuVien);
+                    break;
+                }
+            }
+            thuVienAdapter.notifyDataSetChanged();
+            cursor.close();
+        }
     }
 }
