@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Tạo class MainAdapter đã làm trước đó
     MainAdapter adapter;
-
+    Integer maU;
     DbHelper dbHelper = null;
 
     @Override
@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         addControls();
+
         // Drawer
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_nav, R.string.close_nav);
@@ -127,6 +128,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public Integer getMyVariable() {
+        return maU;
+    }
+
     private void addControls() {
         bottom_navigation = findViewById(R.id.bottomNavigationView);
         view_pager = findViewById(R.id.view_pager);
@@ -134,7 +139,14 @@ public class MainActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigation_drawer);
+        // Lấy Intent đã được chuyển từ Login_userActivity
+        Intent intent = getIntent();
 
+        // Kiểm tra xem có dữ liệu "maU" được chuyển không
+        if (intent.hasExtra("maU")) {
+            // Lấy dữ liệu từ Intent
+            maU = intent.getIntExtra("maU",0);
+        }
 
     }
 

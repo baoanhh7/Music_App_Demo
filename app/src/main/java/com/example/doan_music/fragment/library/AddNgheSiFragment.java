@@ -3,6 +3,7 @@ package com.example.doan_music.fragment.library;
 import static android.content.Context.MODE_PRIVATE;
 import static android.database.sqlite.SQLiteDatabase.openOrCreateDatabase;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -16,9 +17,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.example.doan_music.R;
+import com.example.doan_music.activity.MainActivity;
 import com.example.doan_music.adapter.thuvien.AddNgheSiAdapter;
+import com.example.doan_music.data.DatabaseManager;
+import com.example.doan_music.data.DbHelper;
 import com.example.doan_music.fragment.main.Library_Fragment;
 import com.example.doan_music.m_interface.OnItemClickListener;
 import com.example.doan_music.model.AddNgheSi_ThuVien;
@@ -38,6 +43,7 @@ public class AddNgheSiFragment extends Fragment implements OnItemClickListener {
     ArrayList<AddNgheSi_ThuVien> arrayList;
     View view;
     SQLiteDatabase database = null;
+    DbHelper dbHelper;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -73,7 +79,7 @@ public class AddNgheSiFragment extends Fragment implements OnItemClickListener {
         while (cursor.moveToNext()) {
             String ten = cursor.getString(1);
             byte[] img = cursor.getBlob(2);
-            AddNgheSi_ThuVien addNgheSiThuVien = new AddNgheSi_ThuVien(img,ten);
+            AddNgheSi_ThuVien addNgheSiThuVien = new AddNgheSi_ThuVien(img, ten);
             arrayList.add(addNgheSiThuVien);
         }
         addNgheSiAdapter.notifyDataSetChanged();
@@ -85,20 +91,43 @@ public class AddNgheSiFragment extends Fragment implements OnItemClickListener {
         recycler_Artists_thuvien_add = view.findViewById(R.id.recycler_Artists_thuvien_add);
 
         arrayList = new ArrayList<>();
-        addNgheSiAdapter = new AddNgheSiAdapter(requireContext(),arrayList);
+        addNgheSiAdapter = new AddNgheSiAdapter(requireContext(), arrayList);
         addNgheSiAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(String data) {
                 // Tạo đối tượng Bundle và đính kèm dữ liệu
                 Bundle bundle = new Bundle();
                 bundle.putString("key", data); // Thay "key" bằng key bạn muốn đặt cho dữ liệu
+                if (getActivity() instanceof MainActivity) {
+                    MainActivity mainActivity = (MainActivity) getActivity();
+                    Integer maU = mainActivity.getMyVariable();
+                    database = getActivity().openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
+                    Cursor cursor = database.rawQuery("select * from Artists", null);
+                    while (cursor.moveToNext()) {
+                        String ten = cursor.getString(1);
+                        Integer maArtist = Integer.valueOf(cursor.getString(0) + "");
+                        if (data.equals(ten)) {
+                            ContentValues values = new ContentValues();
+                            values.put("User_Artist_UserID", maU);
+                            values.put("User_Artist_ArtistID", maArtist);
+                            dbHelper = DatabaseManager.dbHelper(requireContext());
+                            long kq = dbHelper.getReadableDatabase().insert("User_Artist", null, values);
+                            if (kq > 0) {
+                                break;
+                            } else {
+                                Toast.makeText(requireContext(), "Fail", Toast.LENGTH_SHORT);
+                                break;
+                            }
+                        }
+                    }
 
-                // Tạo Fragment và đặt Bundle vào Fragment
-                Library_Fragment fragment = new Library_Fragment();
-                fragment.setArguments(bundle);
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.frame_container,fragment);
-                fragmentTransaction.commit();
+                    // Tạo Fragment và đặt Bundle vào Fragment
+                    Library_Fragment fragment = new Library_Fragment();
+                    fragment.setArguments(bundle);
+                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.frame_container, fragment);
+                    fragmentTransaction.commit();
+                }
             }
         });
         recycler_Artists_thuvien_add.setAdapter(addNgheSiAdapter);

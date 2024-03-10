@@ -3,6 +3,7 @@ package com.example.doan_music.fragment.main;
 import static android.content.Context.MODE_PRIVATE;
 import static android.database.sqlite.SQLiteDatabase.openOrCreateDatabase;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TableRow;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
@@ -23,9 +25,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_music.R;
+import com.example.doan_music.activity.MainActivity;
 import com.example.doan_music.activity.library.AddNgheSiActivity;
 import com.example.doan_music.adapter.thuvien.ThuVienAdapter;
+import com.example.doan_music.data.DatabaseManager;
+import com.example.doan_music.data.DbHelper;
 import com.example.doan_music.fragment.library.AddNgheSiFragment;
+import com.example.doan_music.loginPackage.Login_userActivity;
+import com.example.doan_music.loginPackage.Register_emailActivity;
 import com.example.doan_music.model.AddNgheSi_ThuVien;
 import com.example.doan_music.model.ThuVien;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -38,11 +45,15 @@ public class Library_Fragment extends Fragment {
     ThuVienAdapter thuVienAdapter;
     ArrayList<ThuVien> arr;
     SQLiteDatabase database = null;
+    DbHelper dbHelper;
     Button btnDoi;
     View view;
     ImageButton btn_thuvien_add;
     SearchView btn_thuvien_search;
     TableRow tbr_bottom_sheet_thuvien_adddanhsachphat, tbr_bottom_sheet_thuvien_addnghesy;
+
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,7 +61,6 @@ public class Library_Fragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_library_, container, false);
         addControl();
-        loadData();
         addEvents();
         return view;
     }
@@ -58,26 +68,7 @@ public class Library_Fragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Bundle bundle = getArguments();
-
-        if (bundle != null) {
-            // Trích xuất dữ liệu từ Bundle
-            String data = bundle.getString("key"); // Thay "key" bằng key bạn đã đặt trong Activity
-            database = getActivity().openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
-            Cursor cursor = database.rawQuery("select * from Artists", null);
-            arr.clear();
-            while (cursor.moveToNext()) {
-                String ten = cursor.getString(1);
-                byte[] img = cursor.getBlob(2);
-                if(data.equals(ten)) {
-                    ThuVien thuVien = new ThuVien(img, ten);
-                    arr.add(thuVien);
-                    break;
-                }
-            }
-            thuVienAdapter.notifyDataSetChanged();
-            cursor.close();
-        }
+      loadData();
     }
 
     private void addEvents() {
@@ -131,8 +122,33 @@ public class Library_Fragment extends Fragment {
     private void loadData() {
         // arr.add(new ThuVien(R.drawable.obito, "Obito"));
         //arr.add(new ThuVien(R.drawable.podcastchualanh, "Viết chữa lành"));
+        if (getActivity() instanceof MainActivity) {
+            MainActivity mainActivity = (MainActivity) getActivity();
+            Integer maU = mainActivity.getMyVariable();
+            Bundle bundle = getArguments();
 
-
+            if (bundle != null) {
+                // Trích xuất dữ liệu từ Bundle
+                String data = bundle.getString("key"); // Thay "key" bằng key bạn đã đặt trong Activity
+                database = getActivity().openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
+                Cursor cursor = database.rawQuery("select * " +
+                                "from Artists " +
+                        "JOIN User_Artist ON Artists.ArtistsID =User_Artist.User_Artist_ArtistID "+
+                        "JOIN Users ON User_Artist.User_Artist_UserID = Users.UserID "+
+                        "WHERE Users.UserID = maU"
+                        , null);
+                arr.clear();
+                while (cursor.moveToNext()) {
+                    Integer maArtist = Integer.valueOf(cursor.getString(0) + "");
+                    String ten = cursor.getString(1);
+                    byte[] img = cursor.getBlob(2);
+                    ThuVien thuVien = new ThuVien(img, ten);
+                    arr.add(thuVien);
+                    thuVienAdapter.notifyDataSetChanged();
+                    cursor.close();
+                }
+            }
+        }
     }
 
 
