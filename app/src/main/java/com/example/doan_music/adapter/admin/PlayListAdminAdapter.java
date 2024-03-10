@@ -1,7 +1,10 @@
 package com.example.doan_music.adapter.admin;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
@@ -14,6 +17,8 @@ import android.widget.TextView;
 
 import com.example.doan_music.R;
 import com.example.doan_music.activity.admin.playlist.UpdatePlayListActivity;
+import com.example.doan_music.data.DatabaseManager;
+import com.example.doan_music.data.DbHelper;
 import com.example.doan_music.model.Playlists;
 
 import java.util.List;
@@ -21,6 +26,9 @@ import java.util.List;
 public class PlayListAdminAdapter extends BaseAdapter {
     private Context context;
     private List<Playlists> list;
+    ImageView img_playlist_admin;
+    TextView txt_id_playlist_admin, txt_name_playplist_admin;
+    Button btn_update, btn_delete;
 
     public PlayListAdminAdapter(Context context, List<Playlists> list) {
         this.context = context;
@@ -46,14 +54,16 @@ public class PlayListAdminAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_playlist_admin, parent, false);
 
-        ImageView img_playlist_admin = view.findViewById(R.id.img_playlist_admin);
-        TextView txt_id_playlist_admin = view.findViewById(R.id.txt_id_playlist_admin);
-        TextView txt_name_playplist_admin = view.findViewById(R.id.txt_name_playplist_admin);
+        img_playlist_admin = view.findViewById(R.id.img_playlist_admin);
+        txt_id_playlist_admin = view.findViewById(R.id.txt_id_playlist_admin);
+        txt_name_playplist_admin = view.findViewById(R.id.txt_name_playplist_admin);
 
-        Button btn_update = view.findViewById(R.id.btn_update);
-        Button btn_delete = view.findViewById(R.id.btn_delete);
+        btn_update = view.findViewById(R.id.btn_update);
+        btn_delete = view.findViewById(R.id.btn_delete);
 
+        // add dữ liệu từ db vào list
         Playlists playlists = list.get(position);
+
         txt_id_playlist_admin.setText(playlists.getPlaylistID() + "");
         txt_name_playplist_admin.setText(playlists.getPlaylistName());
 
@@ -69,7 +79,44 @@ public class PlayListAdminAdapter extends BaseAdapter {
                 context.startActivity(intent);
             }
         });
+        btn_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Xác nhận xóa");
+                builder.setMessage("Bạn có muốn xóa không ?");
 
+                builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        delete(playlists.getPlaylistID());
+                    }
+                });
+                builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builder.create().show();
+            }
+        });
         return view;
+    }
+
+    private void delete(int playlistID) {
+        DbHelper dbHelper = DatabaseManager.dbHelper(context);
+        dbHelper.getWritableDatabase().delete("Playlists", "PlaylistID=?"
+                , new String[]{playlistID + ""});
+        list.clear();
+        Cursor cursor = dbHelper.getWritableDatabase().rawQuery("select * from Playlists", null);
+        while (cursor.moveToNext()) {
+            int id = cursor.getInt(0);
+            String ten = cursor.getString(1);
+            byte[] anh = cursor.getBlob(2);
+
+            list.add(new Playlists(id, ten, anh));
+        }
+        notifyDataSetChanged();
     }
 }

@@ -12,13 +12,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_music.R;
 import com.example.doan_music.m_interface.OnItemClickListener;
 import com.example.doan_music.model.AddNgheSi_ThuVien;
-import com.example.doan_music.model.ThuVien;
 
 import java.util.ArrayList;
 
@@ -26,6 +24,7 @@ public class AddNgheSiAdapter extends RecyclerView.Adapter<AddNgheSiAdapter.View
     Context context;
     private OnItemClickListener onItemClickListener;
     ArrayList<AddNgheSi_ThuVien> arr, arr1;
+
     public AddNgheSiAdapter(Context context, ArrayList<AddNgheSi_ThuVien> arr) {
         this.context = context;
         this.arr = arr;
@@ -88,6 +87,7 @@ public class AddNgheSiAdapter extends RecyclerView.Adapter<AddNgheSiAdapter.View
             }
         });
     }
+
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.onItemClickListener = listener;
     }
