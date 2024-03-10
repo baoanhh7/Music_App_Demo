@@ -29,6 +29,7 @@ public class PlayListAdminAdapter extends BaseAdapter {
     ImageView img_playlist_admin;
     TextView txt_id_playlist_admin, txt_name_playplist_admin;
     Button btn_update, btn_delete;
+    Playlists playlists;
 
     public PlayListAdminAdapter(Context context, List<Playlists> list) {
         this.context = context;
@@ -62,7 +63,7 @@ public class PlayListAdminAdapter extends BaseAdapter {
         btn_delete = view.findViewById(R.id.btn_delete);
 
         // add dữ liệu từ db vào list
-        Playlists playlists = list.get(position);
+        playlists = list.get(position);
 
         txt_id_playlist_admin.setText(playlists.getPlaylistID() + "");
         txt_name_playplist_admin.setText(playlists.getPlaylistName());
