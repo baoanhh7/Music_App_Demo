@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_music.R;
-import com.example.doan_music.activity.PlayListActivity;
-import com.example.doan_music.activity.SongsAlbumActivity;
+import com.example.doan_music.activity.home.PlayListActivity;
+import com.example.doan_music.activity.home.SongsAlbumActivity;
 import com.example.doan_music.adapter.home.CategoryAdapter;
 import com.example.doan_music.adapter.home.HomeAdapter;
 import com.example.doan_music.data.DatabaseManager;
@@ -141,7 +141,6 @@ public class All_Fragment extends Fragment {
             @Override
             public void onClickItemCategory(Category category) {
                 Intent i = new Intent(requireContext(), PlayListActivity.class);
-                i.putExtra("c", category);
                 startActivity(i);
             }
         });

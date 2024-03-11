@@ -14,7 +14,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -61,8 +60,7 @@ public class AddAlbumActivity extends AppCompatActivity {
                 Cursor cursor = database.rawQuery("select * from Artists", null);
                 while (cursor.moveToNext()) {
                     Integer maArtist = Integer.valueOf(cursor.getString(0) + "");
-                    if( Integer.valueOf(edtMaArtist1) == maArtist)
-                    {
+                    if (Integer.valueOf(edtMaArtist1) == maArtist) {
                         ContentValues values = new ContentValues();
                         values.put("AlbumID", edtMa.getText().toString() + "");
                         values.put("AlbumName", edtTen.getText().toString());
@@ -151,14 +149,14 @@ public class AddAlbumActivity extends AppCompatActivity {
         }
     }
 
-        private void addControls() {
-            edtMa = findViewById(R.id.edt_id_albumadmin);
-            edtTen = findViewById(R.id.edt_name_albumadmin);
-            imageView = findViewById(R.id.img_addAblumAdmin);
-            edtMaArtist = findViewById(R.id.edt_idArtist_albumadmin);
-            btnSave = findViewById(R.id.btn_save_albumadmin);
-            btncancel = findViewById(R.id.btn_cancel_albumadmin);
-            btn_choose_image_addAblumAdmin = findViewById(R.id.btn_choose_image_addAblumAdmin);
-            btn_camera = findViewById(R.id.btn_camera_albumadmin);
-        }
+    private void addControls() {
+        edtMa = findViewById(R.id.edt_id_albumadmin);
+        edtTen = findViewById(R.id.edt_name_albumadmin);
+        imageView = findViewById(R.id.img_addAblumAdmin);
+        edtMaArtist = findViewById(R.id.edt_idArtist_albumadmin);
+        btnSave = findViewById(R.id.btn_save_albumadmin);
+        btncancel = findViewById(R.id.btn_cancel_albumadmin);
+        btn_choose_image_addAblumAdmin = findViewById(R.id.btn_choose_image_addAblumAdmin);
+        btn_camera = findViewById(R.id.btn_camera_albumadmin);
+    }
 }

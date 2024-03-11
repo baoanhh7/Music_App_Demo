@@ -30,7 +30,7 @@
             android:name=".activity.admin.playlist.PlayListAdminActivity"
             android:exported="true" /> <!-- 1 -->
         <activity
-            android:name=".activity.SongsAlbumActivity"
+            android:name=".activity.home.SongsAlbumActivity"
             android:exported="false" /> <!-- 2 -->
         <activity
             android:name=".activity.admin.AdminActivity"
@@ -67,7 +67,7 @@
             android:name=".music.PlayMusicActivity"
             android:exported="true" /> <!-- 11 -->
         <activity
-            android:name=".activity.PlayListActivity"
+            android:name=".activity.home.PlayListActivity"
             android:exported="true" />
     </application>
 

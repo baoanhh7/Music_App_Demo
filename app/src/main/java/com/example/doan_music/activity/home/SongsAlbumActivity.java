@@ -1,4 +1,4 @@
-package com.example.doan_music.activity;
+package com.example.doan_music.activity.home;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -94,7 +94,5 @@ public class SongsAlbumActivity extends AppCompatActivity {
         User user = (User) i.getSerializableExtra("u");
         img_songlist.setImageResource(user.getResourceImage());
         txt_songlist.setText(user.getName());
-
-
     }
 }

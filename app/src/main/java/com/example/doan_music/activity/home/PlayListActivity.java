@@ -1,6 +1,5 @@
-package com.example.doan_music.activity;
+package com.example.doan_music.activity.home;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -16,7 +15,6 @@ import com.example.doan_music.R;
 import com.example.doan_music.adapter.home.PlayListAdapter;
 import com.example.doan_music.data.DatabaseManager;
 import com.example.doan_music.data.DbHelper;
-import com.example.doan_music.model.Category;
 import com.example.doan_music.model.Playlists;
 
 import java.util.ArrayList;
@@ -27,9 +25,6 @@ public class PlayListActivity extends AppCompatActivity {
     PlayListAdapter playListAdapter;
     Button btn_back;
     TextView txt_playlist;
-    Category category;
-    Intent i = null;
-
     Playlists playlists;
 
     @Override
@@ -59,7 +54,7 @@ public class PlayListActivity extends AppCompatActivity {
             String name = cursor.getString(1);
             byte[] img = cursor.getBlob(2);
 
-            Playlists playlists = new Playlists(id, name, img);
+            playlists = new Playlists(id, name, img);
             list.add(playlists);
         }
         cursor.close();
@@ -84,10 +79,5 @@ public class PlayListActivity extends AppCompatActivity {
 
         txt_playlist = findViewById(R.id.txt_playlist);
         btn_back = findViewById(R.id.btn_back);
-
-        i = getIntent();
-        category = (Category) i.getSerializableExtra("c");
-        txt_playlist.setText(category.getName());
-
     }
 }

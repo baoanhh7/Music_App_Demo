@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.doan_music.R;
 import com.example.doan_music.activity.admin.AdminActivity;
-import com.example.doan_music.activity.admin.playlist.PlayListAdminActivity;
 import com.example.doan_music.adapter.admin.AlbumAdminAdapter;
 import com.example.doan_music.data.DbHelper;
 import com.example.doan_music.model.Ablum;
@@ -25,7 +24,7 @@ public class AlbumActivity extends AppCompatActivity {
     ListView listView;
     SQLiteDatabase database = null;
     DbHelper dbHelper;
-    Button btn_add_ablum,btn_back_add_ablum_admin;
+    Button btn_add_ablum, btn_back_add_ablum_admin;
     AlbumAdminAdapter albumAdapter;
     ArrayList<Ablum> arrayAblum;
 

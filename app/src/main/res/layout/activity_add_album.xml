@@ -24,11 +24,13 @@
             android:orientation="vertical"
             android:gravity="center"
             android:layout_height="match_parent">
+
             <Button
                 android:id="@+id/btn_choose_image_addAblumAdmin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Choose image" />
+
             <ImageButton
                 android:id="@+id/btn_camera_albumadmin"
                 android:layout_marginTop="10dp"
@@ -58,6 +60,7 @@
         android:hint="Name"
         android:textSize="20sp"
         android:textStyle="bold" />
+
     <EditText
         android:id="@+id/edt_idArtist_albumadmin"
         android:layout_width="match_parent"
