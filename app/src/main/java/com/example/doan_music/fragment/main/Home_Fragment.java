@@ -59,10 +59,9 @@ Home_Fragment extends Fragment {
         tabLayout = mView.findViewById(R.id.tab_layout);
         home_viewpager = mView.findViewById(R.id.home_viewpager);
         navigationView = mView.findViewById(R.id.navigation_drawer);
+
         // Khác với khai báo Adapter trong Activity, trong Fragment khai báo Adapter theo kiểu sau
         adapter = new TabLayoutAdapter(getChildFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-
-        // Cung cấp dữ liệu cho viewpager bằng MainAdapter như bth
         home_viewpager.setAdapter(adapter);
     }
 }
