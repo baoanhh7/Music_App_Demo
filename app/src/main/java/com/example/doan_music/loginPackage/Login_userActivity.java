@@ -11,11 +11,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.doan_music.R;
 import com.example.doan_music.activity.MainActivity;
 import com.example.doan_music.activity.admin.AdminActivity;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 public class Login_userActivity extends AppCompatActivity {
     EditText EdtEmail, EdtPassword;
@@ -78,7 +90,8 @@ public class Login_userActivity extends AppCompatActivity {
                     } else {
                         // Nếu là người dùng thông thường, chuyển đến MainActivity
                         intent = new Intent(Login_userActivity.this, MainActivity.class);
-                        intent.putExtra("maU", ma);
+                        //intent.putExtra("emailU", Email);
+                        intent.putExtra("maU",ma);
                     }
                     startActivity(intent);
                     break;
