@@ -85,7 +85,6 @@ public class PlayListAdminActivity extends AppCompatActivity {
         playListAdminAdapter.notifyDataSetChanged();
 
         cursor.close();
-        database.close();
     }
 
     private void addControl() {
