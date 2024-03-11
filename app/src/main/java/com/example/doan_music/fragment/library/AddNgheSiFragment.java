@@ -71,17 +71,26 @@ public class AddNgheSiFragment extends Fragment implements OnItemClickListener {
     }
 
     private void loadData() {
-        database = getActivity().openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
-        Cursor cursor = database.rawQuery("select * from Artists", null);
-        arrayList.clear();
-        while (cursor.moveToNext()) {
-            String ten = cursor.getString(1);
-            byte[] img = cursor.getBlob(2);
-            AddNgheSi_ThuVien addNgheSiThuVien = new AddNgheSi_ThuVien(img, ten);
-            arrayList.add(addNgheSiThuVien);
+        if (getActivity() instanceof MainActivity) {
+            MainActivity mainActivity = (MainActivity) getActivity();
+            Integer maU = mainActivity.getMyVariable();
+            database = getActivity().openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
+            Cursor cursor = database.rawQuery("SELECT * " +
+                            "FROM Artists " +
+                            "WHERE Artists.ArtistID NOT IN (SELECT User_Artist_ArtistID " +
+                            "FROM User_Artist " +
+                            "WHERE User_Artist_UserID = ?)",
+                    new String[]{String.valueOf(maU)});
+            arrayList.clear();
+            while (cursor.moveToNext()) {
+                String ten = cursor.getString(1);
+                byte[] img = cursor.getBlob(2);
+                AddNgheSi_ThuVien addNgheSiThuVien = new AddNgheSi_ThuVien(img, ten);
+                arrayList.add(addNgheSiThuVien);
+            }
+            addNgheSiAdapter.notifyDataSetChanged();
+            cursor.close();
         }
-        addNgheSiAdapter.notifyDataSetChanged();
-        cursor.close();
     }
 
     private void addControl() {
@@ -94,8 +103,8 @@ public class AddNgheSiFragment extends Fragment implements OnItemClickListener {
             @Override
             public void onItemClick(String data) {
                 // Tạo đối tượng Bundle và đính kèm dữ liệu
-                Bundle bundle = new Bundle();
-                bundle.putString("key", data); // Thay "key" bằng key bạn muốn đặt cho dữ liệu
+                //Bundle bundle = new Bundle();
+               // bundle.putString("key", data); // Thay "key" bằng key bạn muốn đặt cho dữ liệu
                 if (getActivity() instanceof MainActivity) {
                     MainActivity mainActivity = (MainActivity) getActivity();
                     Integer maU = mainActivity.getMyVariable();
@@ -112,16 +121,13 @@ public class AddNgheSiFragment extends Fragment implements OnItemClickListener {
                             long kq = dbHelper.getReadableDatabase().insert("User_Artist", null, values);
                             if (kq > 0) {
                                 break;
-                            } else {
-                                Toast.makeText(requireContext(), "Fail", Toast.LENGTH_SHORT);
-                                break;
                             }
                         }
                     }
+                    cursor.close();
 
                     // Tạo Fragment và đặt Bundle vào Fragment
                     Library_Fragment fragment = new Library_Fragment();
-                    fragment.setArguments(bundle);
                     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.frame_container, fragment);
                     fragmentTransaction.commit();
