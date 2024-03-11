@@ -1,8 +1,6 @@
 package com.example.doan_music.adapter.home;
 
 import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +11,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_music.R;
-import com.example.doan_music.data.DatabaseManager;
-import com.example.doan_music.data.DbHelper;
 import com.example.doan_music.m_interface.IClickItemCategory;
 import com.example.doan_music.model.Category;
-import com.example.doan_music.model.Playlists;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
@@ -53,7 +47,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         holder.txt_home_cate.setText(category.getName());
 
         PlaylistHomeAdapter playlistHomeAdapter = new PlaylistHomeAdapter();
-        playlistHomeAdapter.setData(getPlaylists());
+        playlistHomeAdapter.setData(category.getList());
         holder.rcv_home_cate.setAdapter(playlistHomeAdapter);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
@@ -66,27 +60,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
             }
         });
 
-    }
-
-    private List<Playlists> getPlaylists() {
-        List<Playlists> list = new ArrayList<>();
-
-        DbHelper dbHelper = DatabaseManager.dbHelper(context);
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-
-        Cursor cursor = db.rawQuery("Select * from Playlists", null);
-        while (cursor.moveToNext()) {
-            int id = cursor.getInt(0);
-            String name = cursor.getString(1);
-            byte[] img = cursor.getBlob(2);
-
-            Playlists playlists = new Playlists(id, name, img);
-            list.add(playlists);
-        }
-        cursor.close();
-        db.close();
-
-        return list;
     }
 
     @Override

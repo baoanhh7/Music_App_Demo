@@ -113,7 +113,6 @@ public class MainActivity extends AppCompatActivity {
                 else if (id == R.id.logout) {
 //                    replace(new Settings_Fragment());
                     startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                    finish();
                 } else if (id == R.id.home) {
                     Intent i = new Intent(MainActivity.this, MainActivity.class);
                     startActivity(i);
