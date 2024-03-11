@@ -83,6 +83,16 @@ public class UpdatePlayListActivity extends AppCompatActivity {
         });
     }
 
+    private byte[] getByteArrayFromImageView(ImageView img) {
+        BitmapDrawable drawable = (BitmapDrawable) img.getDrawable();
+        Bitmap bitmap = drawable.getBitmap();
+
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        return byteArray;
+    }
+
     private void choosePhoto() {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
@@ -124,16 +134,6 @@ public class UpdatePlayListActivity extends AppCompatActivity {
         img_update.setImageBitmap(bitmap);
         edt_id_playlist.setText(ma + "");
         edt_name_playlist.setText(ten);
-    }
-
-    private byte[] getByteArrayFromImageView(ImageView img) {
-        BitmapDrawable drawable = (BitmapDrawable) img.getDrawable();
-        Bitmap bitmap = drawable.getBitmap();
-
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        byte[] byteArray = stream.toByteArray();
-        return byteArray;
     }
 
     private void addControls() {

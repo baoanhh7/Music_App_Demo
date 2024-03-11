@@ -70,6 +70,12 @@ public class AddPlayListActivity extends AppCompatActivity {
                 finish();
             }
         });
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private byte[] getByteArrayFromImageView(ImageView img) {
