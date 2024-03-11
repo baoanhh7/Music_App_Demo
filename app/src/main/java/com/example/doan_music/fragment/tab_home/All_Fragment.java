@@ -101,27 +101,6 @@ public class All_Fragment extends Fragment {
         return categoryList;
     }
 
-    private List<Playlists> getPlaylists() {
-        List<Playlists> list = new ArrayList<>();
-
-        DbHelper dbHelper = DatabaseManager.dbHelper(requireContext());
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-
-        Cursor cursor = db.rawQuery("Select * from Playlists", null);
-        while (cursor.moveToNext()) {
-            int id = cursor.getInt(0);
-            String name = cursor.getString(1);
-            byte[] img = cursor.getBlob(2);
-
-            Playlists playlists = new Playlists(id, name, img);
-            list.add(playlists);
-        }
-        cursor.close();
-        db.close();
-
-        return list;
-    }
-
     private void addControls() {
         rcv_all_header = view.findViewById(R.id.rcv_all_header);
         rcv_all_bottom = view.findViewById(R.id.rcv_all_bottom);
@@ -141,6 +120,7 @@ public class All_Fragment extends Fragment {
             @Override
             public void onClickItemCategory(Category category) {
                 Intent i = new Intent(requireContext(), PlayListActivity.class);
+                i.putExtra("c", category.getName());
                 startActivity(i);
             }
         });

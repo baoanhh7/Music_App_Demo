@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,11 +28,12 @@ import java.io.InputStream;
 
 public class UpdatePlayListActivity extends AppCompatActivity {
     ImageView img_update;
-    Button btn_choose_image, btn_update, btn_cancel;
+    Button btn_choose_image, btn_camera, btn_update, btn_cancel;
     EditText edt_id_playlist, edt_name_playlist;
     Intent intent = null;
     int id = -1;
     final int choose_img = 1;
+    final int photo_img = 2;
 
 
     @Override
@@ -75,12 +77,23 @@ public class UpdatePlayListActivity extends AppCompatActivity {
                 choosePhoto();
             }
         });
+        btn_camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                takePhoto();
+            }
+        });
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+    }
+
+    private void takePhoto() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, photo_img);
     }
 
     private byte[] getByteArrayFromImageView(ImageView img) {
@@ -111,6 +124,9 @@ public class UpdatePlayListActivity extends AppCompatActivity {
                 } catch (FileNotFoundException e) {
                     throw new RuntimeException(e);
                 }
+            } else if (requestCode == photo_img) {
+                Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+                img_update.setImageBitmap(bitmap);
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -140,6 +156,7 @@ public class UpdatePlayListActivity extends AppCompatActivity {
         img_update = findViewById(R.id.img_update);
 
         btn_choose_image = findViewById(R.id.btn_choose_image);
+        btn_camera = findViewById(R.id.btn_camera);
         btn_update = findViewById(R.id.btn_update);
         btn_cancel = findViewById(R.id.btn_cancel);
 

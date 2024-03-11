@@ -72,13 +72,10 @@ public class MainActivity extends AppCompatActivity {
                 int id = item.getItemId();
                 if (id == R.id.allSongs) replace(new AllSongs_Fragment());
                 else if (id == R.id.logout) {
-//                    replace(new Settings_Fragment());
                     startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                } else if (id == R.id.home) {
-                    Intent i = new Intent(MainActivity.this, MainActivity.class);
-                    startActivity(i);
-
                     finish();
+                } else if (id == R.id.home) {
+                    replace(new Home_Fragment());
                 }
                 // Xử lý xong sẽ đóng Drawer
                 drawerLayout.closeDrawer(GravityCompat.START);

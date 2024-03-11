@@ -1,5 +1,6 @@
 package com.example.doan_music.activity.home;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -79,5 +80,8 @@ public class PlayListActivity extends AppCompatActivity {
 
         txt_playlist = findViewById(R.id.txt_playlist);
         btn_back = findViewById(R.id.btn_back);
+
+        Intent intent = getIntent();
+        txt_playlist.setText(intent.getStringExtra("c"));
     }
 }
