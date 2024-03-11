@@ -114,28 +114,28 @@ public class Library_Fragment extends Fragment {
         if (getActivity() instanceof MainActivity) {
             MainActivity mainActivity = (MainActivity) getActivity();
             Integer maU = mainActivity.getMyVariable();
-           // Bundle bundle = getArguments();
+            // Bundle bundle = getArguments();
 
             //if (bundle != null) {
-                // Trích xuất dữ liệu từ Bundle
-               // String data = bundle.getString("key"); // Thay "key" bằng key bạn đã đặt trong Activity
-                database = getActivity().openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
-                Cursor cursor = database.rawQuery("select * " +
-                                "from Artists " +
-                                "JOIN User_Artist ON Artists.ArtistID =User_Artist.User_Artist_ArtistID " +
-                                "WHERE User_Artist.User_Artist_UserID = ? ",  new String[] {String.valueOf(maU)});
-                arr.clear();
-                while (cursor.moveToNext()) {
-                    Integer maArtist = Integer.valueOf(cursor.getString(0) + "");
-                    String ten = cursor.getString(1);
-                    byte[] img = cursor.getBlob(2);
-                    ThuVien thuVien = new ThuVien(img, ten);
-                    arr.add(thuVien);
+            // Trích xuất dữ liệu từ Bundle
+            // String data = bundle.getString("key"); // Thay "key" bằng key bạn đã đặt trong Activity
+            database = getActivity().openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
+            Cursor cursor = database.rawQuery("select * " +
+                    "from Artists " +
+                    "JOIN User_Artist ON Artists.ArtistID =User_Artist.User_Artist_ArtistID " +
+                    "WHERE User_Artist.User_Artist_UserID = ? ", new String[]{String.valueOf(maU)});
+            arr.clear();
+            while (cursor.moveToNext()) {
+                Integer maArtist = Integer.valueOf(cursor.getString(0) + "");
+                String ten = cursor.getString(1);
+                byte[] img = cursor.getBlob(2);
+                ThuVien thuVien = new ThuVien(img, ten);
+                arr.add(thuVien);
 
-                }
+            }
             thuVienAdapter.notifyDataSetChanged();
             cursor.close();
-           // }
+            // }
         }
     }
 

@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -104,7 +103,7 @@ public class AddNgheSiFragment extends Fragment implements OnItemClickListener {
             public void onItemClick(String data) {
                 // Tạo đối tượng Bundle và đính kèm dữ liệu
                 //Bundle bundle = new Bundle();
-               // bundle.putString("key", data); // Thay "key" bằng key bạn muốn đặt cho dữ liệu
+                // bundle.putString("key", data); // Thay "key" bằng key bạn muốn đặt cho dữ liệu
                 if (getActivity() instanceof MainActivity) {
                     MainActivity mainActivity = (MainActivity) getActivity();
                     Integer maU = mainActivity.getMyVariable();

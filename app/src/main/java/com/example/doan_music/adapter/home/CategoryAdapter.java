@@ -1,10 +1,11 @@
 package com.example.doan_music.adapter.home;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,9 +13,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_music.R;
+import com.example.doan_music.data.DatabaseManager;
+import com.example.doan_music.data.DbHelper;
 import com.example.doan_music.m_interface.IClickItemCategory;
 import com.example.doan_music.model.Category;
+import com.example.doan_music.model.Playlists;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
@@ -47,20 +52,41 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
         holder.txt_home_cate.setText(category.getName());
 
-        HomeAdapter homeAdapter = new HomeAdapter();
-        homeAdapter.setData(category.getList());
-        holder.rcv_home_cate.setAdapter(homeAdapter);
+        PlaylistHomeAdapter playlistHomeAdapter = new PlaylistHomeAdapter();
+        playlistHomeAdapter.setData(getPlaylists());
+        holder.rcv_home_cate.setAdapter(playlistHomeAdapter);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         holder.rcv_home_cate.setLayoutManager(linearLayoutManager);
 
-        holder.ll_category.setOnClickListener(new View.OnClickListener() {
+        holder.txt_xemthem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 iClickItemCategory.onClickItemCategory(category);
             }
         });
 
+    }
+
+    private List<Playlists> getPlaylists() {
+        List<Playlists> list = new ArrayList<>();
+
+        DbHelper dbHelper = DatabaseManager.dbHelper(context);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("Select * from Playlists", null);
+        while (cursor.moveToNext()) {
+            int id = cursor.getInt(0);
+            String name = cursor.getString(1);
+            byte[] img = cursor.getBlob(2);
+
+            Playlists playlists = new Playlists(id, name, img);
+            list.add(playlists);
+        }
+        cursor.close();
+        db.close();
+
+        return list;
     }
 
     @Override
@@ -70,10 +96,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     }
 
     public class CategoryViewHolder extends RecyclerView.ViewHolder {
-        TextView txt_home_cate;
+        TextView txt_home_cate, txt_xemthem;
         RecyclerView rcv_home_cate;
 
-        LinearLayout ll_category;
 
         public CategoryViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -81,7 +106,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
             txt_home_cate = itemView.findViewById(R.id.txt_home_cate);
             rcv_home_cate = itemView.findViewById(R.id.rcv_home_cate);
 
-            ll_category = itemView.findViewById(R.id.ll_category);
+            txt_xemthem = itemView.findViewById(R.id.txt_xemthem);
         }
     }
 }

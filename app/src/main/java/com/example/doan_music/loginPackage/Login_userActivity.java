@@ -57,8 +57,8 @@ public class Login_userActivity extends AppCompatActivity {
             startActivity(new Intent(Login_userActivity.this, AdminActivity.class));
         } else if (password.isEmpty() || password.length() < 7) {
             showError(EdtPassword, "Your password must be 7 character");
-        } else if (email.isEmpty() || !email.contains("@")) {
-            showError(EdtEmail, "Your email is not valid");
+        } else if (email.isEmpty() || !email.contains("@gmail.com")) {
+            showError(EdtEmail, "Your email must @gmail.com");
         } else {
             database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
             Cursor cursor = database.rawQuery("select * from Users", null);
@@ -69,7 +69,7 @@ public class Login_userActivity extends AppCompatActivity {
                 String Role = cursor.getString(4);
                 if (email.equals(Email) && password.equals(Password)) {
                     // Xử lý đăng nhập thành công
-                    Toast.makeText(Login_userActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Login_userActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
 
                     Intent intent;
                     if ("admin".equalsIgnoreCase(Role)) {
@@ -80,9 +80,10 @@ public class Login_userActivity extends AppCompatActivity {
                         intent = new Intent(Login_userActivity.this, MainActivity.class);
                         intent.putExtra("maU", ma);
                     }
-
                     startActivity(intent);
                     break;
+                } else if (!email.equals(Email) && !password.equals(Password)) {
+                    showError(EdtPassword, "Your password not valid");
                 }
             }
             cursor.close();

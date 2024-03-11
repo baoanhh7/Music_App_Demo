@@ -1,6 +1,8 @@
 package com.example.doan_music.activity;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,7 +14,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_music.R;
 import com.example.doan_music.adapter.home.PlayListAdapter;
+import com.example.doan_music.data.DatabaseManager;
+import com.example.doan_music.data.DbHelper;
 import com.example.doan_music.model.Category;
+import com.example.doan_music.model.Playlists;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PlayListActivity extends AppCompatActivity {
     RecyclerView rcv_playlist;
@@ -20,8 +28,9 @@ public class PlayListActivity extends AppCompatActivity {
     Button btn_back;
     TextView txt_playlist;
     Category category;
-
     Intent i = null;
+
+    Playlists playlists;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,11 +40,32 @@ public class PlayListActivity extends AppCompatActivity {
         addControls();
         addEvents();
 
-        playListAdapter.setData(category.getList());
+        playListAdapter.setData(getPlaylists());
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         rcv_playlist.setLayoutManager(linearLayoutManager);
 
+    }
+
+    private List<Playlists> getPlaylists() {
+        List<Playlists> list = new ArrayList<>();
+
+        DbHelper dbHelper = DatabaseManager.dbHelper(this);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("Select * from Playlists", null);
+        while (cursor.moveToNext()) {
+            int id = cursor.getInt(0);
+            String name = cursor.getString(1);
+            byte[] img = cursor.getBlob(2);
+
+            Playlists playlists = new Playlists(id, name, img);
+            list.add(playlists);
+        }
+        cursor.close();
+        db.close();
+
+        return list;
     }
 
     private void addEvents() {

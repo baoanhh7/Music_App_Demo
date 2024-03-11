@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#191919"
-    android:id="@+id/ll_category"
     android:orientation="vertical">
 
     <TextView
@@ -11,11 +10,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="10dp"
         android:text="Radio phổ biến"
         android:textColor="@color/white"
         android:textSize="23sp"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txt_xemthem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:gravity="right"
+        android:text="Xem thêm"
+        android:textColor="#64F169"
+        android:textSize="16sp"
+        android:textStyle="italic" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcv_home_cate"

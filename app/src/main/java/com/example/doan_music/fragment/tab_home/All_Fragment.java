@@ -1,6 +1,8 @@
 package com.example.doan_music.fragment.tab_home;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,9 +18,12 @@ import com.example.doan_music.activity.PlayListActivity;
 import com.example.doan_music.activity.SongsAlbumActivity;
 import com.example.doan_music.adapter.home.CategoryAdapter;
 import com.example.doan_music.adapter.home.HomeAdapter;
+import com.example.doan_music.data.DatabaseManager;
+import com.example.doan_music.data.DbHelper;
 import com.example.doan_music.m_interface.IClickItemCategory;
 import com.example.doan_music.m_interface.IClickItemUser;
 import com.example.doan_music.model.Category;
+import com.example.doan_music.model.Playlists;
 import com.example.doan_music.model.User;
 
 import java.util.ArrayList;
@@ -29,7 +34,6 @@ public class All_Fragment extends Fragment {
     private HomeAdapter allAdapter_header;
     private CategoryAdapter allCateAdapter_bottom;
     View view;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -71,17 +75,22 @@ public class All_Fragment extends Fragment {
     }
 
     private List<Category> getlistuserBottom() {
-        List<User> list = new ArrayList<>();
+        List<Playlists> list = new ArrayList<>();
 
-        list.add(new User(R.drawable.avt_vu, "Vũ.Radio", false));
-        list.add(new User(R.drawable.avt_ronboogz, "Ronboogz", false));
-        list.add(new User(R.drawable.avt_gducky, "GDucky", false));
-        list.add(new User(R.drawable.avt_hoangdung, "Hoàng Dũng", false));
+        DbHelper dbHelper = DatabaseManager.dbHelper(requireContext());
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        list.add(new User(R.drawable.avt_mck, "RPT MCK Radio", false));
-        list.add(new User(R.drawable.avt_lowg, "Low G Radio", false));
-        list.add(new User(R.drawable.avt_obito, "Obito", false));
-        list.add(new User(R.drawable.avt_dalab, "Dalab Radio", false));
+        Cursor cursor = db.rawQuery("Select * from Playlists", null);
+        while (cursor.moveToNext()) {
+            int id = cursor.getInt(0);
+            String name = cursor.getString(1);
+            byte[] img = cursor.getBlob(2);
+
+            Playlists playlists = new Playlists(id, name, img);
+            list.add(playlists);
+        }
+        cursor.close();
+        db.close();
 
         List<Category> categoryList = new ArrayList<>();
         categoryList.add(new Category("Danh sách phát hàng đầu của bạn", list));
@@ -90,6 +99,27 @@ public class All_Fragment extends Fragment {
         categoryList.add(new Category("Mới nghe gần đây", list));
 
         return categoryList;
+    }
+
+    private List<Playlists> getPlaylists() {
+        List<Playlists> list = new ArrayList<>();
+
+        DbHelper dbHelper = DatabaseManager.dbHelper(requireContext());
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("Select * from Playlists", null);
+        while (cursor.moveToNext()) {
+            int id = cursor.getInt(0);
+            String name = cursor.getString(1);
+            byte[] img = cursor.getBlob(2);
+
+            Playlists playlists = new Playlists(id, name, img);
+            list.add(playlists);
+        }
+        cursor.close();
+        db.close();
+
+        return list;
     }
 
     private void addControls() {
@@ -107,8 +137,6 @@ public class All_Fragment extends Fragment {
             }
         });
 
-//        allCateAdapter_bottom = new CategoryAdapter();
-
         allCateAdapter_bottom = new CategoryAdapter(new IClickItemCategory() {
             @Override
             public void onClickItemCategory(Category category) {
@@ -119,6 +147,7 @@ public class All_Fragment extends Fragment {
         });
 
         rcv_all_header.setAdapter(allAdapter_header);
+
         rcv_all_bottom.setAdapter(allCateAdapter_bottom);
     }
 }

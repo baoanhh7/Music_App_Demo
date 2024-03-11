@@ -18,9 +18,10 @@
             android:src="@drawable/nhungloihuaboquen" />
 
         <TextView
-            android:id="@+id/txt_playlist"
-            android:layout_width="match_parent"
+            android:id="@+id/txt_name"
+            android:layout_width="0dp"
             android:layout_height="70dp"
+            android:layout_weight="1"
             android:background="#191919"
             android:gravity="center|left"
             android:paddingLeft="10dp"
@@ -29,6 +30,16 @@
             android:textSize="15sp"
             android:textStyle="bold" />
 
+        <TextView
+            android:id="@+id/txt_id"
+            android:layout_width="30dp"
+            android:layout_height="70dp"
+            android:background="#191919"
+            android:gravity="center"
+            android:text="id"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
 </LinearLayout>

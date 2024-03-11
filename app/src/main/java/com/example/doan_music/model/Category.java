@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Category implements Serializable {
     private String name;
-    private List<User> list;
+    private List<Playlists> list;
 
     public String getName() {
         return name;
@@ -15,15 +15,15 @@ public class Category implements Serializable {
         this.name = name;
     }
 
-    public List<User> getList() {
+    public List<Playlists> getList() {
         return list;
     }
 
-    public void setList(List<User> list) {
+    public void setList(List<Playlists> list) {
         this.list = list;
     }
 
-    public Category(String name, List<User> list) {
+    public Category(String name, List<Playlists> list) {
         this.name = name;
         this.list = list;
     }
