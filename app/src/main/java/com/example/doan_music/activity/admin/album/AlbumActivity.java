@@ -11,6 +11,8 @@ import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.doan_music.R;
+import com.example.doan_music.activity.admin.AdminActivity;
+import com.example.doan_music.activity.admin.playlist.PlayListAdminActivity;
 import com.example.doan_music.adapter.admin.AlbumAdminAdapter;
 import com.example.doan_music.data.DbHelper;
 import com.example.doan_music.model.Ablum;
@@ -23,7 +25,7 @@ public class AlbumActivity extends AppCompatActivity {
     ListView listView;
     SQLiteDatabase database = null;
     DbHelper dbHelper;
-    Button btn_add_ablum;
+    Button btn_add_ablum,btn_back_add_ablum_admin;
     AlbumAdminAdapter albumAdapter;
     ArrayList<Ablum> arrayAblum;
 
@@ -34,7 +36,7 @@ public class AlbumActivity extends AppCompatActivity {
         addControls();
         addEvents();
         xulaycapnhat();
-        loadData();
+
     }
 
 
@@ -57,7 +59,7 @@ public class AlbumActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
+        loadData();
     }
 
     private void xulaycapnhat() {
@@ -71,10 +73,18 @@ public class AlbumActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        btn_back_add_ablum_admin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AlbumActivity.this, AdminActivity.class));
+                finish();
+            }
+        });
     }
 
     private void addControls() {
         btn_add_ablum = findViewById(R.id.btn_add_ablum);
+        btn_back_add_ablum_admin = findViewById(R.id.btn_back_add_ablum_admin);
         listView = findViewById(R.id.lvAblum_admin);
         arrayAblum = new ArrayList<>();
         albumAdapter = new AlbumAdminAdapter(AlbumActivity.this, arrayAblum);
