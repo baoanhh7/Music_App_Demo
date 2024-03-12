@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Filterable;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,7 +23,6 @@ import com.example.doan_music.data.DbHelper;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
-import com.google.firebase.auth.ActionCodeSettings;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
@@ -37,12 +35,13 @@ import java.util.concurrent.TimeUnit;
 
 public class Register_emailActivity extends AppCompatActivity {
 
-    EditText EdtUsername, EdtEmail, EdtPassword, EdtRepassword,EdtPhone;
+    EditText EdtUsername, EdtEmail, EdtPassword, EdtRepassword, EdtPhone;
     Button btnRegister, btn_back;
     TextView tvLogin;
     DbHelper dbHelper;
     SQLiteDatabase database = null;
     FirebaseAuth auth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,9 +86,9 @@ public class Register_emailActivity extends AppCompatActivity {
             showError(EdtPassword, "Your password must be at least 8 character");
         } else if (repassword.isEmpty() || !repassword.equals(password)) {
             showError(EdtRepassword, "Your password is not match");
-        }else if (phone.isEmpty()|| phone.length() < 12 || phone.length() > 12 ){
+        } else if (phone.isEmpty() || phone.length() < 12 || phone.length() > 12) {
             showError(EdtPhone, "Your phone is not valid!");
-        }  else {
+        } else {
             database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
             Cursor cursor = database.rawQuery("select * from Users", null);
             while (cursor.moveToNext()) {
@@ -98,12 +97,12 @@ public class Register_emailActivity extends AppCompatActivity {
                     showError(EdtEmail, "This email has been registered");
                     break;
                 }
-                }
-            cursor.close();
             }
-
-            onClickverifyPhone(phone);
+            cursor.close();
         }
+
+        onClickverifyPhone(phone);
+    }
 
 
     private void onClickverifyPhone(String phone) {
@@ -128,13 +127,13 @@ public class Register_emailActivity extends AppCompatActivity {
 
                             @Override
                             public void onVerificationFailed(@NonNull FirebaseException e) {
-                                Toast.makeText(Register_emailActivity.this,"Verification Fail ",Toast.LENGTH_SHORT);
+                                Toast.makeText(Register_emailActivity.this, "Verification Fail ", Toast.LENGTH_SHORT);
                             }
 
                             @Override
                             public void onCodeSent(@NonNull String verificationId, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
                                 super.onCodeSent(verificationId, forceResendingToken);
-                                gotoOTP(phone,verificationId);
+                                gotoOTP(phone, verificationId);
                             }
                         })          // OnVerificationStateChangedCallbacks
                         .build();
@@ -143,12 +142,12 @@ public class Register_emailActivity extends AppCompatActivity {
     }
 
     private void gotoOTP(String phone, String verificationId) {
-        Intent intent = new Intent(this,OTPActivity.class);
-        intent.putExtra("phone",phone);
-        intent.putExtra("verification_Id",verificationId);
-        intent.putExtra("Username",EdtUsername.getText().toString());
-        intent.putExtra("Email",EdtEmail.getText().toString());
-        intent.putExtra("Password",EdtPassword.getText().toString());
+        Intent intent = new Intent(this, OTPActivity.class);
+        intent.putExtra("phone", phone);
+        intent.putExtra("verification_Id", verificationId);
+        intent.putExtra("Username", EdtUsername.getText().toString());
+        intent.putExtra("Email", EdtEmail.getText().toString());
+        intent.putExtra("Password", EdtPassword.getText().toString());
         startActivity(intent);
     }
 
@@ -169,7 +168,7 @@ public class Register_emailActivity extends AppCompatActivity {
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                                 // The verification code entered was invalid
-                                Toast.makeText(Register_emailActivity.this,"/ The verification code entered was invalid",Toast.LENGTH_SHORT);
+                                Toast.makeText(Register_emailActivity.this, "/ The verification code entered was invalid", Toast.LENGTH_SHORT);
                             }
                         }
                     }
@@ -180,7 +179,7 @@ public class Register_emailActivity extends AppCompatActivity {
         ContentValues values = new ContentValues();
         values.put("Username", EdtUsername.getText().toString());
         values.put("Email", EdtEmail.getText().toString());
-        values.put("Phone",EdtPhone.getText().toString());
+        values.put("Phone", EdtPhone.getText().toString());
         values.put("Password", EdtPassword.getText().toString());
         dbHelper = DatabaseManager.dbHelper(Register_emailActivity.this);
         long kq = dbHelper.getReadableDatabase().insert("Users", null, values);

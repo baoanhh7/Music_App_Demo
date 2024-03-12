@@ -4,7 +4,6 @@ import static android.content.ContentValues.TAG;
 
 import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,23 +13,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.doan_music.R;
-import com.example.doan_music.activity.MainActivity;
 import com.example.doan_music.data.DatabaseManager;
 import com.example.doan_music.data.DbHelper;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -44,9 +30,6 @@ import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class OTPActivity extends AppCompatActivity {
@@ -54,10 +37,11 @@ public class OTPActivity extends AppCompatActivity {
     Button verifyButton;
     TextView sendOtpAgain;
     DbHelper dbHelper;
-    String phone,verificationId,username,email,password;
+    String phone, verificationId, username, email, password;
     FirebaseAuth auth;
     SQLiteDatabase database = null;
     PhoneAuthProvider.ForceResendingToken mforceResendingToken;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,8 +56,8 @@ public class OTPActivity extends AppCompatActivity {
         verifyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    String strOTP = otpEditText.getText().toString().trim();
-                    onClickSendOTPCode(strOTP);
+                String strOTP = otpEditText.getText().toString().trim();
+                onClickSendOTPCode(strOTP);
             }
         });
         sendOtpAgain.setOnClickListener(new View.OnClickListener() {
@@ -107,7 +91,7 @@ public class OTPActivity extends AppCompatActivity {
 
                             @Override
                             public void onVerificationFailed(@NonNull FirebaseException e) {
-                                Toast.makeText(OTPActivity.this,"Verification Fail ",Toast.LENGTH_SHORT);
+                                Toast.makeText(OTPActivity.this, "Verification Fail ", Toast.LENGTH_SHORT);
                             }
 
                             @Override
@@ -125,6 +109,7 @@ public class OTPActivity extends AppCompatActivity {
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, strOTP);
         signInWithPhoneAuthCredential(credential);
     }
+
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
         auth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -142,17 +127,18 @@ public class OTPActivity extends AppCompatActivity {
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                                 // The verification code entered was invalid
-                                Toast.makeText(OTPActivity.this,"/ The verification code entered was invalid",Toast.LENGTH_SHORT);
+                                Toast.makeText(OTPActivity.this, "/ The verification code entered was invalid", Toast.LENGTH_SHORT);
                             }
                         }
                     }
                 });
     }
+
     private void goToLogin() {
         ContentValues values = new ContentValues();
         values.put("Username", username);
         values.put("Email", email);
-        values.put("Phone",phone);
+        values.put("Phone", phone);
         values.put("Password", password);
         dbHelper = DatabaseManager.dbHelper(OTPActivity.this);
         long kq = dbHelper.getReadableDatabase().insert("Users", null, values);
@@ -169,13 +155,14 @@ public class OTPActivity extends AppCompatActivity {
         sendOtpAgain = findViewById(R.id.txt_sendOtpAgain);
 
     }
-     private  void getDataIntent(){
-        phone= getIntent().getStringExtra("phone");
-         verificationId= getIntent().getStringExtra("verification_Id");
-         username= getIntent().getStringExtra("Username");
-         email= getIntent().getStringExtra("Email");
-         password= getIntent().getStringExtra("Password");
-     }
+
+    private void getDataIntent() {
+        phone = getIntent().getStringExtra("phone");
+        verificationId = getIntent().getStringExtra("verification_Id");
+        username = getIntent().getStringExtra("Username");
+        email = getIntent().getStringExtra("Email");
+        password = getIntent().getStringExtra("Password");
+    }
 }
 
 

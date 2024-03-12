@@ -1,5 +1,7 @@
 package com.example.doan_music.fragment.main;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,7 +15,6 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.doan_music.R;
-import com.example.doan_music.activity.MainActivity;
 import com.example.doan_music.adapter.home.TabLayoutAdapter;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
@@ -38,11 +39,14 @@ public class Home_Fragment extends Fragment {
 
         // Sau khi tạo đối tượng trung gian là là View thì gán vào dòng return, sau đó return đối tượng View để sử dụng
         mView = inflater.inflate(R.layout.fragment_home_, container, false);
+        addControls();
 
-        MainActivity mainActivity = (MainActivity) getActivity();
+//        MainActivity mainActivity = (MainActivity) getActivity();
 //        txt_nameUser.setText(mainActivity.getName());
 
-        addControls();
+        SharedPreferences preferences = requireContext().getSharedPreferences("data", Context.MODE_PRIVATE);
+        String value = preferences.getString("ten", "Loading..");
+        txt_nameUser.setText(value);
 
         // Quản lý hiển thị các trang (Fragment) theo TabLayout
         tabLayout.setupWithViewPager(home_viewpager);

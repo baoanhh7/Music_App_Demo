@@ -1,6 +1,8 @@
 package com.example.doan_music.loginPackage;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -11,23 +13,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.doan_music.R;
 import com.example.doan_music.activity.MainActivity;
 import com.example.doan_music.activity.admin.AdminActivity;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
 
 public class Login_userActivity extends AppCompatActivity {
     EditText EdtEmail, EdtPassword;
@@ -77,6 +67,7 @@ public class Login_userActivity extends AppCompatActivity {
             Cursor cursor = database.rawQuery("select * from Users", null);
             while (cursor.moveToNext()) {
                 Integer ma = Integer.valueOf(cursor.getString(0) + "");
+                String Name = cursor.getString(1);
                 String Email = cursor.getString(2);
                 String Password = cursor.getString(3);
                 String Role = cursor.getString(4);
@@ -92,8 +83,14 @@ public class Login_userActivity extends AppCompatActivity {
                         // Nếu là người dùng thông thường, chuyển đến MainActivity
                         intent = new Intent(Login_userActivity.this, MainActivity.class);
                         //intent.putExtra("emailU", Email);
-                       // intent.putExtra("code",code);
-                        intent.putExtra("maU",ma);
+                        // intent.putExtra("code",code);
+                        intent.putExtra("maU", ma);
+                        intent.putExtra("tenU", Name);
+
+                        SharedPreferences preferences = getSharedPreferences("data", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putString("ten", Name);
+                        editor.apply();
                     }
                     startActivity(intent);
                     break;
