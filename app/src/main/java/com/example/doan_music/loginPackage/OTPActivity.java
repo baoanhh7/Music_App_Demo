@@ -1,15 +1,21 @@
 package com.example.doan_music.loginPackage;
 
+import static android.content.ContentValues.TAG;
+
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -25,23 +31,40 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.doan_music.R;
 import com.example.doan_music.activity.MainActivity;
+import com.example.doan_music.data.DatabaseManager;
+import com.example.doan_music.data.DbHelper;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseException;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.PhoneAuthCredential;
+import com.google.firebase.auth.PhoneAuthOptions;
+import com.google.firebase.auth.PhoneAuthProvider;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public class OTPActivity extends AppCompatActivity {
-    int code;
     EditText otpEditText;
     Button verifyButton;
-    String email;
+    TextView sendOtpAgain;
+    DbHelper dbHelper;
+    String phone,verificationId,username,email,password;
+    FirebaseAuth auth;
     SQLiteDatabase database = null;
+    PhoneAuthProvider.ForceResendingToken mforceResendingToken;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_otpactivity);
+        auth = FirebaseAuth.getInstance();
+        getDataIntent();
         addControls();
-        a();
         addEvents();
     }
 
@@ -49,64 +72,110 @@ public class OTPActivity extends AppCompatActivity {
         verifyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String inputcode = otpEditText.getText().toString();
-                if(inputcode.equals(String.valueOf(code)))
-                {
-                    database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
-                    Cursor cursor = database.rawQuery("select * from Users", null);
-                    while (cursor.moveToNext()) {
-                        Integer ma = Integer.valueOf(cursor.getString(0) + "");
-                        String Email = cursor.getString(2);
-                        if(Email.equals(email))
-                        {
-                            Intent intent = new Intent(OTPActivity.this, MainActivity.class);
-                            intent.putExtra("maU", ma);
-                            startActivity(intent);
-                        }
-                    }
-                }
+                    String strOTP = otpEditText.getText().toString().trim();
+                    onClickSendOTPCode(strOTP);
             }
         });
+        sendOtpAgain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickSendOTPAgain();
+            }
+        });
+    }
+
+    private void onClickSendOTPAgain() {
+        PhoneAuthOptions options =
+                PhoneAuthOptions.newBuilder(auth)
+                        .setPhoneNumber(phone)       // Phone number to verify
+                        .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
+                        .setActivity(this)// (optional) Activity for callback binding
+                        .setForceResendingToken(mforceResendingToken)
+                        // If no activity is passed, reCAPTCHA verification can not be used.
+                        .setCallbacks(new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+                            @Override
+                            public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
+                                // This callback will be invoked in two situations:
+                                // 1 - Instant verification. In some cases the phone number can be instantly
+                                //     verified without needing to send or enter a verification code.
+                                // 2 - Auto-retrieval. On some devices Google Play services can automatically
+                                //     detect the incoming verification SMS and perform verification without
+                                //     user action.
+
+                                signInWithPhoneAuthCredential(phoneAuthCredential);
+                            }
+
+                            @Override
+                            public void onVerificationFailed(@NonNull FirebaseException e) {
+                                Toast.makeText(OTPActivity.this,"Verification Fail ",Toast.LENGTH_SHORT);
+                            }
+
+                            @Override
+                            public void onCodeSent(@NonNull String mverificationId, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+                                super.onCodeSent(verificationId, forceResendingToken);
+                                verificationId = mverificationId;
+                                mforceResendingToken = forceResendingToken;
+                            }
+                        })          // OnVerificationStateChangedCallbacks
+                        .build();
+        PhoneAuthProvider.verifyPhoneNumber(options);
+    }
+
+    private void onClickSendOTPCode(String strOTP) {
+        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, strOTP);
+        signInWithPhoneAuthCredential(credential);
+    }
+    private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
+        auth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.e(TAG, "signInWithCredential:success");
+
+                            FirebaseUser user = task.getResult().getUser();
+                            // Update UI
+                            goToLogin();
+                        } else {
+                            // Sign in failed, display a message and update the UI
+                            Log.w(TAG, "signInWithCredential:failure", task.getException());
+                            if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
+                                // The verification code entered was invalid
+                                Toast.makeText(OTPActivity.this,"/ The verification code entered was invalid",Toast.LENGTH_SHORT);
+                            }
+                        }
+                    }
+                });
+    }
+    private void goToLogin() {
+        ContentValues values = new ContentValues();
+        values.put("Username", username);
+        values.put("Email", email);
+        values.put("Phone",phone);
+        values.put("Password", password);
+        dbHelper = DatabaseManager.dbHelper(OTPActivity.this);
+        long kq = dbHelper.getReadableDatabase().insert("Users", null, values);
+        if (kq > 0) {
+            Toast.makeText(this, "Register Successful", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(OTPActivity.this, Login_userActivity.class));
+        } else
+            Toast.makeText(OTPActivity.this, "Register Fail", Toast.LENGTH_SHORT);
     }
 
     private void addControls() {
         otpEditText = findViewById(R.id.otpEditText);
         verifyButton = findViewById(R.id.verifyButton);
-        // Lấy Intent đã được chuyển từ Login_userActivity
-        Intent intent = getIntent();
+        sendOtpAgain = findViewById(R.id.txt_sendOtpAgain);
 
-        // Kiểm tra xem có dữ liệu "maU" được chuyển không
-        if (intent.hasExtra("emailU")) {
-            // Lấy dữ liệu từ Intent
-            email = intent.getStringExtra("emailU");
-        }
     }
-
-    private void a() {
-        Random random = new Random();
-        code = random.nextInt(8999)+1000;
-        String url ="https://doanmusic.000webhostapp.com/sendEmail.php";
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String s) {
-                Toast.makeText(OTPActivity.this,""+s,Toast.LENGTH_SHORT).show();
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                Toast.makeText(OTPActivity.this,""+volleyError,Toast.LENGTH_SHORT).show();
-            }
-        }){
-            @Nullable
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String> params = new HashMap<>();
-                params.put("email",email);
-                params.put("code",String.valueOf(code));
-                return params;
-            }
-        };
-        requestQueue.add(stringRequest);
-    }
+     private  void getDataIntent(){
+        phone= getIntent().getStringExtra("phone");
+         verificationId= getIntent().getStringExtra("verification_Id");
+         username= getIntent().getStringExtra("Username");
+         email= getIntent().getStringExtra("Email");
+         password= getIntent().getStringExtra("Password");
+     }
 }
+
+

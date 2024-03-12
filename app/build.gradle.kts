@@ -1,5 +1,8 @@
 plugins {
     id("com.android.application")
+    // Add the Google services Gradle plugin
+    id ( "com.google.gms.google-services" )
+
 }
 
 android {
@@ -14,6 +17,13 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+    packagingOptions {
+        exclude ("META-INF/DEPENDENCIES")
+        exclude ("META-INF/NOTICE")
+        exclude ("META-INF/LICENSE")
+        exclude ("META-INF/LICENSE.txt")
+        exclude ("META-INF/NOTICE.txt")
     }
 
     buildTypes {
@@ -30,6 +40,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
     buildToolsVersion = "34.0.0"
+
 }
 
 dependencies {
@@ -46,6 +57,15 @@ dependencies {
     implementation("com.makeramen:roundedimageview:2.3.0")
     implementation("com.android.volley:volley:1.2.1")
     implementation("io.github.chaosleung:pinview:1.4.4")
+    implementation ("com.sendgrid:sendgrid-java:4.7.0")
     //bottom sheet
+    // Import the Firebase BoM
+    implementation ( platform ( "com.google.firebase:firebase-bom:32.7.4" ))
+
+
+    // TODO: Add the dependencies for Firebase products you want to use
+    // When using the BoM, don't specify versions in Firebase dependencies
+    implementation ( "com.google.firebase:firebase-analytics" )
+    implementation ( "com.google.firebase:firebase-auth" )
 
 }

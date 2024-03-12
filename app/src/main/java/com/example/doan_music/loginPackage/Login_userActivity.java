@@ -34,6 +34,7 @@ public class Login_userActivity extends AppCompatActivity {
     TextView tvForgotPass, tvSignup;
     Button btnLogin, btn_back;
     SQLiteDatabase database = null;
+    int code;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +92,7 @@ public class Login_userActivity extends AppCompatActivity {
                         // Nếu là người dùng thông thường, chuyển đến MainActivity
                         intent = new Intent(Login_userActivity.this, MainActivity.class);
                         //intent.putExtra("emailU", Email);
+                       // intent.putExtra("code",code);
                         intent.putExtra("maU",ma);
                     }
                     startActivity(intent);
