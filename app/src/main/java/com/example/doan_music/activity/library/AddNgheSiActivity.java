@@ -96,7 +96,5 @@ public class AddNgheSiActivity extends AppCompatActivity implements OnItemClickL
 
     @Override
     public void onItemClick(String data) {
-
-
     }
 }
