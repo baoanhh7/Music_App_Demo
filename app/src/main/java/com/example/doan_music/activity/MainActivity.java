@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottom_navigation;
     NavigationView navigationView;
     Integer maU;
+    String tenU;
     DbHelper dbHelper = null;
 
     @Override
@@ -89,6 +90,10 @@ public class MainActivity extends AppCompatActivity {
         return maU;
     }
 
+    public String getName() {
+        return tenU;
+    }
+
     private void addControls() {
         bottom_navigation = findViewById(R.id.bottomNavigationView);
         replace(new Home_Fragment());
@@ -97,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigation_drawer);
+
         // Lấy Intent đã được chuyển từ Login_userActivity
         Intent intent = getIntent();
 
@@ -104,8 +110,8 @@ public class MainActivity extends AppCompatActivity {
         if (intent.hasExtra("maU")) {
             // Lấy dữ liệu từ Intent
             maU = intent.getIntExtra("maU", 0);
+            tenU = intent.getStringExtra("tenU");
         }
-
     }
 
     // Nhấn nút back device để trở về(sử dụng nút trong device)

@@ -12,10 +12,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.doan_music.R;
 import com.example.doan_music.activity.MainActivity;
 import com.example.doan_music.activity.admin.AdminActivity;
+import com.example.doan_music.fragment.main.Home_Fragment;
 
 public class Login_userActivity extends AppCompatActivity {
     EditText EdtEmail, EdtPassword;
@@ -46,7 +48,6 @@ public class Login_userActivity extends AppCompatActivity {
                 startActivity(new Intent(Login_userActivity.this, LoginActivity.class));
             }
         });
-
     }
 
     private void checkCrededentials() {
@@ -64,6 +65,7 @@ public class Login_userActivity extends AppCompatActivity {
             Cursor cursor = database.rawQuery("select * from Users", null);
             while (cursor.moveToNext()) {
                 Integer ma = Integer.valueOf(cursor.getString(0) + "");
+                String Name = cursor.getString(1).trim();
                 String Email = cursor.getString(2);
                 String Password = cursor.getString(3);
                 String Role = cursor.getString(4);
@@ -79,6 +81,11 @@ public class Login_userActivity extends AppCompatActivity {
                         // Nếu là người dùng thông thường, chuyển đến MainActivity
                         intent = new Intent(Login_userActivity.this, MainActivity.class);
                         intent.putExtra("maU", ma);
+                        intent.putExtra("tenU", Name);
+
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.frame_container, new Home_Fragment());
+                        transaction.commit();
                     }
                     startActivity(intent);
                     break;
@@ -89,6 +96,7 @@ public class Login_userActivity extends AppCompatActivity {
             cursor.close();
         }
     }
+
 
     private void showError(@NonNull EditText Edt, String s) {
         Edt.setError(s);

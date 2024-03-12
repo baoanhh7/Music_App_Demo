@@ -25,12 +25,31 @@
             android:background="@drawable/ic_user"
             android:backgroundTint="@color/white" />
 
+        <TextView
+            android:id="@+id/hello"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:gravity="center"
+            android:text="Hello, "
+            android:textColor="@color/white"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txt_nameUser"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="Name"
+            android:textColor="#64DA69"
+            android:textStyle="italic" />
         <!--        fill các tab sẽ được phân bồ đều theo chiều rộng, scrollable khi còn chỗ thì sẽ cuộn-->
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
+            android:layout_marginLeft="20dp"
             android:background="#191919"
             app:tabGravity="center"
             app:tabMode="scrollable" />
