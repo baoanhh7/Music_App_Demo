@@ -44,6 +44,8 @@ dependencies {
 
     implementation("de.hdodenhof:circleimageview:2.1.0")
     implementation("com.makeramen:roundedimageview:2.3.0")
+    implementation("com.android.volley:volley:1.2.1")
+    implementation("io.github.chaosleung:pinview:1.4.4")
     //bottom sheet
 
 }
