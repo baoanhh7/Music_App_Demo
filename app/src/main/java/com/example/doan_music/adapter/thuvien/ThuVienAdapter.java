@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_music.R;
+import com.example.doan_music.m_interface.OnItemClickListener;
 import com.example.doan_music.model.ThuVien;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class ThuVienAdapter extends RecyclerView.Adapter<ThuVienAdapter.ViewHold
     //khai báo biến
     Fragment context;
     ArrayList<ThuVien> arr, arr1;
+    private OnItemClickListener onItemClickListener;
 
     public ThuVienAdapter(Fragment context, ArrayList<ThuVien> arr) {
         this.context = context;
@@ -46,6 +48,17 @@ public class ThuVienAdapter extends RecyclerView.Adapter<ThuVienAdapter.ViewHold
         Bitmap bitmap = BitmapFactory.decodeByteArray(hinhAlbumByteArray, 0, hinhAlbumByteArray.length);
         holder.img.setImageBitmap(bitmap);
         holder.txtTen.setText(tv.getTensp());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onItemClickListener != null) {
+                    onItemClickListener.onItemClick(arr.get(position).getTensp());
+                }
+            }
+        });
+    }
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.onItemClickListener = listener;
     }
 
     @Override
@@ -89,9 +102,8 @@ public class ThuVienAdapter extends RecyclerView.Adapter<ThuVienAdapter.ViewHold
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            img = itemView.findViewById(R.id.img);
-            txtTen = itemView.findViewById(R.id.txtTen);
-            txtND = itemView.findViewById(R.id.txtND);
+            img = itemView.findViewById(R.id.img_thuvien);
+            txtTen = itemView.findViewById(R.id.txtTen_thuvien);
         }
     }
 }
