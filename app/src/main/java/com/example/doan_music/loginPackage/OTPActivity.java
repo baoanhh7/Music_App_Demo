@@ -9,12 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -36,6 +32,7 @@ public class OTPActivity extends AppCompatActivity {
     Button verifyButton;
     String email;
     SQLiteDatabase database = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,15 +47,13 @@ public class OTPActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String inputcode = otpEditText.getText().toString();
-                if(inputcode.equals(String.valueOf(code)))
-                {
+                if (inputcode.equals(String.valueOf(code))) {
                     database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
                     Cursor cursor = database.rawQuery("select * from Users", null);
                     while (cursor.moveToNext()) {
                         Integer ma = Integer.valueOf(cursor.getString(0) + "");
                         String Email = cursor.getString(2);
-                        if(Email.equals(email))
-                        {
+                        if (Email.equals(email)) {
                             Intent intent = new Intent(OTPActivity.this, MainActivity.class);
                             intent.putExtra("maU", ma);
                             startActivity(intent);
@@ -84,26 +79,26 @@ public class OTPActivity extends AppCompatActivity {
 
     private void a() {
         Random random = new Random();
-        code = random.nextInt(8999)+1000;
-        String url ="https://doanmusic.000webhostapp.com/sendEmail.php";
+        code = random.nextInt(8999) + 1000;
+        String url = "https://doanmusic.000webhostapp.com/sendEmail.php";
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
-                Toast.makeText(OTPActivity.this,""+s,Toast.LENGTH_SHORT).show();
+                Toast.makeText(OTPActivity.this, "" + s, Toast.LENGTH_SHORT).show();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Toast.makeText(OTPActivity.this,""+volleyError,Toast.LENGTH_SHORT).show();
+                Toast.makeText(OTPActivity.this, "" + volleyError, Toast.LENGTH_SHORT).show();
             }
-        }){
+        }) {
             @Nullable
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String> params = new HashMap<>();
-                params.put("email",email);
-                params.put("code",String.valueOf(code));
+                Map<String, String> params = new HashMap<>();
+                params.put("email", email);
+                params.put("code", String.valueOf(code));
                 return params;
             }
         };

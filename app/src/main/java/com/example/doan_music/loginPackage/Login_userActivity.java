@@ -64,6 +64,7 @@ public class Login_userActivity extends AppCompatActivity {
             Cursor cursor = database.rawQuery("select * from Users", null);
             while (cursor.moveToNext()) {
                 Integer ma = Integer.valueOf(cursor.getString(0) + "");
+                String Name = cursor.getString(1);
                 String Email = cursor.getString(2);
                 String Password = cursor.getString(3);
                 String Role = cursor.getString(4);
@@ -79,6 +80,8 @@ public class Login_userActivity extends AppCompatActivity {
                         // Nếu là người dùng thông thường, chuyển đến MainActivity
                         intent = new Intent(Login_userActivity.this, MainActivity.class);
                         intent.putExtra("maU", ma);
+                        intent.putExtra("tenU", Name);
+
                     }
                     startActivity(intent);
                     break;
