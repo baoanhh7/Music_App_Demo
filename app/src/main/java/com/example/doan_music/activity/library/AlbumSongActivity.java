@@ -9,20 +9,18 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_music.R;
-import com.example.doan_music.adapter.thuvien.ThuVienAdapter;
 import com.example.doan_music.adapter.thuvien.ThuVienAlbumAdapter;
 import com.example.doan_music.model.ThuVien;
 
 import java.util.ArrayList;
 
 public class AlbumSongActivity extends AppCompatActivity {
-    ImageButton btnback,btnplay;
+    ImageButton btnback, btnplay;
     ImageView imgHinh;
     RecyclerView rcv;
     ThuVienAlbumAdapter thuVienAlbumAdapter;
@@ -49,16 +47,16 @@ public class AlbumSongActivity extends AppCompatActivity {
     }
 
     private void loadImgArtist() {
-        Integer IDArtist = getIntent().getIntExtra("MaArtist",-1);
+        Integer IDArtist = getIntent().getIntExtra("MaArtist", -1);
         database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
-        Cursor cursor = database.rawQuery("select *  from Artists" ,null);
+        Cursor cursor = database.rawQuery("select *  from Artists", null);
 //                "from Artists " +
 //                "JOIN Songs ON Artists.ArtistID =Songs.ArtistID " +
 //                "WHERE Songs.ArtistID = ? ", new String[]{String.valueOf(IDArtist)});
         while (cursor.moveToNext()) {
             Integer idArtist = cursor.getInt(0);
             byte[] img = cursor.getBlob(2);
-            if(idArtist.equals(IDArtist)){
+            if (idArtist.equals(IDArtist)) {
                 Bitmap bitmap = BitmapFactory.decodeByteArray(img, 0, img.length);
                 imgHinh.setImageBitmap(bitmap);
             }
@@ -67,16 +65,15 @@ public class AlbumSongActivity extends AppCompatActivity {
     }
 
     private void loadData() {
-        Integer IDArtist = getIntent().getIntExtra("MaArtist",-1);
+        Integer IDArtist = getIntent().getIntExtra("MaArtist", -1);
         database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
-        Cursor cursor = database.rawQuery("select * from Songs",null);
+        Cursor cursor = database.rawQuery("select * from Songs", null);
         arr.clear();
-        while (cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             Integer IdArtist = cursor.getInt(4);
             String ten = cursor.getString(2);
             byte[] img = cursor.getBlob(3);
-            if(IdArtist.equals(IDArtist))
-            {
+            if (IdArtist.equals(IDArtist)) {
                 ThuVien thuVien = new ThuVien(img, ten);
                 arr.add(thuVien);
             }
@@ -91,7 +88,7 @@ public class AlbumSongActivity extends AppCompatActivity {
         imgHinh = findViewById(R.id.img_song_album);
         rcv = findViewById(R.id.rcv_songlalbum);
         arr = new ArrayList<>();
-        thuVienAlbumAdapter = new ThuVienAlbumAdapter(AlbumSongActivity.this,arr);
+        thuVienAlbumAdapter = new ThuVienAlbumAdapter(AlbumSongActivity.this, arr);
         rcv.setAdapter(thuVienAlbumAdapter);
         LinearLayoutManager linearLayout = new LinearLayoutManager(this);
         rcv.setLayoutManager(linearLayout);

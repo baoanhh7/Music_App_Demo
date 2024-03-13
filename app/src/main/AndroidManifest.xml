@@ -18,6 +18,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
         tools:targetApi="31">
+        <service
+            android:name=".service.MyService"
+            android:enabled="true"
+            android:exported="true"></service>
+
         <activity
             android:name=".activity.library.AlbumSongActivity"
             android:exported="false" />

@@ -31,7 +31,7 @@ public class PlayMusicActivity extends AppCompatActivity {
         //myMusic = MediaPlayer.create(this, R.raw.nhung_loi_hua_bo_quen);
 
         try {
-            myMusic.setDataSource("https://doanmusic.000webhostapp.com/BuonHayVuiFeatRptMckObitoRonboogz-VSOULRPTMCKObitoRonboogz-13159599.mp3");
+            myMusic.setDataSource("https://musiclink666.000webhostapp.com/anhnhora-Vu.mp3");
             myMusic.prepare();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -42,6 +42,7 @@ public class PlayMusicActivity extends AppCompatActivity {
 
         myMusic.start();
 
+        // tạo biến duration để lưu thời gian bài hát
         String duration = timeSeekbar(myMusic.getDuration());
         txt_time.setText(duration);
 
@@ -79,7 +80,7 @@ public class PlayMusicActivity extends AppCompatActivity {
 //        btn_pause.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                // Khai báo Intent công khai để khởi động Service
+//                // Khai báo Intent công khai để khởi động MyService_Music
 //                Intent intent2 = new Intent(PlayMusicActivity.this, MyService_Music.class);
 //                stopService(intent2);
 //                // Nhấn vào Stop chuyển ảnh của play sang pause
@@ -95,6 +96,7 @@ public class PlayMusicActivity extends AppCompatActivity {
             }
         });
 
+        // set giới hạn Max cho thanh seekBar
         seekBar.setMax(myMusic.getDuration());
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override

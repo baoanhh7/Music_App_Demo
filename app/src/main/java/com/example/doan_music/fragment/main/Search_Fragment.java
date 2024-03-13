@@ -1,19 +1,10 @@
 package com.example.doan_music.fragment.main;
 
-import android.app.SearchManager;
-import android.content.ClipData;
-import android.media.RouteListingPreference;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -58,7 +49,7 @@ public class Search_Fragment extends Fragment {
         searchAdapter_header.setData(getlistuserHeader());
         searchAdapter_bottom.setData(getlistuserBottom());
 
-        rcvSearchItem= view.findViewById(R.id.rcv_searchItem);
+        rcvSearchItem = view.findViewById(R.id.rcv_searchItem);
         LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(requireContext());
         rcvSearchItem.setLayoutManager((linearLayoutManager1));
 
@@ -182,7 +173,6 @@ public class Search_Fragment extends Fragment {
 
         rcv_search_header.setAdapter(searchAdapter_header);
         rcv_search_bottom.setAdapter(searchAdapter_bottom);
-
 
 
     }

@@ -29,7 +29,7 @@ public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.se
     @NonNull
     @Override
     public search_itemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_searchview,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_searchview, parent, false);
         return new search_itemViewHolder(view);
     }
 
@@ -46,7 +46,7 @@ public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.se
 
     @Override
     public int getItemCount() {
-        if (listSearchItem !=null) {
+        if (listSearchItem != null) {
             return listSearchItem.size();
         }
         return 0;
@@ -56,20 +56,22 @@ public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.se
         private ImageView imgItem;
         private TextView tvName;
         private TextView tvDescribe;
+
         public search_itemViewHolder(@NonNull View itemView) {
             super(itemView);
-            imgItem=itemView.findViewById(R.id.img_search_song);
-            tvName=itemView.findViewById(R.id.tv_search_song_name);
-            tvDescribe=itemView.findViewById(R.id.tv_search_song_describe);
+            imgItem = itemView.findViewById(R.id.img_search_song);
+            tvName = itemView.findViewById(R.id.tv_search_song_name);
+            tvDescribe = itemView.findViewById(R.id.tv_search_song_describe);
         }
     }
+
     @Override
     public Filter getFilter() {
         return new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
                 String strSearch = constraint.toString();
-                if (strSearch.isEmpty()){
+                if (strSearch.isEmpty()) {
                     listSearchItem = listSearchItemOld;
                 } else {
                     List<SearchItem> list = new ArrayList<>();
@@ -87,7 +89,7 @@ public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.se
 
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
-                listSearchItem =(List<SearchItem>) results.values;
+                listSearchItem = (List<SearchItem>) results.values;
                 notifyDataSetChanged();
             }
         };

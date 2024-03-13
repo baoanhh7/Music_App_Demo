@@ -157,13 +157,13 @@ public class Library_Fragment extends Fragment implements OnItemClickListener {
             @Override
             public void onItemClick(String data) {
                 database = getActivity().openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
-                Cursor cursor = database.rawQuery("select * from Artists",null);
-                while (cursor.moveToNext()){
+                Cursor cursor = database.rawQuery("select * from Artists", null);
+                while (cursor.moveToNext()) {
                     Integer Id = cursor.getInt(0);
                     String ten = cursor.getString(1);
-                    if(data.equals(ten)) {
+                    if (data.equals(ten)) {
                         Intent intent = new Intent(requireContext(), AlbumSongActivity.class);
-                        intent.putExtra("MaArtist",Id);
+                        intent.putExtra("MaArtist", Id);
                         startActivity(intent);
                         break;
                     }

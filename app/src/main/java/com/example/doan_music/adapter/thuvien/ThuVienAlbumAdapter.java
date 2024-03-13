@@ -6,13 +6,10 @@ import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_music.R;
@@ -20,7 +17,7 @@ import com.example.doan_music.model.ThuVien;
 
 import java.util.ArrayList;
 
-public class ThuVienAlbumAdapter extends RecyclerView.Adapter<ThuVienAlbumAdapter.ViewHolder>{
+public class ThuVienAlbumAdapter extends RecyclerView.Adapter<ThuVienAlbumAdapter.ViewHolder> {
     //khai báo biến
     Context context;
     ArrayList<ThuVien> arr, arr1;
