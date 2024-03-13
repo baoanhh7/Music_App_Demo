@@ -86,7 +86,7 @@ public class Register_emailActivity extends AppCompatActivity {
             showError(EdtPassword, "Your password must be at least 8 character");
         } else if (repassword.isEmpty() || !repassword.equals(password)) {
             showError(EdtRepassword, "Your password is not match");
-        } else if (phone.isEmpty() || phone.length() < 12 || phone.length() > 12) {
+        } else if (phone.isEmpty() || (phone.length() < 12 && phone.length() > 12)) {
             showError(EdtPhone, "Your phone is not valid!");
         } else {
             database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
