@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
     public Integer getMyVariable() {
         return maU;
     }

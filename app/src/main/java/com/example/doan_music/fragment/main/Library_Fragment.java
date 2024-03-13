@@ -2,6 +2,7 @@ package com.example.doan_music.fragment.main;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -22,16 +23,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_music.R;
 import com.example.doan_music.activity.MainActivity;
+import com.example.doan_music.activity.library.AlbumSongActivity;
 import com.example.doan_music.adapter.thuvien.ThuVienAdapter;
 import com.example.doan_music.data.DbHelper;
 import com.example.doan_music.fragment.library.AddNgheSiFragment;
+import com.example.doan_music.m_interface.OnItemClickListener;
 import com.example.doan_music.model.ThuVien;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 
 
-public class Library_Fragment extends Fragment {
+public class Library_Fragment extends Fragment implements OnItemClickListener {
     RecyclerView recyclerView;
     ThuVienAdapter thuVienAdapter;
     ArrayList<ThuVien> arr;
@@ -150,6 +153,25 @@ public class Library_Fragment extends Fragment {
         btnDoi = view.findViewById(R.id.btnDoi);
         arr = new ArrayList<>();
         thuVienAdapter = new ThuVienAdapter(this, arr);
+        thuVienAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(String data) {
+                database = getActivity().openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
+                Cursor cursor = database.rawQuery("select * from Artists",null);
+                while (cursor.moveToNext()){
+                    Integer Id = cursor.getInt(0);
+                    String ten = cursor.getString(1);
+                    if(data.equals(ten)) {
+                        Intent intent = new Intent(requireContext(), AlbumSongActivity.class);
+                        intent.putExtra("MaArtist",Id);
+                        startActivity(intent);
+                        break;
+                    }
+                }
+                cursor.close();
+
+            }
+        });
         recyclerView.setAdapter(thuVienAdapter);
         LinearLayoutManager linearLayout = new LinearLayoutManager(requireContext());
         GridLayoutManager gridLayoutManager = new GridLayoutManager(requireContext(), 2);
@@ -166,5 +188,10 @@ public class Library_Fragment extends Fragment {
         });
         //recyclerViewNV.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.HORIZONTAL));
         // Lấy Bundle từ Fragment
+    }
+
+    @Override
+    public void onItemClick(String data) {
+
     }
 }
