@@ -20,13 +20,14 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!--        <TextView-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:text="Bảo Anh"-->
-        <!--            android:textColor="@color/white"-->
-        <!--            android:textSize="18sp"-->
-        <!--            android:textStyle="bold" />-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:text="Welcome"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"

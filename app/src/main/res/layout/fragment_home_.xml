@@ -27,24 +27,36 @@
             android:backgroundTint="@color/white" />
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:fontFamily="cursive"
+            android:gravity="center"
+            android:text="Hi,"
+            android:textColor="#FFFFFF"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
+        <TextView
             android:id="@+id/txt_nameUser"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginStart="5dp"
+            android:fontFamily="cursive"
             android:gravity="center"
             android:text="Le Viet Bao Anh"
             android:textColor="#64DA69"
-            android:textSize="15dp"
-            android:textStyle="bold|italic" />
+            android:textSize="18dp"
+            android:textStyle="bold" />
         <!--        fill các tab sẽ được phân bồ đều theo chiều rộng, scrollable khi còn chỗ thì sẽ cuộn-->
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:background="#191919"
-            app:tabGravity="center"
+            app:tabGravity="fill"
             app:tabMode="scrollable" />
 
     </LinearLayout>
