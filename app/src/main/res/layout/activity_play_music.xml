@@ -127,5 +127,13 @@
             android:src="@android:drawable/ic_media_next" />
 
     </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:id="@+id/txtLoibaihat"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:textColor="#FFFFFF"
+        android:textSize="25dp"
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

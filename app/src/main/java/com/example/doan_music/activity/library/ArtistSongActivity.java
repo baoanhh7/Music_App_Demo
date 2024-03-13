@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_music.R;
 import com.example.doan_music.adapter.thuvien.ThuVienAlbumAdapter;
+import com.example.doan_music.m_interface.OnItemClickLIstener2;
 import com.example.doan_music.m_interface.OnItemClickListener;
 import com.example.doan_music.model.ThuVien;
 import com.example.doan_music.music.PlayMusicActivity;
@@ -28,6 +29,7 @@ public class ArtistSongActivity extends AppCompatActivity implements OnItemClick
     RecyclerView rcv;
     ThuVienAlbumAdapter thuVienAlbumAdapter;
     ArrayList<ThuVien> arr;
+    ArrayList<Integer> arr1 =new ArrayList<>();
     SQLiteDatabase database = null;
 
     @Override
@@ -73,11 +75,13 @@ public class ArtistSongActivity extends AppCompatActivity implements OnItemClick
         Cursor cursor = database.rawQuery("select * from Songs", null);
         arr.clear();
         while (cursor.moveToNext()) {
+            Integer id = cursor.getInt(0);
             Integer IdArtist = cursor.getInt(4);
             String ten = cursor.getString(2);
             byte[] img = cursor.getBlob(3);
             if (IdArtist.equals(IDArtist)) {
                 ThuVien thuVien = new ThuVien(img, ten);
+                arr1.add(id);
                 arr.add(thuVien);
             }
         }
@@ -103,6 +107,7 @@ public class ArtistSongActivity extends AppCompatActivity implements OnItemClick
                     if (data.equals(ten)) {
                         Intent intent = new Intent(ArtistSongActivity.this,PlayMusicActivity.class);
                         intent.putExtra("SongID", Id);
+                        intent.putExtra("arrIDSongs",arr1);
                         startActivity(intent);
                         break;
                     }
@@ -114,6 +119,8 @@ public class ArtistSongActivity extends AppCompatActivity implements OnItemClick
         LinearLayoutManager linearLayout = new LinearLayoutManager(this);
         rcv.setLayoutManager(linearLayout);
     }
+
+
 
     @Override
     public void onItemClick(String data) {
