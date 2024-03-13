@@ -20,13 +20,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Vũ. Radio"
+        android:text="Radio"
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageView_songs"
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_gravity="center"
@@ -35,7 +35,7 @@
         android:src="@drawable/nhungloihuaboquen" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/txt_artist_song"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="15dp"
@@ -45,7 +45,7 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/txt_name_song"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="15dp"

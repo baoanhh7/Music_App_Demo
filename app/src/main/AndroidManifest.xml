@@ -24,7 +24,7 @@
             android:exported="true"></service>
 
         <activity
-            android:name=".activity.library.AlbumSongActivity"
+            android:name=".activity.library.ArtistSongActivity"
             android:exported="false" />
         <activity
             android:name=".loginPackage.OTPActivity"

@@ -23,7 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_music.R;
 import com.example.doan_music.activity.MainActivity;
-import com.example.doan_music.activity.library.AlbumSongActivity;
+import com.example.doan_music.activity.library.ArtistSongActivity;
 import com.example.doan_music.adapter.thuvien.ThuVienAdapter;
 import com.example.doan_music.data.DbHelper;
 import com.example.doan_music.fragment.library.AddNgheSiFragment;
@@ -162,7 +162,7 @@ public class Library_Fragment extends Fragment implements OnItemClickListener {
                     Integer Id = cursor.getInt(0);
                     String ten = cursor.getString(1);
                     if (data.equals(ten)) {
-                        Intent intent = new Intent(requireContext(), AlbumSongActivity.class);
+                        Intent intent = new Intent(requireContext(), ArtistSongActivity.class);
                         intent.putExtra("MaArtist", Id);
                         startActivity(intent);
                         break;

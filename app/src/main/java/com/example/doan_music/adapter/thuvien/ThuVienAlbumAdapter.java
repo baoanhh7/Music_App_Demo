@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_music.R;
+import com.example.doan_music.m_interface.OnItemClickListener;
 import com.example.doan_music.model.ThuVien;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 public class ThuVienAlbumAdapter extends RecyclerView.Adapter<ThuVienAlbumAdapter.ViewHolder> {
     //khai báo biến
     Context context;
+    private OnItemClickListener onItemClickListener;
     ArrayList<ThuVien> arr, arr1;
 
     public ThuVienAlbumAdapter(Context context, ArrayList<ThuVien> arr) {
@@ -44,6 +46,17 @@ public class ThuVienAlbumAdapter extends RecyclerView.Adapter<ThuVienAlbumAdapte
         Bitmap bitmap = BitmapFactory.decodeByteArray(hinhAlbumByteArray, 0, hinhAlbumByteArray.length);
         holder.img.setImageBitmap(bitmap);
         holder.txtTen.setText(tv.getTensp());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onItemClickListener != null) {
+                    onItemClickListener.onItemClick(arr.get(position).getTensp());
+                }
+            }
+        });
+    }
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.onItemClickListener = listener;
     }
 
     @Override

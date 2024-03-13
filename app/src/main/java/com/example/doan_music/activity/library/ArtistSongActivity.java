@@ -1,5 +1,6 @@
 package com.example.doan_music.activity.library;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -15,11 +16,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_music.R;
 import com.example.doan_music.adapter.thuvien.ThuVienAlbumAdapter;
+import com.example.doan_music.m_interface.OnItemClickListener;
 import com.example.doan_music.model.ThuVien;
+import com.example.doan_music.music.PlayMusicActivity;
 
 import java.util.ArrayList;
 
-public class AlbumSongActivity extends AppCompatActivity {
+public class ArtistSongActivity extends AppCompatActivity implements OnItemClickListener {
     ImageButton btnback, btnplay;
     ImageView imgHinh;
     RecyclerView rcv;
@@ -88,9 +91,32 @@ public class AlbumSongActivity extends AppCompatActivity {
         imgHinh = findViewById(R.id.img_song_album);
         rcv = findViewById(R.id.rcv_songlalbum);
         arr = new ArrayList<>();
-        thuVienAlbumAdapter = new ThuVienAlbumAdapter(AlbumSongActivity.this, arr);
+        thuVienAlbumAdapter = new ThuVienAlbumAdapter(ArtistSongActivity.this, arr);
+        thuVienAlbumAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(String data) {
+                database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
+                Cursor cursor = database.rawQuery("select * from Songs", null);
+                while (cursor.moveToNext()) {
+                    Integer Id = cursor.getInt(0);
+                    String ten = cursor.getString(2);
+                    if (data.equals(ten)) {
+                        Intent intent = new Intent(ArtistSongActivity.this,PlayMusicActivity.class);
+                        intent.putExtra("SongID", Id);
+                        startActivity(intent);
+                        break;
+                    }
+                }
+                cursor.close();
+            }
+        });
         rcv.setAdapter(thuVienAlbumAdapter);
         LinearLayoutManager linearLayout = new LinearLayoutManager(this);
         rcv.setLayoutManager(linearLayout);
+    }
+
+    @Override
+    public void onItemClick(String data) {
+
     }
 }

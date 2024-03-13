@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="#191919"
     android:elevation="10dp"
-    tools:context=".activity.library.AlbumSongActivity">
+    tools:context=".activity.library.ArtistSongActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
