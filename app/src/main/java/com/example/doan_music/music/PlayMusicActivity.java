@@ -178,6 +178,9 @@ public class PlayMusicActivity extends AppCompatActivity {
                     }
                 }
                 cursor.close();
+                String duration = timeSeekbar(myMusic.getDuration());
+                txt_time.setText(duration);
+                seekBar.setMax(myMusic.getDuration());
                 myMusic.start();
                 database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
                 Cursor cursor1 = database.rawQuery("select * " +
@@ -230,6 +233,9 @@ public class PlayMusicActivity extends AppCompatActivity {
                     }
                 }
                 cursor.close();
+                String duration = timeSeekbar(myMusic.getDuration());
+                txt_time.setText(duration);
+                seekBar.setMax(myMusic.getDuration());
                 myMusic.start();
                 database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
                 Cursor cursor1 = database.rawQuery("select * " +
