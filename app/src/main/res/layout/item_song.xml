@@ -10,6 +10,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <TextView
+            android:id="@+id/txt_id"
+            android:layout_width="30dp"
+            android:layout_height="70dp"
+            android:layout_marginRight="10dp"
+            android:background="#191919"
+            android:gravity="center"
+            android:text="id"
+            android:textColor="#75E679"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/img_song"
             android:layout_width="70dp"
@@ -28,17 +40,6 @@
             android:text="Nhung loi hua bo quen - Vu"
             android:textAllCaps="true"
             android:textColor="@color/white"
-            android:textSize="15sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/txt_id"
-            android:layout_width="30dp"
-            android:layout_height="70dp"
-            android:background="#191919"
-            android:gravity="center"
-            android:text="id"
-            android:textColor="#75E679"
             android:textSize="15sp"
             android:textStyle="bold" />
 

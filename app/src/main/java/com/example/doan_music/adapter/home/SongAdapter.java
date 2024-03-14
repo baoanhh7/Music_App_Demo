@@ -14,15 +14,28 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_music.R;
+import com.example.doan_music.m_interface.IClickItemSong;
 import com.example.doan_music.m_interface.OnItemClickListener;
 import com.example.doan_music.model.Song;
 
 import java.util.List;
 
 public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder> {
+
+    // Khai báo một interface để gửi thông báo khi nhấn vào nút thả tim
+    public interface OnHeartClickListener {
+        void onHeartClicked(Song song);
+    }
+
     private List<Song> songList;
     private Context context;
     private OnItemClickListener onItemClickListener;
+    private IClickItemSong iClickItemSong;
+
+    public SongAdapter(List<Song> songs, IClickItemSong iClickItemSong) {
+        this.songList = songs;
+        this.iClickItemSong = iClickItemSong;
+    }
 
     public SongAdapter(Context context, List<Song> songList) {
         this.context = context;
@@ -45,6 +58,16 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
         Bitmap bitmap = BitmapFactory.decodeByteArray(song.getSongImage(), 0, song.getSongImage().length);
         holder.img_song.setImageBitmap(bitmap);
 
+        // Nhấn vào button heart -> qua Song_Fragment
+        holder.btn_heart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Gọi phương thức của interface để thông báo đã nhấn vào nút thả tim
+                iClickItemSong.onClickItemSong(song);
+            }
+        });
+
+        // Nhấn vào tên bài hát sẽ chuyển qua phát bài hát
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,6 +90,7 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
             int newState = song.getisFavorite() == 1 ? 0 : 1;
             song.setisFavorite(newState);
             notifyItemChanged(position); // Cập nhật lại giao diện
+
         });
     }
 
@@ -79,6 +103,7 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
         if (songList != null) return songList.size();
         return 0;
     }
+
 
     public static class SongViewHolder extends RecyclerView.ViewHolder {
         TextView txt_song, txt_id;

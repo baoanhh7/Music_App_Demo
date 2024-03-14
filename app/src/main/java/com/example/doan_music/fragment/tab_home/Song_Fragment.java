@@ -1,20 +1,19 @@
 package com.example.doan_music.fragment.tab_home;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.doan_music.R;
-import com.example.doan_music.music.PlayMusicActivity;
+import com.example.doan_music.adapter.home.SongAdapter;
+import com.example.doan_music.model.Song;
 
-public class Song_Fragment extends Fragment {
+public class Song_Fragment extends Fragment implements SongAdapter.OnHeartClickListener {
 
-    LinearLayout linear_nhungloihuaboquen;
     View mView;
 
     @Override
@@ -23,15 +22,14 @@ public class Song_Fragment extends Fragment {
         // Inflate the layout for this fragment
         mView = inflater.inflate(R.layout.fragment_song_, container, false);
 
-        linear_nhungloihuaboquen = mView.findViewById(R.id.linear_nhungloihuaboquen);
-
-        linear_nhungloihuaboquen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getActivity(), PlayMusicActivity.class);
-                startActivity(i);
-            }
-        });
         return mView;
+    }
+
+    @Override
+    public void onHeartClicked(Song song) {
+        FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.home_viewpager, new Song_Fragment());
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 }
