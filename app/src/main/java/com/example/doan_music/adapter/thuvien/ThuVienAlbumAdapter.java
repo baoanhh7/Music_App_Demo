@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_music.R;
-import com.example.doan_music.m_interface.OnItemClickLIstener2;
 import com.example.doan_music.m_interface.OnItemClickListener;
 import com.example.doan_music.model.ThuVien;
 
@@ -56,6 +55,7 @@ public class ThuVienAlbumAdapter extends RecyclerView.Adapter<ThuVienAlbumAdapte
             }
         });
     }
+
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.onItemClickListener = listener;
     }

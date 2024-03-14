@@ -5,7 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -19,19 +18,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.doan_music.R;
 import com.example.doan_music.model.LrcLine;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class PlayMusicActivity extends AppCompatActivity {
 
-    ImageButton btn_play, btn_pause, btn_back,btn_next,btn_pre;
+    ImageButton btn_play, btn_pause, btn_back, btn_next, btn_pre;
     SeekBar seekBar;
     TextView txt_time, txt_time_first;
     SQLiteDatabase database = null;
@@ -40,7 +33,7 @@ public class PlayMusicActivity extends AppCompatActivity {
     List<LrcLine> lrcLines = new ArrayList<>();
     ArrayList<Integer> arr = new ArrayList<>();
     ImageView imageView_songs;
-    TextView txt_artist_song,txt_name_song;
+    TextView txt_artist_song, txt_name_song;
     Integer currentPosition;
     private Handler handler = new Handler();
 
@@ -72,8 +65,6 @@ public class PlayMusicActivity extends AppCompatActivity {
 
     }
 
-
-
     private void loadNameArtist() {
         Integer IDSong = getIntent().getIntExtra("SongID", -1);
         database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
@@ -81,11 +72,9 @@ public class PlayMusicActivity extends AppCompatActivity {
                 "from Artists " +
                 "JOIN Songs ON Artists.ArtistID =Songs.ArtistID " +
                 "WHERE Songs.SongID = ? ", new String[]{String.valueOf(IDSong)});
-        while (cursor.moveToNext())
-        {
+        while (cursor.moveToNext()) {
             String ten = cursor.getString(1);
             txt_artist_song.setText(ten);
-            break;
         }
     }
 
@@ -143,17 +132,15 @@ public class PlayMusicActivity extends AppCompatActivity {
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(myMusic != null)
-                {
+                if (myMusic != null) {
                     btn_play.setImageResource(R.drawable.ic_pause);
                 }
-                if(currentPosition < arr.size() -1)
-                {
+                if (currentPosition < arr.size() - 1) {
                     currentPosition++;
-                }else{
+                } else {
                     currentPosition = 0;
                 }
-                if(myMusic.isPlaying()){
+                if (myMusic.isPlaying()) {
                     myMusic.stop();
                     myMusic.reset();
                 }
@@ -184,8 +171,7 @@ public class PlayMusicActivity extends AppCompatActivity {
                         "from Artists " +
                         "JOIN Songs ON Artists.ArtistID =Songs.ArtistID " +
                         "WHERE Songs.SongID = ? ", new String[]{String.valueOf(idSong)});
-                while (cursor.moveToNext())
-                {
+                while (cursor.moveToNext()) {
                     String ten = cursor1.getString(1);
                     txt_artist_song.setText(ten);
                     break;
@@ -195,17 +181,15 @@ public class PlayMusicActivity extends AppCompatActivity {
         btn_pre.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(myMusic != null)
-                {
+                if (myMusic != null) {
                     btn_play.setImageResource(R.drawable.ic_pause);
                 }
-                if(currentPosition >0)
-                {
+                if (currentPosition > 0) {
                     currentPosition--;
-                }else{
-                    currentPosition = arr.size() -1;
+                } else {
+                    currentPosition = arr.size() - 1;
                 }
-                if(myMusic.isPlaying()){
+                if (myMusic.isPlaying()) {
                     myMusic.stop();
                     myMusic.reset();
                 }
@@ -236,8 +220,7 @@ public class PlayMusicActivity extends AppCompatActivity {
                         "from Artists " +
                         "JOIN Songs ON Artists.ArtistID =Songs.ArtistID " +
                         "WHERE Songs.SongID = ? ", new String[]{String.valueOf(idSong)});
-                while (cursor.moveToNext())
-                {
+                while (cursor.moveToNext()) {
                     String ten = cursor1.getString(1);
                     txt_artist_song.setText(ten);
                     break;
@@ -260,7 +243,7 @@ public class PlayMusicActivity extends AppCompatActivity {
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(myMusic.isPlaying()){
+                if (myMusic.isPlaying()) {
                     myMusic.stop();
                     myMusic.reset();
                 }

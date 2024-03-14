@@ -23,7 +23,7 @@
         android:layout_marginRight="5dp"
         android:layout_marginBottom="5dp"
         android:gravity="right"
-        android:text="Xem thêm ➜"
+        android:text="Khám phá ➜"
         android:textColor="#64F169"
         android:textSize="16sp"
         android:textStyle="italic|bold" />
