@@ -19,8 +19,9 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-smallcaps"
         android:gravity="center"
-        android:text="Radio"
+        android:text="Radio Music"
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold" />
@@ -129,12 +130,12 @@
     </LinearLayout>
 
     <TextView
-        android:layout_width="match_parent"
         android:id="@+id/txtLoibaihat"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginTop="20dp"
         android:gravity="center"
         android:textColor="#FFFFFF"
-        android:textSize="25dp"
-        android:layout_height="match_parent" />
+        android:textSize="25dp" />
 
 </LinearLayout>

@@ -72,10 +72,10 @@ public class PlayMusicActivity extends AppCompatActivity {
                 "from Artists " +
                 "JOIN Songs ON Artists.ArtistID =Songs.ArtistID " +
                 "WHERE Songs.SongID = ? ", new String[]{String.valueOf(IDSong)});
-            while (cursor.moveToNext()) {
-                String ten = cursor.getString(1);
-                txt_artist_song.setText(ten);
-            }
+        while (cursor.moveToNext()) {
+            String ten = cursor.getString(1);
+            txt_artist_song.setText(ten);
+        }
 
     }
 
@@ -219,10 +219,7 @@ public class PlayMusicActivity extends AppCompatActivity {
                     }
                 }
                 cursor.close();
-                String duration = timeSeekbar(myMusic.getDuration());
-                txt_time.setText(duration);
-                seekBar.setMax(myMusic.getDuration());
-                myMusic.start();
+
                 database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
                 Cursor cursor1 = database.rawQuery("select * " +
                         "from Artists " +
@@ -232,7 +229,13 @@ public class PlayMusicActivity extends AppCompatActivity {
                     String ten = cursor1.getString(1);
                     txt_artist_song.setText(ten);
                     break;
+
                 }
+
+                String duration = timeSeekbar(myMusic.getDuration());
+                txt_time.setText(duration);
+                seekBar.setMax(myMusic.getDuration());
+                myMusic.start();
             }
         });
 
