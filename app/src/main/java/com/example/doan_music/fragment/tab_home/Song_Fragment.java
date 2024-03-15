@@ -55,12 +55,4 @@ public class Song_Fragment extends Fragment {
 
         lv_lovesong.setAdapter(adapter);
     }
-
-//    @Override
-//    public void onHeartClicked(Song song) {
-//        FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
-//        fragmentTransaction.replace(R.id.home_viewpager, new Song_Fragment());
-//        fragmentTransaction.addToBackStack(null);
-//        fragmentTransaction.commit();
-//    }
 }
