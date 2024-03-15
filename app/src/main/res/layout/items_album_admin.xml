@@ -17,6 +17,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -30,15 +31,17 @@
                 android:textColor="@color/black"
                 android:textSize="18dp"
                 android:textStyle="bold" />
-        <TextView
-            android:id="@+id/txtID_album_admin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="TextView"
-            android:textSize="18dp"
-            android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtID_album_admin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="TextView"
+                android:textSize="18dp"
+                android:textStyle="bold" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -52,6 +55,7 @@
                 android:textColor="@color/black"
                 android:textSize="18dp"
                 android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/txtTen_album_admin"
                 android:layout_width="match_parent"
@@ -60,7 +64,8 @@
                 android:text="TextView"
                 android:textSize="18dp"
                 android:textStyle="bold" />
-            </LinearLayout>
+        </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -74,16 +79,18 @@
                 android:textColor="@color/black"
                 android:textSize="18dp"
                 android:textStyle="bold" />
-        <TextView
-            android:id="@+id/txtIDArtist_album_admin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="TextView"
-            android:textSize="18dp"
-            android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtIDArtist_album_admin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="TextView"
+                android:textSize="18dp"
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

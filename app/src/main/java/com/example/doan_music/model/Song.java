@@ -13,6 +13,9 @@ public class Song implements Serializable {
     private int TypeID;
     private int isFavorite;
 
+    public Song() {
+    }
+
     public Song(int songID, String songName, byte[] songImage, int isFavorite) {
         SongID = songID;
         SongName = songName;

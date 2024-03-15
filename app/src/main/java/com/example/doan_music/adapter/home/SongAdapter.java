@@ -3,6 +3,7 @@ package com.example.doan_music.adapter.home;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +12,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_music.R;
+import com.example.doan_music.fragment.tab_home.Song_Fragment;
 import com.example.doan_music.m_interface.IClickItemSong;
 import com.example.doan_music.m_interface.OnItemClickListener;
 import com.example.doan_music.model.Song;
@@ -31,11 +36,6 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
     private Context context;
     private OnItemClickListener onItemClickListener;
     private IClickItemSong iClickItemSong;
-
-    public SongAdapter(List<Song> songs, IClickItemSong iClickItemSong) {
-        this.songList = songs;
-        this.iClickItemSong = iClickItemSong;
-    }
 
     public SongAdapter(Context context, List<Song> songList) {
         this.context = context;
@@ -57,15 +57,6 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
         holder.txt_song.setText(song.getSongName());
         Bitmap bitmap = BitmapFactory.decodeByteArray(song.getSongImage(), 0, song.getSongImage().length);
         holder.img_song.setImageBitmap(bitmap);
-
-        // Nhấn vào button heart -> qua Song_Fragment
-        holder.btn_heart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Gọi phương thức của interface để thông báo đã nhấn vào nút thả tim
-                iClickItemSong.onClickItemSong(song);
-            }
-        });
 
         // Nhấn vào tên bài hát sẽ chuyển qua phát bài hát
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -91,11 +82,30 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
             song.setisFavorite(newState);
             notifyItemChanged(position); // Cập nhật lại giao diện
 
+            // Chuyển Fragment từ AllSongFragment sang SongFragment
+            FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            Song_Fragment songFragment = new Song_Fragment();
+
+            // Truyền dữ liệu của bài hát tới SongFragment
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("heartSong", song);
+            songFragment.setArguments(bundle);
+
+//            fragmentTransaction.replace(R.id.frame_container, songFragment);
+            fragmentTransaction.replace(R.id.view_pager, songFragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+
         });
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.onItemClickListener = listener;
+    }
+
+    public void setOnItemClickListener1(IClickItemSong listener) {
+        this.iClickItemSong = listener;
     }
 
     @Override

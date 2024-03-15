@@ -25,9 +25,6 @@ import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.doan_music.R;
 import com.example.doan_music.data.DatabaseManager;
@@ -44,6 +41,7 @@ public class UpdateAlbumActivity extends AppCompatActivity {
     ImageButton btn_camera;
     SQLiteDatabase database = null;
     ImageView imageView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,11 +111,13 @@ public class UpdateAlbumActivity extends AppCompatActivity {
         byte[] byteArray = stream.toByteArray();
         return byteArray;
     }
+
     private void choosePhoto() {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
         startActivityForResult(intent, 100);
     }
+
     private void openCamera() {
         Intent takePictureIntent = new Intent(ACTION_IMAGE_CAPTURE);
         if (ActivityCompat.checkSelfPermission(UpdateAlbumActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
@@ -128,6 +128,7 @@ public class UpdateAlbumActivity extends AppCompatActivity {
         startActivityForResult(takePictureIntent, 99);
         //}
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -148,6 +149,7 @@ public class UpdateAlbumActivity extends AppCompatActivity {
             }
         }
     }
+
     private void addControls() {
         edtMa = findViewById(R.id.edt_id_updatealbumadmin);
         edtTen = findViewById(R.id.edt_name_updatealbumadmin);
@@ -157,12 +159,12 @@ public class UpdateAlbumActivity extends AppCompatActivity {
         btncancel = findViewById(R.id.btn_cancel_updatealbumadmin);
         btn_choose_image_addAblumAdmin = findViewById(R.id.btn_choose_image_updateAblumAdmin);
         btn_camera = findViewById(R.id.btn_camera_updatealbumadmin);
-        edtMa.setText(getIntent().getIntExtra("id",-1)+"");
+        edtMa.setText(getIntent().getIntExtra("id", -1) + "");
         edtTen.setText(getIntent().getStringExtra("name"));
-        edtMaArtist.setText(getIntent().getIntExtra("IDArtist",-1)+"");
+        edtMaArtist.setText(getIntent().getIntExtra("IDArtist", -1) + "");
         database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
         Cursor cursor = database.rawQuery("SELECT * FROM Albums where AlbumID=?"
-                , new String[]{getIntent().getIntExtra("id",-1)+""});
+                , new String[]{getIntent().getIntExtra("id", -1) + ""});
         cursor.moveToFirst();
         byte[] img = cursor.getBlob(2);
 

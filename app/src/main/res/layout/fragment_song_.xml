@@ -28,6 +28,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/txt_songname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Những lời hứa bỏ quên"
@@ -44,4 +45,10 @@
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
+
+    <ListView
+        android:id="@+id/lv_lovesong"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp" />
 </LinearLayout>

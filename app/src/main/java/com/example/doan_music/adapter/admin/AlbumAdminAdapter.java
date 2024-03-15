@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
@@ -18,11 +17,9 @@ import android.widget.TextView;
 
 import com.example.doan_music.R;
 import com.example.doan_music.activity.admin.album.UpdateAlbumActivity;
-import com.example.doan_music.activity.admin.playlist.UpdatePlayListActivity;
 import com.example.doan_music.data.DatabaseManager;
 import com.example.doan_music.data.DbHelper;
 import com.example.doan_music.model.Ablum;
-import com.example.doan_music.model.Playlists;
 
 import java.util.ArrayList;
 
@@ -108,6 +105,7 @@ public class AlbumAdminAdapter extends BaseAdapter {
         });
         return view;
     }
+
     private void delete(int ID) {
         DbHelper dbHelper = DatabaseManager.dbHelper(context);
         dbHelper.getWritableDatabase().delete("Albums", "AlbumID=?"
@@ -120,7 +118,7 @@ public class AlbumAdminAdapter extends BaseAdapter {
             byte[] anh = cursor.getBlob(2);
             int idArtist = cursor.getInt(3);
 
-            arr.add(new Ablum(id, ten, anh,idArtist));
+            arr.add(new Ablum(id, ten, anh, idArtist));
         }
         notifyDataSetChanged();
     }
