@@ -55,8 +55,8 @@ public class AllSongs_Fragment extends Fragment {
                     byte[] image = cursor.getBlob(3);
                     String linkSong = cursor.getString(5);
 
-                    Song song = new Song(id, songName, artist, image, linkSong);
-                    songList.add(song);
+                    //Song song = new Song(id, songName, artist, image, linkSong);
+                    //songList.add(song);
 
                     if (data.equals(songName)) {
                         Intent intent = new Intent(requireContext(), PlayMusicActivity.class);
