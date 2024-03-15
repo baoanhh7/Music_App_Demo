@@ -20,21 +20,24 @@ import com.example.doan_music.model.LrcLine;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class PlayMusicActivity extends AppCompatActivity {
 
-    ImageButton btn_play, btn_pause, btn_back, btn_next, btn_pre;
+    ImageButton btn_play, btn_pause, btn_back, btn_next, btn_pre,btn_shuffer,btn_repeat;
     SeekBar seekBar;
     TextView txt_time, txt_time_first;
     SQLiteDatabase database = null;
     MediaPlayer myMusic;
     TextView txtLoibaihat;
-    List<LrcLine> lrcLines = new ArrayList<>();
     ArrayList<Integer> arr = new ArrayList<>();
+    ArrayList<Integer> shuffledArr = new ArrayList<>();
     ImageView imageView_songs;
     TextView txt_artist_song, txt_name_song;
     Integer currentPosition;
+    int isIconrepeat = 0;
+    int isIconshuffer = 0;
     private Handler handler = new Handler();
 
     @Override
@@ -44,6 +47,7 @@ public class PlayMusicActivity extends AppCompatActivity {
 
         addControls();
         arr = (ArrayList<Integer>) getIntent().getSerializableExtra("arrIDSongs");
+        shuffledArr.addAll(arr);
         Integer IDSong = getIntent().getIntExtra("SongID", -1);
         currentPosition = arr.indexOf(IDSong);
         myMusic = new MediaPlayer();
@@ -55,7 +59,13 @@ public class PlayMusicActivity extends AppCompatActivity {
         myMusic.seekTo(0);
 
         myMusic.start();
-
+        myMusic.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                // Kiểm tra nếu đang ở chế độ repeat, thì không chuyển bài tiếp theo
+                playNextSong();
+            }
+        });
         // tạo biến duration để lưu thời gian bài hát
         String duration = timeSeekbar(myMusic.getDuration());
         txt_time.setText(duration);
@@ -261,6 +271,42 @@ public class PlayMusicActivity extends AppCompatActivity {
                 finish();
             }
         });
+        btn_repeat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isIconrepeat==0) {
+                    // Nếu đang hiển thị biểu tượng 1, thì chuyển sang biểu tượng 2
+                    btn_repeat.setImageResource(R.drawable.ic_repeatactive);
+                    isIconrepeat=1;
+                } else {
+                    // Nếu đang hiển thị biểu tượng 2, thì chuyển lại biểu tượng 1
+                    btn_repeat.setImageResource(R.drawable.ic_repeat);
+                    isIconrepeat=0;
+                }
+            }
+        });
+        btn_shuffer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isIconshuffer==0) {
+                    // Nếu đang hiển thị biểu tượng 1, thì chuyển sang biểu tượng 2
+                    btn_shuffer.setImageResource(R.drawable.ic_shufferactive);
+                    isIconshuffer=1;
+                    Collections.shuffle(shuffledArr);
+                    myMusic.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                        @Override
+                        public void onCompletion(MediaPlayer mp) {
+                            PlayShuffer(shuffledArr );
+                        }
+                    });
+                } else {
+                    // Nếu đang hiển thị biểu tượng 2, thì chuyển lại biểu tượng 1
+                    btn_shuffer.setImageResource(R.drawable.ic_shuffer);
+                    isIconshuffer=0;
+                }
+                // Đảo ngược trạng thái của biến isIcon1
+            }
+        });
 
         // set giới hạn Max cho thanh seekBar
         seekBar.setMax(myMusic.getDuration());
@@ -283,6 +329,7 @@ public class PlayMusicActivity extends AppCompatActivity {
 
             }
         });
+
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -308,6 +355,114 @@ public class PlayMusicActivity extends AppCompatActivity {
         }).start();
     }
 
+    private void PlayShuffer(ArrayList<Integer> arr) {
+        if (isIconrepeat==0) {
+            // Chuyển sang bài hát tiếp theo
+            //playNextSong();
+            myMusic.reset();
+            if (currentPosition < arr.size() - 1) {
+                currentPosition++;
+            } else {
+                currentPosition = 0;
+            }
+            Integer idSong = arr.get(currentPosition);
+            database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
+            Cursor cursor = database.rawQuery("select * from Songs", null);
+            while (cursor.moveToNext()) {
+                Integer Id = cursor.getInt(0);
+                String ten = cursor.getString(2);
+                byte[] img = cursor.getBlob(3);
+                String linkSong = cursor.getString(5);
+                if (idSong.equals(Id)) {
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(img, 0, img.length);
+                    imageView_songs.setImageBitmap(bitmap);
+                    try {
+                        myMusic.setDataSource(linkSong);
+                        myMusic.prepare();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    txt_name_song.setText(ten);
+                }
+            }
+            cursor.close();
+            database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
+            Cursor cursor1 = database.rawQuery("select * " +
+                    "from Artists " +
+                    "JOIN Songs ON Artists.ArtistID =Songs.ArtistID " +
+                    "WHERE Songs.SongID = ? ", new String[]{String.valueOf(idSong)});
+            while (cursor1.moveToNext()) {
+                String ten = cursor1.getString(1);
+                txt_artist_song.setText(ten);
+            }
+
+            String duration = timeSeekbar(myMusic.getDuration());
+            txt_time.setText(duration);
+            seekBar.setMax(myMusic.getDuration());
+            myMusic.start();
+
+        }
+        else {
+            // Đang ở chế độ repeat, vì vậy chơi lại bài hát hiện tại
+            myMusic.seekTo(0); // Quay lại đầu bài hát
+            myMusic.start(); // Bắt đầu phát lại bài hát
+        }
+    }
+
+    private void playNextSong() {
+        if (isIconrepeat==0) {
+            // Chuyển sang bài hát tiếp theo
+            //playNextSong();
+            myMusic.reset();
+            if (currentPosition < arr.size() - 1) {
+                currentPosition++;
+            } else {
+                currentPosition = 0;
+            }
+            Integer idSong = arr.get(currentPosition);
+            database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
+            Cursor cursor = database.rawQuery("select * from Songs", null);
+            while (cursor.moveToNext()) {
+                Integer Id = cursor.getInt(0);
+                String ten = cursor.getString(2);
+                byte[] img = cursor.getBlob(3);
+                String linkSong = cursor.getString(5);
+                if (idSong.equals(Id)) {
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(img, 0, img.length);
+                    imageView_songs.setImageBitmap(bitmap);
+                    try {
+                        myMusic.setDataSource(linkSong);
+                        myMusic.prepare();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    txt_name_song.setText(ten);
+                }
+            }
+            cursor.close();
+            database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
+            Cursor cursor1 = database.rawQuery("select * " +
+                    "from Artists " +
+                    "JOIN Songs ON Artists.ArtistID =Songs.ArtistID " +
+                    "WHERE Songs.SongID = ? ", new String[]{String.valueOf(idSong)});
+            while (cursor1.moveToNext()) {
+                String ten = cursor1.getString(1);
+                txt_artist_song.setText(ten);
+            }
+
+            String duration = timeSeekbar(myMusic.getDuration());
+            txt_time.setText(duration);
+            seekBar.setMax(myMusic.getDuration());
+            myMusic.start();
+
+        }
+        else {
+            // Đang ở chế độ repeat, vì vậy chơi lại bài hát hiện tại
+            myMusic.seekTo(0); // Quay lại đầu bài hát
+            myMusic.start(); // Bắt đầu phát lại bài hát
+        }
+    }
+
     private void addControls() {
         btn_play = findViewById(R.id.btn_play);
         txtLoibaihat = findViewById(R.id.txtLoibaihat);
@@ -320,6 +475,9 @@ public class PlayMusicActivity extends AppCompatActivity {
         txt_time = findViewById(R.id.txt_time);
         txt_time_first = findViewById(R.id.txt_time_first);
         btn_pre = findViewById(R.id.btn_pre);
+        btn_shuffer = findViewById(R.id.btn_shuffer);
+        btn_repeat = findViewById(R.id.btn_repeat);
         btn_next = findViewById(R.id.btn_next);
     }
+
 }
