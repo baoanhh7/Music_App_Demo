@@ -98,7 +98,6 @@ public class AllSongs_Fragment extends Fragment {
         songList = new ArrayList<>();
 
         songAdapter = new SongAdapter(requireContext(), songList);
-
         rcv_songs.setAdapter(songAdapter);
 
         rcv_songs.setLayoutManager(new LinearLayoutManager(requireContext()));
