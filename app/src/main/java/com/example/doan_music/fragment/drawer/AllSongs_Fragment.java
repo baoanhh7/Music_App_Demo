@@ -1,6 +1,7 @@
 package com.example.doan_music.fragment.drawer;
 
-import android.content.Context;
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -46,17 +47,11 @@ public class AllSongs_Fragment extends Fragment {
             @Override
             public void onItemClick(String data) {
                 dbHelper = new DbHelper(requireContext());
-                database = requireContext().openOrCreateDatabase("doanmusic.db", Context.MODE_PRIVATE, null);
+                database = requireContext().openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
                 Cursor cursor = database.rawQuery("select * from Songs", null);
                 while (cursor.moveToNext()) {
                     int id = cursor.getInt(0);
                     String songName = cursor.getString(2);
-                    int artist = cursor.getInt(4);
-                    byte[] image = cursor.getBlob(3);
-                    String linkSong = cursor.getString(5);
-
-                    //Song song = new Song(id, songName, artist, image, linkSong);
-                    //songList.add(song);
 
                     if (data.equals(songName)) {
                         Intent intent = new Intent(requireContext(), PlayMusicActivity.class);
@@ -71,12 +66,40 @@ public class AllSongs_Fragment extends Fragment {
             }
         });
 
+//        songAdapter.setOnItemClickListener(new OnItemClickListener() {
+//            @Override
+//            public void onItemClick(String data) {
+//                if (getActivity() instanceof MainActivity) {
+//                    MainActivity mainActivity = (MainActivity) getActivity();
+//                    Integer maU = mainActivity.getMyVariable();
+//                    database = getActivity().openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
+//                    Cursor cursor = database.rawQuery("select * from Songs", null);
+//                    while (cursor.moveToNext()) {
+//                        String ten = cursor.getString(2);
+//                        if (data.equals(ten)) {
+//                            ContentValues values = new ContentValues();
+//                            values.put("User_SongLove.UserID", maU);
+//                            values.put("User_SongLove.SongLoveName", ten);
+//                            dbHelper = DatabaseManager.dbHelper(requireContext());
+//                            long kq = dbHelper.getReadableDatabase().insert("User_SongLove", null, values);
+//                            if (kq > 0) {
+//                                // Thêm dữ liệu mới vào Adapter
+//                                Toast.makeText(requireContext(), "Yêu thích thành công", Toast.LENGTH_LONG).show();
+//                                break;
+//                            }
+//                        }
+//                    }
+//                    cursor.close();
+//                }
+//            }
+//        });
+
         return view;
     }
 
     private void createData() {
         dbHelper = new DbHelper(requireContext());
-        database = requireContext().openOrCreateDatabase("doanmusic.db", Context.MODE_PRIVATE, null);
+        database = requireContext().openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
         Cursor cursor = database.rawQuery("select * from Songs", null);
         while (cursor.moveToNext()) {
             int id = cursor.getInt(0);

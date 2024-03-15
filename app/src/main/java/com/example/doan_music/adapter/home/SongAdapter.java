@@ -12,9 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_music.R;
@@ -82,20 +79,12 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
             song.setisFavorite(newState);
             notifyItemChanged(position); // Cập nhật lại giao diện
 
-            // Chuyển Fragment từ AllSongFragment sang SongFragment
-            FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             Song_Fragment songFragment = new Song_Fragment();
 
             // Truyền dữ liệu của bài hát tới SongFragment
             Bundle bundle = new Bundle();
             bundle.putSerializable("heartSong", song);
             songFragment.setArguments(bundle);
-
-//            fragmentTransaction.replace(R.id.frame_container, songFragment);
-            fragmentTransaction.replace(R.id.view_pager, songFragment);
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
 
         });
     }
@@ -104,7 +93,7 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
         this.onItemClickListener = listener;
     }
 
-    public void setOnItemClickListener1(IClickItemSong listener) {
+    public void setIClickItemSong(IClickItemSong listener) {
         this.iClickItemSong = listener;
     }
 

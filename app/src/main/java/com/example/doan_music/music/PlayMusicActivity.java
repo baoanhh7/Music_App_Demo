@@ -6,8 +6,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -24,7 +25,7 @@ import java.util.List;
 
 public class PlayMusicActivity extends AppCompatActivity {
 
-    ImageButton btn_play, btn_pause, btn_back, btn_next, btn_pre;
+    ImageButton btn_play, btn_pause, btn_back, btn_next, btn_pre, btn_toggle;
     SeekBar seekBar;
     TextView txt_time, txt_time_first;
     SQLiteDatabase database = null;
@@ -35,7 +36,8 @@ public class PlayMusicActivity extends AppCompatActivity {
     ImageView imageView_songs;
     TextView txt_artist_song, txt_name_song;
     Integer currentPosition;
-    private Handler handler = new Handler();
+    private boolean frag = true;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +52,6 @@ public class PlayMusicActivity extends AppCompatActivity {
         //myMusic = MediaPlayer.create(this, R.raw.nhung_loi_hua_bo_quen);
         loadData();
 
-
-        myMusic.setLooping(true);
         myMusic.seekTo(0);
 
         myMusic.start();
@@ -262,6 +262,26 @@ public class PlayMusicActivity extends AppCompatActivity {
             }
         });
 
+        btn_toggle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // Thay đổi hình ảnh của nút dựa trên trạng thái mới
+                if (frag) {
+
+                    // Thực hiện các hành động khi nút được bật
+                    btn_toggle.setImageResource(R.drawable.ic_on);
+                    myMusic.setLooping(true);
+                    frag = false;
+                } else {
+                    btn_toggle.setImageResource(R.drawable.ic_off);
+                    myMusic.setLooping(false);
+                    frag = true;
+                }
+            }
+        });
+
+
         // set giới hạn Max cho thanh seekBar
         seekBar.setMax(myMusic.getDuration());
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -321,5 +341,13 @@ public class PlayMusicActivity extends AppCompatActivity {
         txt_time_first = findViewById(R.id.txt_time_first);
         btn_pre = findViewById(R.id.btn_pre);
         btn_next = findViewById(R.id.btn_next);
+
+        btn_toggle = findViewById(R.id.btn_toggle);
+
+        // Load animation từ file xml
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.animation);
+        // Áp dụng animation vào ImageView
+        imageView_songs.startAnimation(animation);
+
     }
 }
