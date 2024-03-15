@@ -11,7 +11,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="#333333">
+        android:layout_margin="10dp"
+        android:background="@drawable/rounded_search"
+        android:backgroundTint="#333333">
 
         <Button
             android:id="@+id/btn_back"
@@ -52,8 +54,6 @@
         android:id="@+id/rcv_playlist"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp" />
-
+        android:layout_marginStart="10dp" />
 
 </LinearLayout>
