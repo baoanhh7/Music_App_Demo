@@ -7,6 +7,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
@@ -31,17 +33,17 @@ import java.util.List;
 
 public class PlayMusicActivity extends AppCompatActivity {
 
-    ImageButton btn_play, btn_back, btn_next, btn_pre, btn_toggle, btn_shuffle, btn_repeat, btn_heart;
-    SeekBar seekBar;
+    ImageButton btn_play, btn_back, btn_next, btn_pre, btn_toggle, btn_shuffle,btn_volume, btn_heart;
+    SeekBar seekBar,seekbar1;
     TextView txt_time, txt_time_first;
     MediaPlayer myMusic;
-    TextView txtLoibaihat;
-    List<LrcLine> lrcLines = new ArrayList<>();
+    AudioManager audioManager;
     ArrayList<Integer> arr = new ArrayList<>();
     ArrayList<Integer> shuffle = new ArrayList<>();
     ImageView imageView_songs;
     TextView txt_artist_song, txt_name_song;
     Integer currentPosition;
+
     boolean Isshuffle = true;
     private boolean frag = true;
     private boolean frag_heart = true;
@@ -61,17 +63,18 @@ public class PlayMusicActivity extends AppCompatActivity {
         myMusic = new MediaPlayer();
         //myMusic = MediaPlayer.create(this, R.raw.nhung_loi_hua_bo_quen);
         loadData();
-
+        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         myMusic.seekTo(0);
 
         myMusic.start();
         myMusic.setLooping(false);
-
+        seekbar1.setVisibility(View.GONE);
         // tạo biến duration để lưu thời gian bài hát
         String duration = timeSeekbar(myMusic.getDuration());
         txt_time.setText(duration);
         loadNameArtist();
         addEvents();
+        volume();
         // Bắt đầu cập nhật lời bài hát
         if (frag) {
             myMusic.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -85,6 +88,29 @@ public class PlayMusicActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("stateHeart", MODE_PRIVATE);
         frag_heart = sharedPreferences.getBoolean("is_favorite", false);
         updateHeartButton();
+    }
+
+    private void volume() {
+        int maxV= audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        int curV = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+        seekbar1.setMax(maxV);
+        seekbar1.setProgress(curV);
+        seekbar1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,progress,0);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
     }
 
     private void updateHeartButton() {
@@ -147,11 +173,23 @@ public class PlayMusicActivity extends AppCompatActivity {
     }
 
     private void addEvents() {
+        btn_volume.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int visibility = seekbar1.getVisibility();
+                if(visibility == View.GONE)
+                {
+                    seekbar1.setVisibility(View.VISIBLE);
+                }
+                else
+                    seekbar1.setVisibility(View.GONE);
+            }
+        });
         btn_play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (myMusic.isPlaying()) {
-                    myMusic.stop();
+                    myMusic.pause();
                     btn_play.setImageResource(R.drawable.ic_play);
 
                 } else {
@@ -539,7 +577,6 @@ public class PlayMusicActivity extends AppCompatActivity {
 
     private void addControls() {
         btn_play = findViewById(R.id.btn_play);
-//        txtLoibaihat = findViewById(R.id.txtLoibaihat);
         btn_back = findViewById(R.id.btn_back);
         txt_artist_song = findViewById(R.id.txt_artist_song);
         txt_name_song = findViewById(R.id.txt_name_song);
@@ -549,7 +586,8 @@ public class PlayMusicActivity extends AppCompatActivity {
         txt_time_first = findViewById(R.id.txt_time_first);
         btn_pre = findViewById(R.id.btn_pre);
         btn_next = findViewById(R.id.btn_next);
-
+        btn_volume = findViewById(R.id.btn_volume);
+        seekbar1 = findViewById(R.id.seekBar_volume);
         btn_toggle = findViewById(R.id.btn_toggle);
         btn_shuffle = findViewById(R.id.btn_shuffle);
         btn_heart = findViewById(R.id.btn_heart);

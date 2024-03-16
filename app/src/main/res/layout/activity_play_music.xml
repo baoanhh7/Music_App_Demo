@@ -186,7 +186,7 @@
         android:src="@drawable/ic_volume"/>
     <SeekBar
         android:id="@+id/seekBar_volume"
-        android:layout_width="300dp"
+        android:layout_width="320dp"
         android:layout_marginTop="3dp"
         android:layout_height="wrap_content"
         android:progressTint="@color/white"
