@@ -26,7 +26,7 @@ import java.util.List;
 
 public class PlayMusicActivity extends AppCompatActivity {
 
-    ImageButton btn_play, btn_pause, btn_back, btn_next, btn_pre, btn_toggle, btn_shuffle, btn_repeat, btn_heart;
+    ImageButton btn_play, btn_back, btn_next, btn_pre, btn_toggle, btn_shuffle, btn_repeat, btn_heart;
     SeekBar seekBar;
     TextView txt_time, txt_time_first;
     SQLiteDatabase database = null;
@@ -252,18 +252,6 @@ public class PlayMusicActivity extends AppCompatActivity {
             }
         });
 
-//        btn_pause.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // Khai báo Intent công khai để khởi động MyService_Music
-//                Intent intent2 = new Intent(PlayMusicActivity.this, MyService_Music.class);
-//                stopService(intent2);
-//                // Nhấn vào Stop chuyển ảnh của play sang pause
-//                btn_play.setImageResource(R.drawable.ic_play);
-//                flag = true;
-//            }
-//        });
-
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -278,8 +266,6 @@ public class PlayMusicActivity extends AppCompatActivity {
         btn_toggle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                // Thay đổi hình ảnh của nút dựa trên trạng thái mới
                 if (frag) {
 
                     // Thực hiện các hành động khi nút được bật
@@ -418,7 +404,6 @@ public class PlayMusicActivity extends AppCompatActivity {
     private void addControls() {
         btn_play = findViewById(R.id.btn_play);
         txtLoibaihat = findViewById(R.id.txtLoibaihat);
-//        btn_pause = findViewById(R.id.btn_pause);
         btn_back = findViewById(R.id.btn_back);
         txt_artist_song = findViewById(R.id.txt_artist_song);
         txt_name_song = findViewById(R.id.txt_name_song);
@@ -430,13 +415,13 @@ public class PlayMusicActivity extends AppCompatActivity {
         btn_next = findViewById(R.id.btn_next);
 
         btn_toggle = findViewById(R.id.btn_toggle);
-
+        btn_shuffle = findViewById(R.id.btn_shuffle);
         btn_heart = findViewById(R.id.btn_heart);
 
         // Load animation từ file xml
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.animation);
         // Áp dụng animation vào ImageView
         imageView_songs.startAnimation(animation);
-        btn_shuffle = findViewById(R.id.btn_shuffle);
+
     }
 }
