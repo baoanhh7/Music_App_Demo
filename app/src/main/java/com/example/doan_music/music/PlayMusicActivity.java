@@ -26,7 +26,7 @@ import java.util.List;
 
 public class PlayMusicActivity extends AppCompatActivity {
 
-    ImageButton btn_play, btn_pause, btn_back, btn_next, btn_pre, btn_toggle,btn_shuffle,btn_repeat;
+    ImageButton btn_play, btn_pause, btn_back, btn_next, btn_pre, btn_toggle, btn_shuffle, btn_repeat, btn_heart;
     SeekBar seekBar;
     TextView txt_time, txt_time_first;
     SQLiteDatabase database = null;
@@ -40,6 +40,7 @@ public class PlayMusicActivity extends AppCompatActivity {
     Integer currentPosition;
     boolean Isshuffle = true;
     private boolean frag = true;
+    private boolean frag_heart = true;
 
 
     @Override
@@ -67,7 +68,7 @@ public class PlayMusicActivity extends AppCompatActivity {
         loadNameArtist();
         addEvents();
         // Bắt đầu cập nhật lời bài hát
-        if(frag){
+        if (frag) {
             myMusic.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                 @Override
                 public void onCompletion(MediaPlayer mp) {
@@ -295,15 +296,29 @@ public class PlayMusicActivity extends AppCompatActivity {
         btn_shuffle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(Isshuffle){
+                if (Isshuffle) {
                     btn_shuffle.setImageResource(R.drawable.ic_shufferactive);
                     Isshuffle = false;
                     Collections.shuffle(arr);
-                }
-                else{
+                } else {
                     btn_shuffle.setImageResource(R.drawable.ic_shuffer);
-                    arr=shuffle;
+                    arr = shuffle;
                     Isshuffle = true;
+                }
+            }
+        });
+        btn_heart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Thay đổi hình ảnh của nút dựa trên trạng thái mới
+                if (frag_heart) {
+
+                    // Thực hiện các hành động khi nút được bật
+                    btn_heart.setImageResource(R.drawable.ic_red_heart);
+                    frag_heart = false;
+                } else {
+                    btn_heart.setImageResource(R.drawable.ic_heart);
+                    frag_heart = true;
                 }
             }
         });
@@ -347,12 +362,14 @@ public class PlayMusicActivity extends AppCompatActivity {
                                 }
                             });
                             Thread.sleep(1000);
-                        } catch (InterruptedException e) {}
+                        } catch (InterruptedException e) {
+                        }
                     }
                 }
             }
         }).start();
     }
+
     private void playNextSong(ArrayList<Integer> arr) {
         myMusic.reset();
         if (currentPosition < arr.size() - 1) {
@@ -413,6 +430,8 @@ public class PlayMusicActivity extends AppCompatActivity {
         btn_next = findViewById(R.id.btn_next);
 
         btn_toggle = findViewById(R.id.btn_toggle);
+
+        btn_heart = findViewById(R.id.btn_heart);
 
         // Load animation từ file xml
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.animation);
