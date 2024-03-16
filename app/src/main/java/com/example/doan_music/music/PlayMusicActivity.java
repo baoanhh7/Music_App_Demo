@@ -7,7 +7,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -24,17 +23,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.doan_music.R;
 import com.example.doan_music.data.DbHelper;
-import com.example.doan_music.model.LrcLine;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 public class PlayMusicActivity extends AppCompatActivity {
 
-    ImageButton btn_play, btn_back, btn_next, btn_pre, btn_toggle, btn_shuffle,btn_volume, btn_heart;
-    SeekBar seekBar,seekbar1;
+    ImageButton btn_play, btn_back, btn_next, btn_pre, btn_toggle, btn_shuffle, btn_volume, btn_heart;
+    SeekBar seekBar, seekbar1;
     TextView txt_time, txt_time_first;
     MediaPlayer myMusic;
     AudioManager audioManager;
@@ -73,6 +70,13 @@ public class PlayMusicActivity extends AppCompatActivity {
         String duration = timeSeekbar(myMusic.getDuration());
         txt_time.setText(duration);
         loadNameArtist();
+
+//        SharedPreferences sharedPreferences = getSharedPreferences("stateHeart", MODE_PRIVATE);
+//        // Trạng thái mặc định là không yêu thích
+//        boolean defaultState = false;
+//        // Lưu trạng thái mặc định vào SharedPreferences
+//        sharedPreferences.edit().putBoolean("is_favorite", defaultState).apply();
+
         addEvents();
         volume();
         // Bắt đầu cập nhật lời bài hát
@@ -84,21 +88,17 @@ public class PlayMusicActivity extends AppCompatActivity {
                 }
             });
         }
-
-        SharedPreferences sharedPreferences = getSharedPreferences("stateHeart", MODE_PRIVATE);
-        frag_heart = sharedPreferences.getBoolean("is_favorite", false);
-        updateHeartButton();
     }
 
     private void volume() {
-        int maxV= audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        int maxV = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
         int curV = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
         seekbar1.setMax(maxV);
         seekbar1.setProgress(curV);
         seekbar1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,progress,0);
+                audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, progress, 0);
             }
 
             @Override
@@ -111,14 +111,6 @@ public class PlayMusicActivity extends AppCompatActivity {
 
             }
         });
-    }
-
-    private void updateHeartButton() {
-        if (frag_heart) {
-            btn_heart.setImageResource(R.drawable.ic_red_heart);
-        } else {
-            btn_heart.setImageResource(R.drawable.ic_heart);
-        }
     }
 
     private void loadNameArtist() {
@@ -177,11 +169,9 @@ public class PlayMusicActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 int visibility = seekbar1.getVisibility();
-                if(visibility == View.GONE)
-                {
+                if (visibility == View.GONE) {
                     seekbar1.setVisibility(View.VISIBLE);
-                }
-                else
+                } else
                     seekbar1.setVisibility(View.GONE);
             }
         });
@@ -335,36 +325,34 @@ public class PlayMusicActivity extends AppCompatActivity {
         btn_heart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (frag_heart) {
-                    frag_heart = false;
-                } else {
-                    frag_heart = true;
-                }
-                // sau khi set trạng thái thì sẽ return ngược của trạng thái đó, thì bạn sẽ đảo ngược lại để
-                // lấy trạng thái ban đầu để set true = 1, false = 0
-                boolean stateFavorite = !frag_heart;
-
                 Integer IDSong = getIntent().getIntExtra("SongID", -1);
                 database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
 
-                ContentValues values = new ContentValues();
+                // Lấy trạng thái yêu thích hiện tại từ SharedPreferences
+                SharedPreferences sharedPreferences = getSharedPreferences("stateHeart", MODE_PRIVATE);
+                boolean isFavorite = sharedPreferences.getBoolean("is_favorite", false);
 
-                // Chuyển đổi boolean thành integer (1 hoặc 0)
-                values.put("StateFavorite", stateFavorite ? 1 : 0);
-                int kq = database.update("Songs", values, "SongID = ?", new String[]{String.valueOf(IDSong)});
-
-                if (kq > 0) {
-                    addSongToLoveList(IDSong);
-                } else {
-                    removeSongFromLoveList(IDSong);
-                }
-                // Cập nhật biến frag_heart
-                frag_heart = !stateFavorite;
+                // Chuyển đổi trạng thái yêu thích
+                isFavorite = !isFavorite;
 
                 // Lưu trạng thái mới vào SharedPreferences
-                SharedPreferences sharedPreferences = getSharedPreferences("stateHeart", MODE_PRIVATE);
-                sharedPreferences.edit().putBoolean("is_favorite", frag_heart).apply();
-                updateHeartButton();
+                sharedPreferences.edit().putBoolean("is_favorite", isFavorite).apply();
+
+                if (frag_heart) {
+                    int value = 1;
+                    btn_heart.setImageResource(R.drawable.ic_red_heart);
+                    frag_heart = false;
+
+                    ContentValues values = new ContentValues();
+                    values.put("StateFavorite", value);
+                    database.update("Songs", values, "SongID = ?", new String[]{String.valueOf(IDSong)});
+                    addSongToLoveList(IDSong);
+
+                } else {
+                    btn_heart.setImageResource(R.drawable.ic_heart);
+                    frag_heart = true;
+                    removeSongFromLoveList(IDSong);
+                }
             }
         });
 
@@ -447,11 +435,9 @@ public class PlayMusicActivity extends AppCompatActivity {
 
     private void removeSongFromLoveList(Integer songid) {
 
-
         SharedPreferences preferences = getSharedPreferences("data", Context.MODE_PRIVATE);
         int maU = preferences.getInt("maU1", -1);
 
-        // Mở hoặc tạo cơ sở dữ liệu
         SQLiteDatabase database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
         database.beginTransaction();
 
@@ -462,7 +448,7 @@ public class PlayMusicActivity extends AppCompatActivity {
             if (kq > 0) {
                 // Cập nhật trạng thái yêu thích của bài hát trong bảng Songs
                 ContentValues values = new ContentValues();
-                values.put("Favorite", 0); // Đặt trạng thái yêu thích thành không yêu thích (0)
+                values.put("StateFavorite", 0);
 
                 // Cập nhật bảng Songs dựa trên SongID
                 database.update("Songs", values, "SongID = ?", new String[]{String.valueOf(songid)});
@@ -485,32 +471,25 @@ public class PlayMusicActivity extends AppCompatActivity {
 
         try {
             // Lặp qua các bản ghi trong bảng Songs
-            Cursor cursor = database.rawQuery("SELECT * FROM Songs", null);
+            Cursor cursor = database.rawQuery("SELECT * FROM Songs" + " where SongID=?", new String[]{String.valueOf(songid)});
             while (cursor.moveToNext()) {
                 int favorite = cursor.getInt(6);
 
                 // Xây dựng ContentValues mới
                 ContentValues values = new ContentValues();
 
-                // Chuyển đổi trạng thái yêu thích của bài hát
-                if (favorite == 1) {
-                    favorite = 0;
-                } else {
-                    favorite = 1;
-                    // Đặt giá trị cho cột Favorite
-                    values.put("Favorite", favorite);
-                    // Đặt giá trị cho cột UserID
-                    values.put("UserID", maU);
-                    // Đặt giá trị cho cột SongID
-                    values.put("SongID", songid);
+                // Đặt giá trị cho cột Favorite
+                values.put("Favorite", favorite);
+                // Đặt giá trị cho cột UserID
+                values.put("UserID", maU);
+                // Đặt giá trị cho cột SongID
+                values.put("SongID", songid);
 
-                    // Thực hiện thêm dòng vào bảng User_SongLove
-                    long kq = database.insert("User_SongLove", null, values);
-                    if (kq > 0) {
-                        break;
-                    }
+                // Thực hiện thêm dòng vào bảng User_SongLove
+                long kq = database.insert("User_SongLove", null, values);
+                if (kq > 0) {
+                    break;
                 }
-
             }
             cursor.close();
 
