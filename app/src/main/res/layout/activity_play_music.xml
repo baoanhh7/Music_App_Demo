@@ -172,25 +172,28 @@
 
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_marginTop="30dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-    <ImageButton
-        android:id="@+id/btn_volume"
-       android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:background="#131313"
-        android:src="@drawable/ic_volume"/>
-    <SeekBar
-        android:id="@+id/seekBar_volume"
-        android:layout_width="320dp"
-        android:layout_marginTop="3dp"
-        android:layout_height="wrap_content"
-        android:progressTint="@color/white"
-        android:thumbTint="#3FC3FF" />
+
+        <ImageButton
+            android:id="@+id/btn_volume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:background="#131313"
+            android:src="@drawable/ic_volume" />
+
+        <SeekBar
+            android:id="@+id/seekBar_volume"
+            android:layout_width="320dp"
+            android:layout_marginTop="3dp"
+            android:layout_height="wrap_content"
+            android:progressTint="@color/white"
+            android:thumbTint="#3FC3FF" />
     </LinearLayout>
 
 </LinearLayout>

@@ -8,7 +8,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -219,12 +218,14 @@ public class Library_Fragment extends Fragment implements OnItemClickListener {
         //recyclerViewNV.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.HORIZONTAL));
         // Lấy Bundle từ Fragment
     }
+
     public static byte[] convertDrawableToByteArray(Context context, int drawableId) {
         Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), drawableId);
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
         return stream.toByteArray();
     }
+
     @Override
     public void onItemClick(String data) {
 
