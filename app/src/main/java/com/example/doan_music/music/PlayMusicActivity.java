@@ -1,7 +1,8 @@
 package com.example.doan_music.music;
 
 import android.content.ContentValues;
-import android.content.Intent;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.doan_music.R;
+import com.example.doan_music.data.DbHelper;
 import com.example.doan_music.model.LrcLine;
 
 import java.io.IOException;
@@ -31,7 +33,6 @@ public class PlayMusicActivity extends AppCompatActivity {
     ImageButton btn_play, btn_back, btn_next, btn_pre, btn_toggle, btn_shuffle, btn_repeat, btn_heart;
     SeekBar seekBar;
     TextView txt_time, txt_time_first;
-    SQLiteDatabase database = null;
     MediaPlayer myMusic;
     TextView txtLoibaihat;
     List<LrcLine> lrcLines = new ArrayList<>();
@@ -43,6 +44,8 @@ public class PlayMusicActivity extends AppCompatActivity {
     boolean Isshuffle = true;
     private boolean frag = true;
     private boolean frag_heart = true;
+    SQLiteDatabase database = null;
+    DbHelper dbHelper;
 
 
     @Override
@@ -314,7 +317,13 @@ public class PlayMusicActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Thay đổi hình ảnh của nút dựa trên trạng thái mới
                 if (frag_heart) {
-                    addSongToLoveList();
+                    Integer IDSong = getIntent().getIntExtra("SongID", -1);
+                    database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
+                    Cursor cursor = database.rawQuery("select * " +
+                            "from Songs " +
+                            "WHERE Songs.SongID = ? ", new String[]{String.valueOf(IDSong)});
+
+                    addSongToLoveList(IDSong);
                     // Thực hiện các hành động khi nút được bật
                     btn_heart.setImageResource(R.drawable.ic_red_heart);
                     frag_heart = false;
@@ -380,30 +389,50 @@ public class PlayMusicActivity extends AppCompatActivity {
         }
     }
 
-    private void addSongToLoveList() {
-        Intent i = getIntent();
-        int maU = i.getIntExtra("maU1", -1);
-        SQLiteDatabase database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
-        Cursor cursor = database.rawQuery("select * from Songs", null);
-        while (cursor.moveToNext()) {
-            String nameSong = cursor.getString(2);
-            int favorite = cursor.getInt(6);
+    private void addSongToLoveList(Integer songid) {
+        SharedPreferences preferences = getSharedPreferences("data", Context.MODE_PRIVATE);
+        int maU = preferences.getInt("maU1", -1);
 
-            ContentValues values = new ContentValues();
+        database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
+        database.beginTransaction();
 
-            if (favorite == 1) {
-                favorite = 0;
-                values.put("User_SongLove.Favorite", favorite);
-            } else {
-                favorite = 1;
-                values.put("User_SongLove.Favorite", favorite);
+        try {
+            // Lặp qua các bản ghi trong bảng Songs
+            Cursor cursor = database.rawQuery("SELECT * FROM Songs", null);
+            while (cursor.moveToNext()) {
+                int favorite = cursor.getInt(6);
+
+                // Xây dựng ContentValues mới
+                ContentValues values = new ContentValues();
+
+                // Chuyển đổi trạng thái yêu thích của bài hát
+                if (favorite == 1) {
+                    favorite = 0;
+                } else {
+                    favorite = 1;
+                }
+
+                // Đặt giá trị cho cột Favorite
+                values.put("Favorite", favorite);
+                // Đặt giá trị cho cột UserID
+                values.put("UserID", maU);
+                // Đặt giá trị cho cột SongID
+                values.put("SongID", songid);
+
+                // Thực hiện thêm dòng vào bảng User_SongLove
+                long kq = database.insert("User_SongLove", null, values);
+                if (kq > 0) {
+                    break;
+                }
             }
-            
-            values.put("User_SongLove.UserID", maU);
-            values.put("User_SongLove.SongLoveName", nameSong);
-            long kq = database.insert("User_SongLove", null, values);
+            cursor.close();
+
+            // Đánh dấu giao dịch thành công nếu không có lỗi xảy ra
+            database.setTransactionSuccessful();
+        } finally {
+            // Kết thúc giao dịch, đảm bảo rằng dữ liệu được lưu trữ an toàn
+            database.endTransaction();
         }
-        cursor.close();
     }
 
     private void playNextSong(ArrayList<Integer> arr) {

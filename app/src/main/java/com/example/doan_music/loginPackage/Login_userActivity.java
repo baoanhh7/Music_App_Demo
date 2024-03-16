@@ -1,6 +1,8 @@
 package com.example.doan_music.loginPackage;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -16,7 +18,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.doan_music.R;
 import com.example.doan_music.activity.MainActivity;
 import com.example.doan_music.activity.admin.AdminActivity;
-import com.example.doan_music.activity.home.PlayListActivity;
 
 public class Login_userActivity extends AppCompatActivity {
     EditText EdtEmail, EdtPassword;
@@ -86,8 +87,10 @@ public class Login_userActivity extends AppCompatActivity {
                         intent.putExtra("maU", ma);
                         intent.putExtra("tenU", Name);
 
-                        Intent i = new Intent(Login_userActivity.this, PlayListActivity.class);
-                        intent.putExtra("maU1", ma);
+                        SharedPreferences preferences = getSharedPreferences("data", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putInt("maU1", ma);
+                        editor.apply();
                     }
                     startActivity(intent);
                     break;
