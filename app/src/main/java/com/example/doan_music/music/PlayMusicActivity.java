@@ -25,7 +25,7 @@ import java.util.List;
 
 public class PlayMusicActivity extends AppCompatActivity {
 
-    ImageButton btn_play, btn_pause, btn_back, btn_next, btn_pre, btn_toggle;
+    ImageButton btn_play, btn_pause, btn_back, btn_next, btn_pre, btn_toggle, btn_heart;
     SeekBar seekBar;
     TextView txt_time, txt_time_first;
     SQLiteDatabase database = null;
@@ -37,6 +37,7 @@ public class PlayMusicActivity extends AppCompatActivity {
     TextView txt_artist_song, txt_name_song;
     Integer currentPosition;
     private boolean frag = true;
+    private boolean frag_heart = true;
 
 
     @Override
@@ -281,6 +282,21 @@ public class PlayMusicActivity extends AppCompatActivity {
             }
         });
 
+        btn_heart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (frag_heart) {
+                    // Thực hiện các hành động khi nút được nhấn
+                    btn_heart.setImageResource(R.drawable.ic_red_heart);
+                    frag_heart = false;
+                } else {
+                    btn_heart.setImageResource(R.drawable.ic_heart);
+                    frag_heart = true;
+                }
+            }
+        });
+
 
         // set giới hạn Max cho thanh seekBar
         seekBar.setMax(myMusic.getDuration());
@@ -343,6 +359,8 @@ public class PlayMusicActivity extends AppCompatActivity {
         btn_next = findViewById(R.id.btn_next);
 
         btn_toggle = findViewById(R.id.btn_toggle);
+
+        btn_heart = findViewById(R.id.btn_heart);
 
         // Load animation từ file xml
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.animation);

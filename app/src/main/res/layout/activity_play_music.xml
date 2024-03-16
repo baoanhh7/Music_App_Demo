@@ -95,10 +95,17 @@
         android:orientation="horizontal">
 
         <ImageButton
+            android:id="@+id/btn_heart"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:background="@drawable/ic_heart" />
+
+        <ImageButton
             android:id="@+id/btn_pre"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginStart="80dp"
+            android:layout_marginStart="30dp"
             android:background="#131313"
             android:src="@android:drawable/ic_media_previous" />
 
@@ -132,7 +139,7 @@
             android:id="@+id/btn_toggle"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginLeft="30dp"
+            android:layout_marginStart="30dp"
             android:background="#131313"
             android:src="@drawable/ic_off" />
 
