@@ -539,7 +539,7 @@ public class PlayMusicActivity extends AppCompatActivity {
 
     private void addControls() {
         btn_play = findViewById(R.id.btn_play);
-        txtLoibaihat = findViewById(R.id.txtLoibaihat);
+//        txtLoibaihat = findViewById(R.id.txtLoibaihat);
         btn_back = findViewById(R.id.btn_back);
         txt_artist_song = findViewById(R.id.txt_artist_song);
         txt_name_song = findViewById(R.id.txt_name_song);
