@@ -21,11 +21,12 @@ import com.example.doan_music.model.LrcLine;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class PlayMusicActivity extends AppCompatActivity {
 
-    ImageButton btn_play, btn_pause, btn_back, btn_next, btn_pre, btn_toggle;
+    ImageButton btn_play, btn_pause, btn_back, btn_next, btn_pre, btn_toggle,btn_shuffle,btn_repeat;
     SeekBar seekBar;
     TextView txt_time, txt_time_first;
     SQLiteDatabase database = null;
@@ -33,9 +34,11 @@ public class PlayMusicActivity extends AppCompatActivity {
     TextView txtLoibaihat;
     List<LrcLine> lrcLines = new ArrayList<>();
     ArrayList<Integer> arr = new ArrayList<>();
+    ArrayList<Integer> shuffle = new ArrayList<>();
     ImageView imageView_songs;
     TextView txt_artist_song, txt_name_song;
     Integer currentPosition;
+    boolean Isshuffle = true;
     private boolean frag = true;
 
 
@@ -47,6 +50,7 @@ public class PlayMusicActivity extends AppCompatActivity {
         addControls();
         arr = (ArrayList<Integer>) getIntent().getSerializableExtra("arrIDSongs");
         Integer IDSong = getIntent().getIntExtra("SongID", -1);
+        shuffle = arr;
         currentPosition = arr.indexOf(IDSong);
         myMusic = new MediaPlayer();
         //myMusic = MediaPlayer.create(this, R.raw.nhung_loi_hua_bo_quen);
@@ -55,6 +59,7 @@ public class PlayMusicActivity extends AppCompatActivity {
         myMusic.seekTo(0);
 
         myMusic.start();
+        myMusic.setLooping(false);
 
         // tạo biến duration để lưu thời gian bài hát
         String duration = timeSeekbar(myMusic.getDuration());
@@ -62,7 +67,14 @@ public class PlayMusicActivity extends AppCompatActivity {
         loadNameArtist();
         addEvents();
         // Bắt đầu cập nhật lời bài hát
-
+        if(frag){
+            myMusic.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    playNextSong(arr);
+                }
+            });
+        }
     }
 
     private void loadNameArtist() {
@@ -270,13 +282,28 @@ public class PlayMusicActivity extends AppCompatActivity {
                 if (frag) {
 
                     // Thực hiện các hành động khi nút được bật
-                    btn_toggle.setImageResource(R.drawable.ic_on);
+                    btn_toggle.setImageResource(R.drawable.ic_repeatactive);
                     myMusic.setLooping(true);
                     frag = false;
                 } else {
-                    btn_toggle.setImageResource(R.drawable.ic_off);
+                    btn_toggle.setImageResource(R.drawable.ic_repeat);
                     myMusic.setLooping(false);
                     frag = true;
+                }
+            }
+        });
+        btn_shuffle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(Isshuffle){
+                    btn_shuffle.setImageResource(R.drawable.ic_shufferactive);
+                    Isshuffle = false;
+                    Collections.shuffle(arr);
+                }
+                else{
+                    btn_shuffle.setImageResource(R.drawable.ic_shuffer);
+                    arr=shuffle;
+                    Isshuffle = true;
                 }
             }
         });
@@ -320,12 +347,55 @@ public class PlayMusicActivity extends AppCompatActivity {
                                 }
                             });
                             Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                        }
+                        } catch (InterruptedException e) {}
                     }
                 }
             }
         }).start();
+    }
+    private void playNextSong(ArrayList<Integer> arr) {
+        myMusic.reset();
+        if (currentPosition < arr.size() - 1) {
+            currentPosition++;
+        } else {
+            currentPosition = 0;
+        }
+        Integer idSong = arr.get(currentPosition);
+        database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
+        Cursor cursor = database.rawQuery("select * from Songs", null);
+        while (cursor.moveToNext()) {
+            Integer Id = cursor.getInt(0);
+            String ten = cursor.getString(2);
+            byte[] img = cursor.getBlob(3);
+            String linkSong = cursor.getString(5);
+            if (idSong.equals(Id)) {
+                Bitmap bitmap = BitmapFactory.decodeByteArray(img, 0, img.length);
+                imageView_songs.setImageBitmap(bitmap);
+                try {
+                    myMusic.reset();
+                    myMusic.setDataSource(linkSong);
+                    myMusic.prepare();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                txt_name_song.setText(ten);
+            }
+        }
+        cursor.close();
+        database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
+        Cursor cursor1 = database.rawQuery("select * " +
+                "from Artists " +
+                "JOIN Songs ON Artists.ArtistID =Songs.ArtistID " +
+                "WHERE Songs.SongID = ? ", new String[]{String.valueOf(idSong)});
+        while (cursor1.moveToNext()) {
+            String ten = cursor1.getString(1);
+            txt_artist_song.setText(ten);
+        }
+
+        String duration = timeSeekbar(myMusic.getDuration());
+        txt_time.setText(duration);
+        seekBar.setMax(myMusic.getDuration());
+        myMusic.start();
     }
 
     private void addControls() {
@@ -348,6 +418,6 @@ public class PlayMusicActivity extends AppCompatActivity {
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.animation);
         // Áp dụng animation vào ImageView
         imageView_songs.startAnimation(animation);
-
+        btn_shuffle = findViewById(R.id.btn_shuffle);
     }
 }
