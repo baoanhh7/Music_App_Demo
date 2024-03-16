@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.doan_music.R;
 import com.example.doan_music.activity.MainActivity;
 import com.example.doan_music.activity.admin.AdminActivity;
+import com.example.doan_music.activity.home.PlayListActivity;
 
 public class Login_userActivity extends AppCompatActivity {
     EditText EdtEmail, EdtPassword;
@@ -85,6 +86,8 @@ public class Login_userActivity extends AppCompatActivity {
                         intent.putExtra("maU", ma);
                         intent.putExtra("tenU", Name);
 
+                        Intent i = new Intent(Login_userActivity.this, PlayListActivity.class);
+                        intent.putExtra("maU1", ma);
                     }
                     startActivity(intent);
                     break;

@@ -1,5 +1,7 @@
 package com.example.doan_music.music;
 
+import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -134,12 +136,17 @@ public class PlayMusicActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (myMusic.isPlaying()) {
-                    myMusic.pause();
+                    myMusic.stop();
                     btn_play.setImageResource(R.drawable.ic_play);
 
                 } else {
                     myMusic.start();
                     btn_play.setImageResource(R.drawable.ic_pause);
+
+                    // Load animation từ file xml
+                    Animation animation = AnimationUtils.loadAnimation(PlayMusicActivity.this, R.anim.animation);
+                    // Áp dụng animation vào ImageView
+                    imageView_songs.startAnimation(animation);
                 }
             }
         });
@@ -177,6 +184,10 @@ public class PlayMusicActivity extends AppCompatActivity {
                         }
                         txt_name_song.setText(ten);
                     }
+
+                    int farovite = cursor.getInt(6);
+                    setFavorite(farovite);
+
                 }
                 cursor.close();
                 database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
@@ -219,6 +230,7 @@ public class PlayMusicActivity extends AppCompatActivity {
                     String ten = cursor.getString(2);
                     byte[] img = cursor.getBlob(3);
                     String linkSong = cursor.getString(5);
+
                     if (idSong.equals(Id)) {
                         Bitmap bitmap = BitmapFactory.decodeByteArray(img, 0, img.length);
                         imageView_songs.setImageBitmap(bitmap);
@@ -230,6 +242,10 @@ public class PlayMusicActivity extends AppCompatActivity {
                         }
                         txt_name_song.setText(ten);
                     }
+
+                    int farovite = cursor.getInt(6);
+                    setFavorite(farovite);
+
                 }
                 cursor.close();
 
@@ -298,7 +314,7 @@ public class PlayMusicActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Thay đổi hình ảnh của nút dựa trên trạng thái mới
                 if (frag_heart) {
-
+                    addSongToLoveList();
                     // Thực hiện các hành động khi nút được bật
                     btn_heart.setImageResource(R.drawable.ic_red_heart);
                     frag_heart = false;
@@ -354,6 +370,40 @@ public class PlayMusicActivity extends AppCompatActivity {
                 }
             }
         }).start();
+    }
+
+    private void setFavorite(int farovite) {
+        if (farovite == 1) {
+            btn_heart.setImageResource(R.drawable.ic_red_heart);
+        } else {
+            btn_heart.setImageResource(R.drawable.ic_heart);
+        }
+    }
+
+    private void addSongToLoveList() {
+        Intent i = getIntent();
+        int maU = i.getIntExtra("maU1", -1);
+        SQLiteDatabase database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
+        Cursor cursor = database.rawQuery("select * from Songs", null);
+        while (cursor.moveToNext()) {
+            String nameSong = cursor.getString(2);
+            int favorite = cursor.getInt(6);
+
+            ContentValues values = new ContentValues();
+
+            if (favorite == 1) {
+                favorite = 0;
+                values.put("User_SongLove.Favorite", favorite);
+            } else {
+                favorite = 1;
+                values.put("User_SongLove.Favorite", favorite);
+            }
+            
+            values.put("User_SongLove.UserID", maU);
+            values.put("User_SongLove.SongLoveName", nameSong);
+            long kq = database.insert("User_SongLove", null, values);
+        }
+        cursor.close();
     }
 
     private void playNextSong(ArrayList<Integer> arr) {
@@ -417,11 +467,6 @@ public class PlayMusicActivity extends AppCompatActivity {
         btn_toggle = findViewById(R.id.btn_toggle);
         btn_shuffle = findViewById(R.id.btn_shuffle);
         btn_heart = findViewById(R.id.btn_heart);
-
-        // Load animation từ file xml
-        Animation animation = AnimationUtils.loadAnimation(this, R.anim.animation);
-        // Áp dụng animation vào ImageView
-        imageView_songs.startAnimation(animation);
 
     }
 }
