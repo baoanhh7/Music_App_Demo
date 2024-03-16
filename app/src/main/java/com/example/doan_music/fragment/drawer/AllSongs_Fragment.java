@@ -30,7 +30,6 @@ public class AllSongs_Fragment extends Fragment {
     SongAdapter songAdapter;
     DbHelper dbHelper;
     SQLiteDatabase database = null;
-
     List<Song> songList;
     ArrayList<Integer> arr = new ArrayList<>();
 
@@ -107,8 +106,9 @@ public class AllSongs_Fragment extends Fragment {
             int artist = cursor.getInt(4);
             byte[] image = cursor.getBlob(3);
             String linkSong = cursor.getString(5);
+            int favorite = cursor.getInt(6);
 
-            Song song = new Song(id, songName, artist, image, linkSong);
+            Song song = new Song(id, songName, artist, image, linkSong, favorite);
             songList.add(song);
             arr.add(id);
         }
@@ -124,6 +124,5 @@ public class AllSongs_Fragment extends Fragment {
         rcv_songs.setAdapter(songAdapter);
 
         rcv_songs.setLayoutManager(new LinearLayoutManager(requireContext()));
-
     }
 }

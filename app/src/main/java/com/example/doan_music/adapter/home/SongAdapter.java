@@ -3,7 +3,6 @@ package com.example.doan_music.adapter.home;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_music.R;
-import com.example.doan_music.fragment.tab_home.Song_Fragment;
 import com.example.doan_music.m_interface.IClickItemSong;
 import com.example.doan_music.m_interface.OnItemClickListener;
 import com.example.doan_music.model.Song;
@@ -23,11 +21,6 @@ import com.example.doan_music.model.Song;
 import java.util.List;
 
 public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder> {
-
-    // Khai báo một interface để gửi thông báo khi nhấn vào nút thả tim
-    public interface OnHeartClickListener {
-        void onHeartClicked(Song song);
-    }
 
     private List<Song> songList;
     private Context context;
@@ -65,7 +58,6 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
             }
         });
 
-
         // Đặt trạng thái cho nút thả tim dựa trên isFavorite
         if (song.getisFavorite() == 1) {
             holder.btn_heart.setImageResource(R.drawable.ic_red_heart); // Đổi màu thành đỏ
@@ -78,13 +70,6 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
             int newState = song.getisFavorite() == 1 ? 0 : 1;
             song.setisFavorite(newState);
             notifyItemChanged(position); // Cập nhật lại giao diện
-
-            Song_Fragment songFragment = new Song_Fragment();
-
-            // Truyền dữ liệu của bài hát tới SongFragment
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("heartSong", song);
-            songFragment.setArguments(bundle);
 
         });
     }

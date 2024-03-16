@@ -16,26 +16,12 @@ public class Song implements Serializable {
     public Song() {
     }
 
-    public Song(int songID, String songName, byte[] songImage, int isFavorite) {
-        SongID = songID;
-        SongName = songName;
-        SongImage = songImage;
-        this.isFavorite = isFavorite;
-    }
-
-    public Song(int songID, String songName, int artistID, byte[] songImage, String linkSong) {
+    public Song(int songID, String songName, int artistID, byte[] songImage, String linkSong, int isFavorite) {
         SongID = songID;
         SongName = songName;
         SongImage = songImage;
         LinkSong = linkSong;
         ArtistID = artistID;
-    }
-
-    public Song(int songID, String songName, byte[] songImage, String linkSong, int isFavorite) {
-        SongID = songID;
-        SongName = songName;
-        SongImage = songImage;
-        LinkSong = linkSong;
         this.isFavorite = isFavorite;
     }
 

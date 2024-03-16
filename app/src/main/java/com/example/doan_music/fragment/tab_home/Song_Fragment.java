@@ -31,17 +31,6 @@ public class Song_Fragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_song_, container, false);
         addControls();
 
-        // Lấy dữ liệu bài hát từ Bundle
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            Song song = (Song) bundle.getSerializable("heartSong");
-            // Hiển thị thông tin bài hát trong Fragment
-            // Ví dụ: update UI với thông tin bài hát
-            txt_songname.setText(song.getSongName());
-
-            songList.add(song);
-            adapter.notifyDataSetChanged();
-        }
         return view;
     }
 
