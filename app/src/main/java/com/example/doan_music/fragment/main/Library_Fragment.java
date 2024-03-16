@@ -27,6 +27,7 @@ import com.example.doan_music.activity.library.ArtistSongActivity;
 import com.example.doan_music.adapter.thuvien.ThuVienAdapter;
 import com.example.doan_music.data.DbHelper;
 import com.example.doan_music.fragment.library.AddNgheSiFragment;
+import com.example.doan_music.fragment.library.AddPlaylistFragment;
 import com.example.doan_music.m_interface.OnItemClickListener;
 import com.example.doan_music.model.ThuVien;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -101,6 +102,17 @@ public class Library_Fragment extends Fragment implements OnItemClickListener {
                 //startActivity(intent);
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.frame_container, new AddNgheSiFragment());
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+                // Đóng bottom sheet dialog sau khi xử lý xong
+                bottomSheetDialog.dismiss();
+            }
+        });
+        tbr_bottom_sheet_thuvien_adddanhsachphat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.frame_container, new AddPlaylistFragment());
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
                 // Đóng bottom sheet dialog sau khi xử lý xong
