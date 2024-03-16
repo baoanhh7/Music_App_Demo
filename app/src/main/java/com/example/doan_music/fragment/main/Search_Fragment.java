@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,7 +23,6 @@ import com.example.doan_music.adapter.search.SearchAdapter;
 import com.example.doan_music.adapter.search.SearchItemAdapter;
 import com.example.doan_music.adapter.thuvien.ThuVienAdapter;
 import com.example.doan_music.m_interface.OnItemClickListener;
-import com.example.doan_music.model.SearchItem;
 import com.example.doan_music.model.ThuVien;
 import com.example.doan_music.model.User;
 import com.example.doan_music.music.PlayMusicActivity;
@@ -38,7 +36,7 @@ public class Search_Fragment extends Fragment {
     private RecyclerView rcvSearchItem;
     private SearchItemAdapter searchItemAdapter;
     SQLiteDatabase database = null;
-    TextView txt_searchlibrary2,txt_searchlibrary1;
+    TextView txt_searchlibrary2, txt_searchlibrary1;
     ThuVienAdapter thuVienAdapter;
     ArrayList<ThuVien> arr;
     ArrayList<Integer> arr1 = new ArrayList<>();
@@ -111,7 +109,7 @@ public class Search_Fragment extends Fragment {
 
     private void loadData() {
         database = getActivity().openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
-        Cursor cursor = database.rawQuery("select * from Artists",null);
+        Cursor cursor = database.rawQuery("select * from Artists", null);
         arr.clear();
         while (cursor.moveToNext()) {
             Integer maArtist = Integer.valueOf(cursor.getString(0) + "");
@@ -123,7 +121,7 @@ public class Search_Fragment extends Fragment {
         }
         thuVienAdapter.notifyDataSetChanged();
         cursor.close();
-         cursor = database.rawQuery("select * from Songs",null);
+        cursor = database.rawQuery("select * from Songs", null);
         while (cursor.moveToNext()) {
             Integer maArtist = Integer.valueOf(cursor.getString(0) + "");
             String ten = cursor.getString(2);
@@ -135,9 +133,6 @@ public class Search_Fragment extends Fragment {
         thuVienAdapter.notifyDataSetChanged();
         cursor.close();
     }
-
-
-
 
 
 //    private List<SearchItem> getListSearchItem() {
@@ -254,14 +249,14 @@ public class Search_Fragment extends Fragment {
                     String ten = cursor.getString(1);
 
                     if (data.equals(ten)) {
-                         intent = new Intent(requireContext(), ArtistSongActivity.class);
+                        intent = new Intent(requireContext(), ArtistSongActivity.class);
                         intent.putExtra("MaArtist", Id);
 
                         break;
                     }
-                }                cursor.close();
-                while (cursor1.moveToNext())
-                {
+                }
+                cursor.close();
+                while (cursor1.moveToNext()) {
                     Integer Id = cursor1.getInt(0);
                     String ten = cursor1.getString(2);
                     arr1.add(Id);

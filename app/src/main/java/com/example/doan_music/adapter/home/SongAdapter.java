@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -57,21 +56,6 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
                 }
             }
         });
-
-        // Đặt trạng thái cho nút thả tim dựa trên isFavorite
-        if (song.getisFavorite() == 1) {
-            holder.btn_heart.setImageResource(R.drawable.ic_red_heart); // Đổi màu thành đỏ
-        } else {
-            holder.btn_heart.setImageResource(R.drawable.ic_heart); // Màu xám
-        }
-
-        holder.btn_heart.setOnClickListener(v -> {
-            // Xử lý sự kiện khi nhấn vào nút thả tim
-            int newState = song.getisFavorite() == 1 ? 0 : 1;
-            song.setisFavorite(newState);
-            notifyItemChanged(position); // Cập nhật lại giao diện
-
-        });
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -91,14 +75,12 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
 
     public static class SongViewHolder extends RecyclerView.ViewHolder {
         TextView txt_song, txt_id;
-        ImageButton btn_heart;
         ImageView img_song;
 
         public SongViewHolder(@NonNull View itemView) {
             super(itemView);
             txt_song = itemView.findViewById(R.id.txt_song);
             txt_id = itemView.findViewById(R.id.txt_id);
-            btn_heart = itemView.findViewById(R.id.btn_heart);
             img_song = itemView.findViewById(R.id.img_song);
         }
     }

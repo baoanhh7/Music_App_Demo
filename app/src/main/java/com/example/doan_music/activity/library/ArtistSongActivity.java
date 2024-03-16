@@ -20,7 +20,6 @@ import com.example.doan_music.m_interface.OnItemClickListener;
 import com.example.doan_music.model.ThuVien;
 import com.example.doan_music.music.PlayMusicActivity;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class ArtistSongActivity extends AppCompatActivity implements OnItemClickListener {
@@ -61,10 +60,10 @@ public class ArtistSongActivity extends AppCompatActivity implements OnItemClick
                     Integer Id = cursor.getInt(0);
                     String ten = cursor.getString(2);
                     if (idSong.equals(Id)) {
-                            intent = new Intent(ArtistSongActivity.this, PlayMusicActivity.class);
-                            intent.putExtra("SongID", Id);
-                            intent.putExtra("arrIDSongs", arr1);
-                            break;
+                        intent = new Intent(ArtistSongActivity.this, PlayMusicActivity.class);
+                        intent.putExtra("SongID", Id);
+                        intent.putExtra("arrIDSongs", arr1);
+                        break;
                     }
                 }
                 cursor.close();
