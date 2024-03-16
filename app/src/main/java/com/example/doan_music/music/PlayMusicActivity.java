@@ -71,11 +71,11 @@ public class PlayMusicActivity extends AppCompatActivity {
         txt_time.setText(duration);
         loadNameArtist();
 
-//        SharedPreferences sharedPreferences = getSharedPreferences("stateHeart", MODE_PRIVATE);
-//        // Trạng thái mặc định là không yêu thích
-//        boolean defaultState = false;
-//        // Lưu trạng thái mặc định vào SharedPreferences
-//        sharedPreferences.edit().putBoolean("is_favorite", defaultState).apply();
+        SharedPreferences sharedPreferences = getSharedPreferences("stateHeart", MODE_PRIVATE);
+        // Trạng thái mặc định là không yêu thích
+        boolean defaultState = false;
+        // Lưu trạng thái mặc định vào SharedPreferences
+        sharedPreferences.edit().putBoolean("is_favorite", defaultState).apply();
 
         addEvents();
         volume();
@@ -338,7 +338,7 @@ public class PlayMusicActivity extends AppCompatActivity {
                 // Lưu trạng thái mới vào SharedPreferences
                 sharedPreferences.edit().putBoolean("is_favorite", isFavorite).apply();
 
-                if (frag_heart) {
+                if (isFavorite) {
                     int value = 1;
                     btn_heart.setImageResource(R.drawable.ic_red_heart);
                     frag_heart = false;
