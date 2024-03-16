@@ -1,9 +1,15 @@
 package com.example.doan_music.fragment.main;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
@@ -13,19 +19,29 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_music.R;
+import com.example.doan_music.activity.library.ArtistSongActivity;
 import com.example.doan_music.adapter.search.SearchAdapter;
 import com.example.doan_music.adapter.search.SearchItemAdapter;
+import com.example.doan_music.adapter.thuvien.ThuVienAdapter;
+import com.example.doan_music.m_interface.OnItemClickListener;
 import com.example.doan_music.model.SearchItem;
+import com.example.doan_music.model.ThuVien;
 import com.example.doan_music.model.User;
+import com.example.doan_music.music.PlayMusicActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Search_Fragment extends Fragment {
-    private RecyclerView rcv_search_header, rcv_search_bottom;
+    private RecyclerView rcv_search_header, rcv_search_bottom, rcv_searchItem;
     private SearchAdapter searchAdapter_header, searchAdapter_bottom;
     private RecyclerView rcvSearchItem;
     private SearchItemAdapter searchItemAdapter;
+    SQLiteDatabase database = null;
+    TextView txt_searchlibrary2,txt_searchlibrary1;
+    ThuVienAdapter thuVienAdapter;
+    ArrayList<ThuVien> arr;
+    ArrayList<Integer> arr1 = new ArrayList<>();
     private SearchView searchView;
     View view;
 
@@ -48,45 +64,92 @@ public class Search_Fragment extends Fragment {
         // set data cho recyclerView
         searchAdapter_header.setData(getlistuserHeader());
         searchAdapter_bottom.setData(getlistuserBottom());
+        addEvents();
+        loadData();
+        return view;
+    }
 
-        rcvSearchItem = view.findViewById(R.id.rcv_searchItem);
-        LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(requireContext());
-        rcvSearchItem.setLayoutManager((linearLayoutManager1));
-
-        searchItemAdapter = new SearchItemAdapter(getListSearchItem());
-        rcvSearchItem.setAdapter(searchItemAdapter);
-
-        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL);
-        rcvSearchItem.addItemDecoration(itemDecoration);
-
-        searchView = view.findViewById(R.id.searchView);
-        searchView.clearFocus();
+    private void addEvents() {
+        searchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rcv_searchItem.setVisibility(View.VISIBLE);
+                txt_searchlibrary2.setVisibility(View.GONE);
+                txt_searchlibrary1.setVisibility(View.GONE);
+                rcv_search_header.setVisibility(View.GONE);
+                rcv_search_bottom.setVisibility(View.GONE);
+                GridLayoutManager gridLayoutManager = new GridLayoutManager(requireContext(), 2);
+                LinearLayoutManager linearLayout = new LinearLayoutManager(requireContext());
+                rcv_searchItem.setLayoutManager(gridLayoutManager);
+            }
+        });
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                txt_searchlibrary2.setVisibility(View.VISIBLE);
+                txt_searchlibrary1.setVisibility(View.VISIBLE);
+                rcv_search_header.setVisibility(View.VISIBLE);
+                rcv_search_bottom.setVisibility(View.VISIBLE);
+                rcv_searchItem.setVisibility(View.GONE);
+                return false;
+            }
+        });
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                searchItemAdapter.getFilter().filter(query);
+                thuVienAdapter.getFilter().filter(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                searchItemAdapter.getFilter().filter(newText);
+                thuVienAdapter.getFilter().filter(newText);
                 return false;
             }
         });
-        return view;
     }
 
-    private List<SearchItem> getListSearchItem() {
-        List<SearchItem> list = new ArrayList<>();
-        list.add(new SearchItem(R.drawable.avt_lowg, "LowG", "Nghe Si"));
-        list.add(new SearchItem(R.drawable.avt_dalab, "DaLab", "Nghe Si"));
-        list.add(new SearchItem(R.drawable.avt_mck, "MCK", "Nghe Si"));
-        list.add(new SearchItem(R.drawable.avt_obito, "Obito", "Nghe Si"));
-        list.add(new SearchItem(R.drawable.avt_gducky, "Gducky", "Nghe Si"));
+    private void loadData() {
+        database = getActivity().openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
+        Cursor cursor = database.rawQuery("select * from Artists",null);
+        arr.clear();
+        while (cursor.moveToNext()) {
+            Integer maArtist = Integer.valueOf(cursor.getString(0) + "");
+            String ten = cursor.getString(1);
+            byte[] img = cursor.getBlob(2);
+            ThuVien thuVien = new ThuVien(img, ten);
+            arr.add(thuVien);
 
-        return list;
+        }
+        thuVienAdapter.notifyDataSetChanged();
+        cursor.close();
+         cursor = database.rawQuery("select * from Songs",null);
+        while (cursor.moveToNext()) {
+            Integer maArtist = Integer.valueOf(cursor.getString(0) + "");
+            String ten = cursor.getString(2);
+            byte[] img = cursor.getBlob(3);
+            ThuVien thuVien = new ThuVien(img, ten);
+            arr.add(thuVien);
+
+        }
+        thuVienAdapter.notifyDataSetChanged();
+        cursor.close();
     }
+
+
+
+
+
+//    private List<SearchItem> getListSearchItem() {
+//        List<SearchItem> list = new ArrayList<>();
+//        list.add(new SearchItem(R.drawable.avt_lowg, "LowG", "Nghe Si"));
+//        list.add(new SearchItem(R.drawable.avt_dalab, "DaLab", "Nghe Si"));
+//        list.add(new SearchItem(R.drawable.avt_mck, "MCK", "Nghe Si"));
+//        list.add(new SearchItem(R.drawable.avt_obito, "Obito", "Nghe Si"));
+//        list.add(new SearchItem(R.drawable.avt_gducky, "Gducky", "Nghe Si"));
+//
+//        return list;
+//    }
 
 //    @Override
 //    public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -173,7 +236,47 @@ public class Search_Fragment extends Fragment {
 
         rcv_search_header.setAdapter(searchAdapter_header);
         rcv_search_bottom.setAdapter(searchAdapter_bottom);
+        searchView = view.findViewById(R.id.searchView);
+        txt_searchlibrary2 = view.findViewById(R.id.txt_searchlibrary2);
+        txt_searchlibrary1 = view.findViewById(R.id.txt_searchlibrary1);
+        rcv_searchItem = view.findViewById(R.id.rcv_searchItem);
+        arr = new ArrayList<>();
+        thuVienAdapter = new ThuVienAdapter(this, arr);
+        thuVienAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(String data) {
+                Intent intent = null;
+                database = getActivity().openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
+                Cursor cursor = database.rawQuery("select * from Artists", null);
+                Cursor cursor1 = database.rawQuery("select * from Songs", null);
+                while (cursor.moveToNext()) {
+                    Integer Id = cursor.getInt(0);
+                    String ten = cursor.getString(1);
 
+                    if (data.equals(ten)) {
+                         intent = new Intent(requireContext(), ArtistSongActivity.class);
+                        intent.putExtra("MaArtist", Id);
+
+                        break;
+                    }
+                }                cursor.close();
+                while (cursor1.moveToNext())
+                {
+                    Integer Id = cursor1.getInt(0);
+                    String ten = cursor1.getString(2);
+                    arr1.add(Id);
+                    if (data.equals(ten)) {
+                        intent = new Intent(requireContext(), PlayMusicActivity.class);
+                        intent.putExtra("SongID", Id);
+                    }
+                }
+                intent.putExtra("arrIDSongs", arr1);
+                cursor1.close();
+                startActivity(intent);
+
+            }
+        });
+        rcv_searchItem.setAdapter(thuVienAdapter);
 
     }
 }
