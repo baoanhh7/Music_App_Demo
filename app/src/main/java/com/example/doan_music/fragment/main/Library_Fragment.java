@@ -2,9 +2,13 @@ package com.example.doan_music.fragment.main;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +36,7 @@ import com.example.doan_music.m_interface.OnItemClickListener;
 import com.example.doan_music.model.ThuVien;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 
@@ -148,9 +153,22 @@ public class Library_Fragment extends Fragment implements OnItemClickListener {
                 arr.add(thuVien);
 
             }
-            thuVienAdapter.notifyDataSetChanged();
+
             cursor.close();
-            // }
+            cursor = database.rawQuery("select * " +
+                    "from PlayList_User_Song " +
+                    "WHERE PlayList_User_Song.UserID = ? ", new String[]{String.valueOf(maU)});
+            while (cursor.moveToNext()) {
+                Integer maArtist = Integer.valueOf(cursor.getString(0) + "");
+                String ten = cursor.getString(1);
+                byte[] byteArray = convertDrawableToByteArray(requireContext(), R.drawable.music_logo);
+
+                ThuVien thuVien = new ThuVien(byteArray, ten);
+                arr.add(thuVien);
+
+            }
+            cursor.close();
+            thuVienAdapter.notifyDataSetChanged();
         }
     }
 
@@ -201,7 +219,12 @@ public class Library_Fragment extends Fragment implements OnItemClickListener {
         //recyclerViewNV.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.HORIZONTAL));
         // Lấy Bundle từ Fragment
     }
-
+    public static byte[] convertDrawableToByteArray(Context context, int drawableId) {
+        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), drawableId);
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        return stream.toByteArray();
+    }
     @Override
     public void onItemClick(String data) {
 
