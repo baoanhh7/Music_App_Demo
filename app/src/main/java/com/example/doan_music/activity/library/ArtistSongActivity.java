@@ -20,6 +20,7 @@ import com.example.doan_music.m_interface.OnItemClickListener;
 import com.example.doan_music.model.ThuVien;
 import com.example.doan_music.music.PlayMusicActivity;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class ArtistSongActivity extends AppCompatActivity implements OnItemClickListener {
@@ -30,6 +31,7 @@ public class ArtistSongActivity extends AppCompatActivity implements OnItemClick
     ArrayList<ThuVien> arr;
     ArrayList<Integer> arr1 = new ArrayList<>();
     SQLiteDatabase database = null;
+    Intent intent = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,27 @@ public class ArtistSongActivity extends AppCompatActivity implements OnItemClick
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+        btnplay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Integer idSong = arr1.get(0);
+                database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
+                Cursor cursor = database.rawQuery("select * from Songs", null);
+                while (cursor.moveToNext()) {
+                    Integer Id = cursor.getInt(0);
+                    String ten = cursor.getString(2);
+                    if (idSong.equals(Id)) {
+                            intent = new Intent(ArtistSongActivity.this, PlayMusicActivity.class);
+                            intent.putExtra("SongID", Id);
+                            intent.putExtra("arrIDSongs", arr1);
+                            break;
+                    }
+                }
+                cursor.close();
+                startActivity(intent);
             }
         });
     }
@@ -101,17 +124,18 @@ public class ArtistSongActivity extends AppCompatActivity implements OnItemClick
                 database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
                 Cursor cursor = database.rawQuery("select * from Songs", null);
                 while (cursor.moveToNext()) {
+
                     Integer Id = cursor.getInt(0);
                     String ten = cursor.getString(2);
                     if (data.equals(ten)) {
-                        Intent intent = new Intent(ArtistSongActivity.this, PlayMusicActivity.class);
+                        intent = new Intent(ArtistSongActivity.this, PlayMusicActivity.class);
                         intent.putExtra("SongID", Id);
                         intent.putExtra("arrIDSongs", arr1);
-                        startActivity(intent);
                         break;
                     }
                 }
                 cursor.close();
+                startActivity(intent);
             }
         });
         rcv.setAdapter(thuVienAlbumAdapter);
