@@ -1,5 +1,10 @@
 package com.example.doan_music.music;
 
+
+
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -7,7 +12,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -20,8 +27,11 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.doan_music.R;
+import com.example.doan_music.adapter.thuvien.ThuVienAdapter;
 import com.example.doan_music.data.DbHelper;
 import com.example.doan_music.model.LrcLine;
+
+import org.checkerframework.checker.units.qual.A;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,12 +40,12 @@ import java.util.List;
 
 public class PlayMusicActivity extends AppCompatActivity {
 
-    ImageButton btn_play, btn_back, btn_next, btn_pre, btn_toggle, btn_shuffle, btn_repeat, btn_heart;
-    SeekBar seekBar;
+    ImageButton btn_play, btn_back, btn_next, btn_pre, btn_toggle, btn_shuffle, btn_volume, btn_heart;
+    SeekBar seekBar,seekBar1;
     TextView txt_time, txt_time_first;
     MediaPlayer myMusic;
-    TextView txtLoibaihat;
-    List<LrcLine> lrcLines = new ArrayList<>();
+
+
     ArrayList<Integer> arr = new ArrayList<>();
     ArrayList<Integer> shuffle = new ArrayList<>();
     ImageView imageView_songs;
@@ -46,13 +56,14 @@ public class PlayMusicActivity extends AppCompatActivity {
     private boolean frag_heart = true;
     SQLiteDatabase database = null;
     DbHelper dbHelper;
+    AudioManager audioManager;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_music);
-
+        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         addControls();
         arr = (ArrayList<Integer>) getIntent().getSerializableExtra("arrIDSongs");
         Integer IDSong = getIntent().getIntExtra("SongID", -1);
@@ -61,17 +72,17 @@ public class PlayMusicActivity extends AppCompatActivity {
         myMusic = new MediaPlayer();
         //myMusic = MediaPlayer.create(this, R.raw.nhung_loi_hua_bo_quen);
         loadData();
-
         myMusic.seekTo(0);
 
         myMusic.start();
         myMusic.setLooping(false);
-
         // tạo biến duration để lưu thời gian bài hát
         String duration = timeSeekbar(myMusic.getDuration());
         txt_time.setText(duration);
         loadNameArtist();
         addEvents();
+        //seekbarvolume
+        volume();
         // Bắt đầu cập nhật lời bài hát
         if (frag) {
             myMusic.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -81,6 +92,31 @@ public class PlayMusicActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+
+
+    private void volume() {
+        int maxV = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        int curV = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+        seekBar1.setMax(maxV);
+        seekBar1.setProgress(curV);
+        seekBar1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,progress,0);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
     }
 
     private void loadNameArtist() {
@@ -151,6 +187,7 @@ public class PlayMusicActivity extends AppCompatActivity {
                     // Áp dụng animation vào ImageView
                     imageView_songs.startAnimation(animation);
                 }
+
             }
         });
         btn_next.setOnClickListener(new View.OnClickListener() {
@@ -333,6 +370,17 @@ public class PlayMusicActivity extends AppCompatActivity {
                 }
             }
         });
+        btn_volume.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int visibility  = seekBar1.getVisibility();
+                if(visibility == View.VISIBLE)
+                seekBar1.setVisibility(View.GONE);
+                else{
+                    seekBar1.setVisibility(View.VISIBLE);
+                }
+            }
+        });
 
 
         // set giới hạn Max cho thanh seekBar
@@ -482,7 +530,6 @@ public class PlayMusicActivity extends AppCompatActivity {
 
     private void addControls() {
         btn_play = findViewById(R.id.btn_play);
-        txtLoibaihat = findViewById(R.id.txtLoibaihat);
         btn_back = findViewById(R.id.btn_back);
         txt_artist_song = findViewById(R.id.txt_artist_song);
         txt_name_song = findViewById(R.id.txt_name_song);
@@ -492,7 +539,8 @@ public class PlayMusicActivity extends AppCompatActivity {
         txt_time_first = findViewById(R.id.txt_time_first);
         btn_pre = findViewById(R.id.btn_pre);
         btn_next = findViewById(R.id.btn_next);
-
+        btn_volume = findViewById(R.id.btn_volume);
+        seekBar1 = findViewById(R.id.seekBar_volume);
         btn_toggle = findViewById(R.id.btn_toggle);
         btn_shuffle = findViewById(R.id.btn_shuffle);
         btn_heart = findViewById(R.id.btn_heart);

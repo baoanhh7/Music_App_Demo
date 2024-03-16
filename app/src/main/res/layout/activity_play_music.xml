@@ -172,14 +172,25 @@
 
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/txtLoibaihat"
+    <LinearLayout
+        android:layout_marginTop="30dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:textColor="#FFFFFF"
-        android:textSize="25dp" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+    <ImageButton
+        android:id="@+id/btn_volume"
+       android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:background="#131313"
+        android:src="@drawable/ic_volume"/>
+    <SeekBar
+        android:id="@+id/seekBar_volume"
+        android:layout_width="300dp"
+        android:layout_marginTop="3dp"
+        android:layout_height="wrap_content"
+        android:progressTint="@color/white"
+        android:thumbTint="#3FC3FF" />
+    </LinearLayout>
 
 </LinearLayout>

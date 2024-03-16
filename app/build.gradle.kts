@@ -58,6 +58,7 @@ dependencies {
     implementation("com.android.volley:volley:1.2.1")
     implementation("io.github.chaosleung:pinview:1.4.4")
     implementation("com.sendgrid:sendgrid-java:4.7.0")
+    implementation("androidx.media:media:1.7.0")
     //bottom sheet
     // Import the Firebase BoM
     implementation(platform("com.google.firebase:firebase-bom:32.7.4"))
