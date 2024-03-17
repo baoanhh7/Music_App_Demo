@@ -1,15 +1,28 @@
 package com.example.doan_music.music;
 
+import static com.example.doan_music.music.MyNoti.CHANNEL_ID;
+
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.media.session.MediaSessionCompat;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -20,6 +33,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
 import com.example.doan_music.R;
 import com.example.doan_music.data.DbHelper;
@@ -51,7 +65,6 @@ public class PlayMusicActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_music);
-
         addControls();
         arr = (ArrayList<Integer>) getIntent().getSerializableExtra("arrIDSongs");
         Integer IDSong = getIntent().getIntExtra("SongID", -1);
@@ -70,7 +83,7 @@ public class PlayMusicActivity extends AppCompatActivity {
         String duration = timeSeekbar(myMusic.getDuration());
         txt_time.setText(duration);
         loadNameArtist();
-
+        sendNotification();
         SharedPreferences sharedPreferences = getSharedPreferences("stateHeart", MODE_PRIVATE);
         // Trạng thái mặc định là không yêu thích
         boolean defaultState = false;
@@ -80,6 +93,7 @@ public class PlayMusicActivity extends AppCompatActivity {
         addEvents();
         volume();
         // Bắt đầu cập nhật lời bài hát
+
         if (frag) {
             myMusic.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                 @Override
@@ -88,6 +102,30 @@ public class PlayMusicActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+
+    private void sendNotification() {
+        Drawable drawable = imageView_songs.getDrawable();
+        Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+        MediaSessionCompat mediaSessionCompat = new MediaSessionCompat(this, "tag");
+        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_headphone)
+                .setSubText("Music")
+                .setContentTitle(txt_artist_song.getText().toString())
+                .setContentText(txt_name_song.getText().toString())
+                .setLargeIcon(bitmap)
+                // Add media control buttons that invoke intents in your media service
+                .addAction(R.drawable.ic_pre, "Previous", null ) // #0
+                .addAction(R.drawable.ic_pause, "Pause", null)  // #1
+                .addAction(R.drawable.ic_next, "Next", null)     // #2
+                .setStyle(new androidx.media.app.NotificationCompat.MediaStyle()
+                        .setShowActionsInCompactView(0,1,2 /* #1: pause button */))
+                .build();
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        if(notificationManager != null)
+            notificationManager.notify(1, notification);
     }
 
     private void volume() {
@@ -243,6 +281,7 @@ public class PlayMusicActivity extends AppCompatActivity {
                     txt_artist_song.setText(ten);
                 }
 
+                sendNotification();
                 String duration = timeSeekbar(myMusic.getDuration());
                 txt_time.setText(duration);
                 seekBar.setMax(myMusic.getDuration());
@@ -307,6 +346,8 @@ public class PlayMusicActivity extends AppCompatActivity {
                 String duration = timeSeekbar(myMusic.getDuration());
                 txt_time.setText(duration);
                 seekBar.setMax(myMusic.getDuration());
+
+                sendNotification();
                 myMusic.start();
             }
         });
