@@ -30,7 +30,7 @@
                 android:layout_height="250dp"
                 android:layout_marginStart="45dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/avt_vu" />
+                android:src="@drawable/music_logo" />
         </LinearLayout>
 
 
