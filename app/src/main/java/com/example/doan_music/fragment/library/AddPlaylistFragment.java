@@ -3,7 +3,6 @@ package com.example.doan_music.fragment.library;
 import static android.content.Context.MODE_PRIVATE;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -36,8 +35,8 @@ import java.util.ArrayList;
 public class AddPlaylistFragment extends Fragment {
 
     SearchView search_thuvien_addPlaylist;
-    Button btn_xong_addplaylist_thuvien,btn_xong_addplaylist_thuvien1;
-    LinearLayout linear_addplayist_tv,linear_addplayist_tv1;
+    Button btn_xong_addplaylist_thuvien, btn_xong_addplaylist_thuvien1;
+    LinearLayout linear_addplayist_tv, linear_addplayist_tv1;
     RecyclerView recycler_Playlist_thuvien_add;
     AddNgheSiAdapter addNgheSiAdapter;
     EditText edt_tenPlaylist;
@@ -85,8 +84,7 @@ public class AddPlaylistFragment extends Fragment {
                     while (cursor.moveToNext()) {
                         Integer id = cursor.getInt(0);
                         String name1 = cursor.getString(1);
-                        if (name1.equals(name))
-                        {
+                        if (name1.equals(name)) {
                             sharedPreferences = getActivity().getSharedPreferences("MyID", MODE_PRIVATE);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
                             editor.putInt("ID", id);
@@ -163,7 +161,7 @@ public class AddPlaylistFragment extends Fragment {
             public void onItemClick(String data) {
 
                 if (getActivity() instanceof MainActivity) {
-                    Integer ID = getActivity().getSharedPreferences("MyID", MODE_PRIVATE).getInt("ID",0);
+                    Integer ID = getActivity().getSharedPreferences("MyID", MODE_PRIVATE).getInt("ID", 0);
                     MainActivity mainActivity = (MainActivity) getActivity();
                     Integer maU = mainActivity.getMyVariable();
                     database = getActivity().openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);

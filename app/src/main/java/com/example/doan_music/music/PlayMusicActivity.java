@@ -47,8 +47,7 @@ public class PlayMusicActivity extends AppCompatActivity {
     ArrayList<Integer> shuffle = new ArrayList<>();
     ImageView imageView_songs;
     TextView txt_artist_song, txt_name_song;
-    Integer currentPosition;
-
+    Integer currentPosition = -1;
     boolean Isshuffle = true;
     private boolean frag = true;
     private boolean frag_heart = false;
@@ -279,6 +278,7 @@ public class PlayMusicActivity extends AppCompatActivity {
                 seekBar.setMax(myMusic.getDuration());
                 myMusic.start();
 
+                updateHeartButtonUI();
             }
         });
         btn_pre.setOnClickListener(new View.OnClickListener() {
@@ -341,6 +341,8 @@ public class PlayMusicActivity extends AppCompatActivity {
 
                 sendNotification();
                 myMusic.start();
+
+                updateHeartButtonUI();
             }
         });
 
@@ -358,7 +360,9 @@ public class PlayMusicActivity extends AppCompatActivity {
         btn_heart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Integer IDSong = getIntent().getIntExtra("SongID", -1);
+//                Integer IDSong = getIntent().getIntExtra("SongID", -1);
+                Integer IDSong = arr.get(currentPosition);
+
                 database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
 
                 // Đảo ngược trạng thái yêu thích (nếu đang yêu thích -> không yêu thích và ngược lại)
@@ -458,7 +462,7 @@ public class PlayMusicActivity extends AppCompatActivity {
 
     private void updateHeartButtonUI() {
 
-        Integer IDSong = getIntent().getIntExtra("SongID", -1);
+        Integer IDSong = arr.get(currentPosition);
         database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
 
         Cursor cursor = database.rawQuery("select * from Songs" + " where SongID=?", new String[]{String.valueOf(IDSong)});

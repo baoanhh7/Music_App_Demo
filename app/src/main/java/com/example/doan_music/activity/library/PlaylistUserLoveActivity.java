@@ -6,13 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,6 +27,7 @@ public class PlaylistUserLoveActivity extends AppCompatActivity {
     ArrayList<Integer> arr1 = new ArrayList<>();
     SQLiteDatabase database = null;
     Intent intent = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,7 +82,7 @@ public class PlaylistUserLoveActivity extends AppCompatActivity {
                     Integer id = cursor1.getInt(0);
                     String ten = cursor1.getString(2);
                     byte[] img = cursor1.getBlob(3);
-                    if(idsong.equals(id)) {
+                    if (idsong.equals(id)) {
                         ThuVien thuVien = new ThuVien(img, ten);
                         arr1.add(id);
                         arr.add(thuVien);

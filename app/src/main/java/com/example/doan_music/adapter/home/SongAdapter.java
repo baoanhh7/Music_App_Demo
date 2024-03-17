@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_music.R;
-import com.example.doan_music.m_interface.IClickItemSong;
 import com.example.doan_music.m_interface.OnItemClickListener;
 import com.example.doan_music.model.Song;
 
@@ -24,7 +23,6 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
     private List<Song> songList;
     private Context context;
     private OnItemClickListener onItemClickListener;
-    private IClickItemSong iClickItemSong;
 
     public SongAdapter(Context context, List<Song> songList) {
         this.context = context;
@@ -47,6 +45,7 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
         Bitmap bitmap = BitmapFactory.decodeByteArray(song.getSongImage(), 0, song.getSongImage().length);
         holder.img_song.setImageBitmap(bitmap);
 
+
         // Nhấn vào tên bài hát sẽ chuyển qua phát bài hát
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,10 +61,6 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
         this.onItemClickListener = listener;
     }
 
-    public void setIClickItemSong(IClickItemSong listener) {
-        this.iClickItemSong = listener;
-    }
-
     @Override
     public int getItemCount() {
         if (songList != null) return songList.size();
@@ -74,7 +69,7 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
 
 
     public static class SongViewHolder extends RecyclerView.ViewHolder {
-        TextView txt_song, txt_id;
+        TextView txt_song, txt_id, txt_artist;
         ImageView img_song;
 
         public SongViewHolder(@NonNull View itemView) {
@@ -82,6 +77,7 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
             txt_song = itemView.findViewById(R.id.txt_song);
             txt_id = itemView.findViewById(R.id.txt_id);
             img_song = itemView.findViewById(R.id.img_song);
+            txt_artist = itemView.findViewById(R.id.txt_artist);
         }
     }
 }

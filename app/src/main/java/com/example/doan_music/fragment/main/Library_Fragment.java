@@ -162,7 +162,7 @@ public class Library_Fragment extends Fragment implements OnItemClickListener {
                 Integer id = cursor.getInt(2);
                 String ten = cursor.getString(1);
                 byte[] byteArray = convertDrawableToByteArray(requireContext(), R.drawable.music_logo);
-                if(maU.equals(id)) {
+                if (maU.equals(id)) {
                     ThuVien thuVien = new ThuVien(byteArray, ten);
                     arr.add(thuVien);
                 }
