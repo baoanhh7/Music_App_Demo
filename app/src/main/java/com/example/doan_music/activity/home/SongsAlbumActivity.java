@@ -68,12 +68,12 @@ public class SongsAlbumActivity extends AppCompatActivity {
 
     private List<User> getList() {
         List<User> list = new ArrayList<>();
-        list.add(new User(R.drawable.avt_vu, "Những lời hứa bỏ quên - Vũ Radio."));
-        list.add(new User(R.drawable.avt_vu, "Những lời hứa bỏ quên - Vũ Radio."));
-        list.add(new User(R.drawable.avt_vu, "Những lời hứa bỏ quên - Vũ Radio."));
-        list.add(new User(R.drawable.avt_vu, "Những lời hứa bỏ quên - Vũ Radio."));
-        list.add(new User(R.drawable.avt_vu, "Những lời hứa bỏ quên - Vũ Radio."));
-        list.add(new User(R.drawable.avt_vu, "Những lời hứa bỏ quên - Vũ Radio."));
+        list.add(new User(R.drawable.music_logo, "Những lời hứa bỏ quên - Vũ Radio."));
+        list.add(new User(R.drawable.music_logo, "Những lời hứa bỏ quên - Vũ Radio."));
+        list.add(new User(R.drawable.music_logo, "Những lời hứa bỏ quên - Vũ Radio."));
+        list.add(new User(R.drawable.music_logo, "Những lời hứa bỏ quên - Vũ Radio."));
+        list.add(new User(R.drawable.music_logo, "Những lời hứa bỏ quên - Vũ Radio."));
+        list.add(new User(R.drawable.music_logo, "Những lời hứa bỏ quên - Vũ Radio."));
 
         return list;
     }

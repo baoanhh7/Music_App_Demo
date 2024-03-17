@@ -61,15 +61,15 @@ public class All_Fragment extends Fragment {
     private List<User> getlistuserHeader() {
         List<User> list = new ArrayList<>();
 
-        list.add(new User(R.drawable.avt_vu, "Vũ.Radio", true));
-        list.add(new User(R.drawable.avt_ronboogz, "Ronboogz", true));
-        list.add(new User(R.drawable.avt_gducky, "GDucky", true));
-        list.add(new User(R.drawable.avt_hoangdung, "Hoàng Dũng", true));
+        list.add(new User(R.drawable.music_logo, "Vũ.Radio", true));
+        list.add(new User(R.drawable.music_logo, "Ronboogz", true));
+        list.add(new User(R.drawable.music_logo, "GDucky", true));
+        list.add(new User(R.drawable.music_logo, "Hoàng Dũng", true));
 
-        list.add(new User(R.drawable.avt_mck, "RPT MCK Radio", true));
-        list.add(new User(R.drawable.avt_lowg, "Low G Radio", true));
-        list.add(new User(R.drawable.avt_obito, "Obito", true));
-        list.add(new User(R.drawable.avt_dalab, "Dalab Radio", true));
+        list.add(new User(R.drawable.music_logo, "RPT MCK Radio", true));
+        list.add(new User(R.drawable.music_logo, "Low G Radio", true));
+        list.add(new User(R.drawable.music_logo, "Obito", true));
+        list.add(new User(R.drawable.music_logo, "Dalab Radio", true));
 
         return list;
     }
