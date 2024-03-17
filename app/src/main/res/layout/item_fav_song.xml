@@ -39,7 +39,7 @@
                 android:id="@+id/txt_artistFav"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Bài hát • Vũ., Dear Jane"
+                android:text="Bài hát"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="17sp"
                 android:textStyle="bold" />
@@ -51,6 +51,7 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_gravity="center"
+        android:backgroundTint="#FF5555"
         android:background="@drawable/ic_heart" />
 
 </LinearLayout>
