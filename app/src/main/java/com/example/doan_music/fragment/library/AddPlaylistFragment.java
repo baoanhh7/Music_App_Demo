@@ -129,11 +129,11 @@ public class AddPlaylistFragment extends Fragment {
             Integer maU = mainActivity.getMyVariable();
             database = getActivity().openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
             Cursor cursor = database.rawQuery("SELECT * " +
-                            "FROM Songs " +
-                            "WHERE Songs.SongID NOT IN (SELECT Playlist_User_Song.SongID " +
-                            "FROM Playlist_User_Song " +
-                            "WHERE Playlist_User_Song.UserID = ?)",
-                    new String[]{String.valueOf(maU)});
+                            "FROM Songs " ,null);
+//                            "WHERE Songs.SongID NOT IN (SELECT Playlist_User_Song.SongID " +
+//                            "FROM Playlist_User_Song " +
+//                            "WHERE Playlist_User_Song.UserID = ?)",
+//                    new String[]{String.valueOf(maU)});
             arrayList.clear();
             while (cursor.moveToNext()) {
                 String ten = cursor.getString(2);
@@ -183,6 +183,7 @@ public class AddPlaylistFragment extends Fragment {
                     }
                     cursor.close();
                 }
+
             }
         });
         recycler_Playlist_thuvien_add.setAdapter(addNgheSiAdapter);

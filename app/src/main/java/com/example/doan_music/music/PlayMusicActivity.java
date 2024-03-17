@@ -237,6 +237,11 @@ public class PlayMusicActivity extends AppCompatActivity {
                     myMusic.stop();
                     myMusic.reset();
                 }
+                if( !myMusic.isPlaying())
+                {
+                    myMusic.stop();
+                    myMusic.reset();
+                }
                 Integer idSong = arr.get(currentPosition);
                 database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
                 Cursor cursor = database.rawQuery("select * from Songs", null);
@@ -293,6 +298,10 @@ public class PlayMusicActivity extends AppCompatActivity {
                     currentPosition = arr.size() - 1;
                 }
                 if (myMusic.isPlaying()) {
+                    myMusic.stop();
+                    myMusic.reset();
+                }if( !myMusic.isPlaying())
+                {
                     myMusic.stop();
                     myMusic.reset();
                 }

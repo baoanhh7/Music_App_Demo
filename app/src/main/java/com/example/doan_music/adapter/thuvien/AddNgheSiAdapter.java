@@ -83,6 +83,10 @@ public class AddNgheSiAdapter extends RecyclerView.Adapter<AddNgheSiAdapter.View
             public void onClick(View v) {
                 if (onItemClickListener != null) {
                     onItemClickListener.onItemClick(arr.get(position).getTensp());
+                    int position = holder.getAdapterPosition();
+                    arr.remove(position);
+                    notifyItemRemoved(position);
+                    notifyItemRangeChanged(position, arr.size()); // Cập nhật lại chỉ số của các item sau
                 }
             }
         });
