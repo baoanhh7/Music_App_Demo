@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "867606935248",
-    "project_id": "doanmusic-577b4",
-    "storage_bucket": "doanmusic-577b4.appspot.com"
+    "project_number": "251101479287",
+    "project_id": "doanmusic-c1235",
+    "storage_bucket": "doanmusic-c1235.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:867606935248:android:7be1828ac60f424007d0d5",
+        "mobilesdk_app_id": "1:251101479287:android:734d07bfc664773759a172",
         "android_client_info": {
           "package_name": "com.example.doan_music"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDcyBO39qCkS6mBq52cmwrSZrROVVpm2Eg"
+          "current_key": "AIzaSyD7t9rtRe_hPzIQufFdjW5sbuKoHEmckK8"
         }
       ],
       "services": {

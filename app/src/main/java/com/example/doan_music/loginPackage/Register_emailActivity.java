@@ -127,7 +127,7 @@ public class Register_emailActivity extends AppCompatActivity {
 
                             @Override
                             public void onVerificationFailed(@NonNull FirebaseException e) {
-                                Toast.makeText(Register_emailActivity.this, "Verification Fail ", Toast.LENGTH_SHORT);
+                                Toast.makeText(Register_emailActivity.this, "Verification Fail ", Toast.LENGTH_SHORT).show();
                             }
 
                             @Override
@@ -168,7 +168,7 @@ public class Register_emailActivity extends AppCompatActivity {
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                                 // The verification code entered was invalid
-                                Toast.makeText(Register_emailActivity.this, "/ The verification code entered was invalid", Toast.LENGTH_SHORT);
+                                Toast.makeText(Register_emailActivity.this, "/ The verification code entered was invalid", Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
