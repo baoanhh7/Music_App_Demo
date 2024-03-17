@@ -12,13 +12,17 @@
         android:orientation="vertical"
         android:background="@color/black">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:id="@+id/btn_xong_addplaylist_thuvien"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="320dp"
-            android:text="Xong" />
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:id="@+id/linear_addplayist_tv">
+            <Button
+                android:layout_width="wrap_content"
+                android:id="@+id/btn_xong_addplaylist_thuvien"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="320dp"
+                android:text="Xong" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -39,7 +43,19 @@
             android:textColor="@color/white"
             android:layout_gravity="center"
             android:textSize="20dp" />
-
+        </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:id="@+id/linear_addplayist_tv1">
+        <Button
+            android:layout_width="wrap_content"
+            android:id="@+id/btn_xong_addplaylist_thuvien1"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="320dp"
+            android:text="Xong" />
         <SearchView
             android:id="@+id/search_thuvien_addPlaylist"
             android:layout_width="match_parent"
@@ -53,6 +69,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/recycler_Playlist_thuvien_add" />
+    </LinearLayout>
 
     </LinearLayout>
 
