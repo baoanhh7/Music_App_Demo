@@ -15,9 +15,8 @@ public class MyNoti extends Application {
     }
 
     private void createNotificationChannel() {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-        {
-            NotificationChannel notificationChannel= new NotificationChannel(CHANNEL_ID,"Channel music", NotificationManager.IMPORTANCE_MAX);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, "Channel music", NotificationManager.IMPORTANCE_MAX);
 
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(notificationChannel);

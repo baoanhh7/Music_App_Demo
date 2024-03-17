@@ -4,14 +4,9 @@ import static com.example.doan_music.music.MyNoti.CHANNEL_ID;
 
 import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -20,7 +15,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.view.View;
@@ -57,7 +51,7 @@ public class PlayMusicActivity extends AppCompatActivity {
 
     boolean Isshuffle = true;
     private boolean frag = true;
-    private boolean frag_heart = true;
+    private boolean frag_heart = false;
     SQLiteDatabase database = null;
     DbHelper dbHelper;
 
@@ -84,13 +78,11 @@ public class PlayMusicActivity extends AppCompatActivity {
         txt_time.setText(duration);
         loadNameArtist();
         sendNotification();
-        SharedPreferences sharedPreferences = getSharedPreferences("stateHeart", MODE_PRIVATE);
-        // Trạng thái mặc định là không yêu thích
-        boolean defaultState = false;
-        // Lưu trạng thái mặc định vào SharedPreferences
-        sharedPreferences.edit().putBoolean("is_favorite", defaultState).apply();
 
         addEvents();
+
+        updateHeartButtonUI();
+
         volume();
         // Bắt đầu cập nhật lời bài hát
 
@@ -116,15 +108,15 @@ public class PlayMusicActivity extends AppCompatActivity {
                 .setContentText(txt_name_song.getText().toString())
                 .setLargeIcon(bitmap)
                 // Add media control buttons that invoke intents in your media service
-                .addAction(R.drawable.ic_pre, "Previous", null ) // #0
+                .addAction(R.drawable.ic_pre, "Previous", null) // #0
                 .addAction(R.drawable.ic_pause, "Pause", null)  // #1
                 .addAction(R.drawable.ic_next, "Next", null)     // #2
                 .setStyle(new androidx.media.app.NotificationCompat.MediaStyle()
-                        .setShowActionsInCompactView(0,1,2 /* #1: pause button */))
+                        .setShowActionsInCompactView(0, 1, 2 /* #1: pause button */))
                 .build();
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        if(notificationManager != null)
+        if (notificationManager != null)
             notificationManager.notify(1, notification);
     }
 
@@ -369,20 +361,12 @@ public class PlayMusicActivity extends AppCompatActivity {
                 Integer IDSong = getIntent().getIntExtra("SongID", -1);
                 database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
 
-                // Lấy trạng thái yêu thích hiện tại từ SharedPreferences
-                SharedPreferences sharedPreferences = getSharedPreferences("stateHeart", MODE_PRIVATE);
-                boolean isFavorite = sharedPreferences.getBoolean("is_favorite", false);
+                // Đảo ngược trạng thái yêu thích (nếu đang yêu thích -> không yêu thích và ngược lại)
+                frag_heart = !frag_heart;
 
-                // Chuyển đổi trạng thái yêu thích
-                isFavorite = !isFavorite;
-
-                // Lưu trạng thái mới vào SharedPreferences
-                sharedPreferences.edit().putBoolean("is_favorite", isFavorite).apply();
-
-                if (isFavorite) {
+                if (frag_heart) {
                     int value = 1;
                     btn_heart.setImageResource(R.drawable.ic_red_heart);
-                    frag_heart = false;
 
                     ContentValues values = new ContentValues();
                     values.put("StateFavorite", value);
@@ -391,7 +375,6 @@ public class PlayMusicActivity extends AppCompatActivity {
 
                 } else {
                     btn_heart.setImageResource(R.drawable.ic_heart);
-                    frag_heart = true;
                     removeSongFromLoveList(IDSong);
                 }
             }
@@ -401,7 +384,6 @@ public class PlayMusicActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (frag) {
-
                     // Thực hiện các hành động khi nút được bật
                     btn_toggle.setImageResource(R.drawable.ic_repeatactive);
                     myMusic.setLooping(true);
@@ -472,6 +454,23 @@ public class PlayMusicActivity extends AppCompatActivity {
                 }
             }
         }).start();
+    }
+
+    private void updateHeartButtonUI() {
+
+        Integer IDSong = getIntent().getIntExtra("SongID", -1);
+        database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
+
+        Cursor cursor = database.rawQuery("select * from Songs" + " where SongID=?", new String[]{String.valueOf(IDSong)});
+        while (cursor.moveToNext()) {
+            int fav = cursor.getInt(6);
+            if (fav == 1) {
+                btn_heart.setImageResource(R.drawable.ic_red_heart);
+            } else {
+                btn_heart.setImageResource(R.drawable.ic_heart);
+            }
+            break;
+        }
     }
 
     private void removeSongFromLoveList(Integer songid) {
@@ -612,5 +611,9 @@ public class PlayMusicActivity extends AppCompatActivity {
         btn_shuffle = findViewById(R.id.btn_shuffle);
         btn_heart = findViewById(R.id.btn_heart);
 
+        // Load animation từ file xml
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.animation);
+        // Áp dụng animation vào ImageView
+        imageView_songs.startAnimation(animation);
     }
 }
