@@ -3,6 +3,8 @@ package com.example.doan_music.fragment.library;
 import static android.content.Context.MODE_PRIVATE;
 
 import android.content.ContentValues;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.SearchView;
 
 import androidx.fragment.app.Fragment;
@@ -33,7 +36,8 @@ import java.util.ArrayList;
 public class AddPlaylistFragment extends Fragment {
 
     SearchView search_thuvien_addPlaylist;
-    Button btn_xong_addplaylist_thuvien;
+    Button btn_xong_addplaylist_thuvien,btn_xong_addplaylist_thuvien1;
+    LinearLayout linear_addplayist_tv,linear_addplayist_tv1;
     RecyclerView recycler_Playlist_thuvien_add;
     AddNgheSiAdapter addNgheSiAdapter;
     EditText edt_tenPlaylist;
@@ -41,7 +45,7 @@ public class AddPlaylistFragment extends Fragment {
     View view;
     SQLiteDatabase database = null;
     DbHelper dbHelper;
-
+    SharedPreferences sharedPreferences;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,14 +53,53 @@ public class AddPlaylistFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_add_playlist, container, false);
         addControl();
-        loadData();
         addEvents();
         // Inflate the layout for this fragment
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadData();
+    }
+
     private void addEvents() {
         btn_xong_addplaylist_thuvien.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Tạo Fragment và đặt Bundle vào Fragment
+
+                if (getActivity() instanceof MainActivity) {
+                    MainActivity mainActivity = (MainActivity) getActivity();
+                    Integer maU = mainActivity.getMyVariable();
+                    String name = edt_tenPlaylist.getText().toString().trim();
+                    ContentValues values = new ContentValues();
+                    values.put("UserID", maU);
+                    values.put("Name", name);
+                    dbHelper = DatabaseManager.dbHelper(requireContext());
+                    long kq = dbHelper.getReadableDatabase().insert("Playlist_User", null, values);
+                    // Lưu giá trị vào SharedPreferences
+                    database = getActivity().openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
+                    Cursor cursor = database.rawQuery("select * from Playlist_User", null);
+                    while (cursor.moveToNext()) {
+                        Integer id = cursor.getInt(0);
+                        String name1 = cursor.getString(1);
+                        if (name1.equals(name))
+                        {
+                            sharedPreferences = getActivity().getSharedPreferences("MyID", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putInt("ID", id);
+                            editor.apply();
+                            break;
+                        }
+                    }
+                }
+                linear_addplayist_tv.setVisibility(View.GONE);
+                linear_addplayist_tv1.setVisibility(View.VISIBLE);
+            }
+        });
+        btn_xong_addplaylist_thuvien1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Tạo Fragment và đặt Bundle vào Fragment
@@ -66,7 +109,6 @@ public class AddPlaylistFragment extends Fragment {
                 fragmentTransaction.commit();
             }
         });
-
         search_thuvien_addPlaylist.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -90,9 +132,9 @@ public class AddPlaylistFragment extends Fragment {
             database = getActivity().openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
             Cursor cursor = database.rawQuery("SELECT * " +
                             "FROM Songs " +
-                            "WHERE Songs.SongID NOT IN (SELECT PlayList_User_Song.SongID " +
-                            "FROM PlayList_User_Song " +
-                            "WHERE PlayList_User_Song.UserID = ?)",
+                            "WHERE Songs.SongID NOT IN (SELECT Playlist_User_Song.SongID " +
+                            "FROM Playlist_User_Song " +
+                            "WHERE Playlist_User_Song.UserID = ?)",
                     new String[]{String.valueOf(maU)});
             arrayList.clear();
             while (cursor.moveToNext()) {
@@ -110,17 +152,18 @@ public class AddPlaylistFragment extends Fragment {
         search_thuvien_addPlaylist = view.findViewById(R.id.search_thuvien_addPlaylist);
         recycler_Playlist_thuvien_add = view.findViewById(R.id.recycler_Playlist_thuvien_add);
         edt_tenPlaylist = view.findViewById(R.id.edt_tenPlaylist);
+        linear_addplayist_tv = view.findViewById(R.id.linear_addplayist_tv);
+        btn_xong_addplaylist_thuvien1 = view.findViewById(R.id.btn_xong_addplaylist_thuvien1);
+        linear_addplayist_tv1 = view.findViewById(R.id.linear_addplayist_tv1);
         btn_xong_addplaylist_thuvien = view.findViewById(R.id.btn_xong_addplaylist_thuvien);
         arrayList = new ArrayList<>();
-        String name = edt_tenPlaylist.getText().toString().trim();
         addNgheSiAdapter = new AddNgheSiAdapter(requireContext(), arrayList);
         addNgheSiAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(String data) {
-                // Tạo đối tượng Bundle và đính kèm dữ liệu
-                //Bundle bundle = new Bundle();
-                // bundle.putString("key", data); // Thay "key" bằng key bạn muốn đặt cho dữ liệu
+
                 if (getActivity() instanceof MainActivity) {
+                    Integer ID = getActivity().getSharedPreferences("MyID", MODE_PRIVATE).getInt("ID",0);
                     MainActivity mainActivity = (MainActivity) getActivity();
                     Integer maU = mainActivity.getMyVariable();
                     database = getActivity().openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
@@ -132,9 +175,9 @@ public class AddPlaylistFragment extends Fragment {
                             ContentValues values = new ContentValues();
                             values.put("UserID", maU);
                             values.put("SongID", idSong);
-                            values.put("Name", name);
+                            values.put("ID_Playlist_User", ID);
                             dbHelper = DatabaseManager.dbHelper(requireContext());
-                            long kq = dbHelper.getReadableDatabase().insert("PlayList_User_Song", null, values);
+                            long kq = dbHelper.getReadableDatabase().insert("Playlist_User_Song", null, values);
                             if (kq > 0) {
                                 break;
                             }

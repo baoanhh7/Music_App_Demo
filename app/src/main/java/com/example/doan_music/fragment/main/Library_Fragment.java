@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.doan_music.R;
 import com.example.doan_music.activity.MainActivity;
 import com.example.doan_music.activity.library.ArtistSongActivity;
+import com.example.doan_music.activity.library.PlaylistUserLoveActivity;
 import com.example.doan_music.adapter.thuvien.ThuVienAdapter;
 import com.example.doan_music.data.DbHelper;
 import com.example.doan_music.fragment.library.AddNgheSiFragment;
@@ -155,16 +156,16 @@ public class Library_Fragment extends Fragment implements OnItemClickListener {
 
             cursor.close();
             cursor = database.rawQuery("select * " +
-                    "from PlayList_User_Song " +
-                    "WHERE PlayList_User_Song.UserID = ? ", new String[]{String.valueOf(maU)});
+                    "from Playlist_User " +
+                    "WHERE Playlist_User.UserID = ? ", new String[]{String.valueOf(maU)});
             while (cursor.moveToNext()) {
-                Integer maArtist = Integer.valueOf(cursor.getString(0) + "");
+                Integer id = cursor.getInt(2);
                 String ten = cursor.getString(1);
                 byte[] byteArray = convertDrawableToByteArray(requireContext(), R.drawable.music_logo);
-
-                ThuVien thuVien = new ThuVien(byteArray, ten);
-                arr.add(thuVien);
-
+                if(maU.equals(id)) {
+                    ThuVien thuVien = new ThuVien(byteArray, ten);
+                    arr.add(thuVien);
+                }
             }
             cursor.close();
             thuVienAdapter.notifyDataSetChanged();
@@ -198,7 +199,18 @@ public class Library_Fragment extends Fragment implements OnItemClickListener {
                     }
                 }
                 cursor.close();
-
+                cursor = database.rawQuery("select * from Playlist_User", null);
+                while (cursor.moveToNext()) {
+                    Integer Id = cursor.getInt(0);
+                    String ten = cursor.getString(1);
+                    if (data.equals(ten)) {
+                        Intent intent = new Intent(requireContext(), PlaylistUserLoveActivity.class);
+                        intent.putExtra("MaPlaylist", Id);
+                        startActivity(intent);
+                        break;
+                    }
+                }
+                cursor.close();
             }
         });
         recyclerView.setAdapter(thuVienAdapter);
