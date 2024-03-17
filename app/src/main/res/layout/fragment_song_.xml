@@ -5,50 +5,28 @@
     android:layout_height="match_parent"
     android:background="#131313"
     android:orientation="vertical"
+    android:padding="10dp"
     tools:context=".fragment.tab_home.Song_Fragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <LinearLayout
-        android:id="@+id/linear_nhungloihuaboquen"
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:gravity="center">
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/rounded_search"
+        android:backgroundTint="#434343"
+        android:elevation="10dp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:gravity="center"
+        android:text="Các bài nhạc yêu thích"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:textStyle="bold" />
 
-        <ImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginRight="10dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/nhungloihuaboquen" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/txt_songname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Những lời hứa bỏ quên"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Bài hát • Vũ., Dear Jane"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="17sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <ListView
-        android:id="@+id/lv_lovesong"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcv_lovesong"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="10dp" />
+        android:layout_height="match_parent" />
 </LinearLayout>

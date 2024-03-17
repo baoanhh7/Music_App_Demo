@@ -30,6 +30,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 
 import com.example.doan_music.R;
+import com.example.doan_music.data.DatabaseManager;
 import com.example.doan_music.data.DbHelper;
 
 import java.io.IOException;
@@ -237,8 +238,7 @@ public class PlayMusicActivity extends AppCompatActivity {
                     myMusic.stop();
                     myMusic.reset();
                 }
-                if( !myMusic.isPlaying())
-                {
+                if (!myMusic.isPlaying()) {
                     myMusic.stop();
                     myMusic.reset();
                 }
@@ -300,8 +300,8 @@ public class PlayMusicActivity extends AppCompatActivity {
                 if (myMusic.isPlaying()) {
                     myMusic.stop();
                     myMusic.reset();
-                }if( !myMusic.isPlaying())
-                {
+                }
+                if (!myMusic.isPlaying()) {
                     myMusic.stop();
                     myMusic.reset();
                 }
@@ -491,7 +491,8 @@ public class PlayMusicActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("data", Context.MODE_PRIVATE);
         int maU = preferences.getInt("maU1", -1);
 
-        SQLiteDatabase database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
+        dbHelper = DatabaseManager.dbHelper(this);
+        database = dbHelper.getWritableDatabase();
         database.beginTransaction();
 
         try {
@@ -519,7 +520,8 @@ public class PlayMusicActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("data", Context.MODE_PRIVATE);
         int maU = preferences.getInt("maU1", -1);
 
-        database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
+        dbHelper = DatabaseManager.dbHelper(this);
+        database = dbHelper.getWritableDatabase();
         database.beginTransaction();
 
         try {

@@ -65,34 +65,6 @@ public class AllSongs_Fragment extends Fragment {
             }
         });
 
-//        songAdapter.setOnItemClickListener(new OnItemClickListener() {
-//            @Override
-//            public void onItemClick(String data) {
-//                if (getActivity() instanceof MainActivity) {
-//                    MainActivity mainActivity = (MainActivity) getActivity();
-//                    Integer maU = mainActivity.getMyVariable();
-//                    database = getActivity().openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
-//                    Cursor cursor = database.rawQuery("select * from Songs", null);
-//                    while (cursor.moveToNext()) {
-//                        String ten = cursor.getString(2);
-//                        if (data.equals(ten)) {
-//                            ContentValues values = new ContentValues();
-//                            values.put("User_SongLove.UserID", maU);
-//                            values.put("User_SongLove.SongLoveName", ten);
-//                            dbHelper = DatabaseManager.dbHelper(requireContext());
-//                            long kq = dbHelper.getReadableDatabase().insert("User_SongLove", null, values);
-//                            if (kq > 0) {
-//                                // Thêm dữ liệu mới vào Adapter
-//                                Toast.makeText(requireContext(), "Yêu thích thành công", Toast.LENGTH_LONG).show();
-//                                break;
-//                            }
-//                        }
-//                    }
-//                    cursor.close();
-//                }
-//            }
-//        });
-
         return view;
     }
 
