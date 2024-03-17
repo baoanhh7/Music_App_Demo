@@ -9,9 +9,9 @@
               <option name="connection">
                 <ConnectionSetting>
                   <option name="appId" value="com.example.doan_music" />
-                  <option name="mobileSdkAppId" value="1:867606935248:android:7be1828ac60f424007d0d5" />
-                  <option name="projectId" value="doanmusic-577b4" />
-                  <option name="projectNumber" value="867606935248" />
+                  <option name="mobileSdkAppId" value="1:251101479287:android:734d07bfc664773759a172" />
+                  <option name="projectId" value="doanmusic-c1235" />
+                  <option name="projectNumber" value="251101479287" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
