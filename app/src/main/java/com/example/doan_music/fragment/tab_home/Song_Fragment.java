@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_music.R;
@@ -98,7 +99,8 @@ public class Song_Fragment extends Fragment {
         songList = new ArrayList<>();
 
         favoriteSongAdapter = new FavoriteSongAdapter(requireContext(), songList);
-
         rcv_lovesong.setAdapter(favoriteSongAdapter);
+
+        rcv_lovesong.setLayoutManager(new LinearLayoutManager(requireContext()));
     }
 }

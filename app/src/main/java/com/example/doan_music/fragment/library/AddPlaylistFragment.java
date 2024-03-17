@@ -129,7 +129,7 @@ public class AddPlaylistFragment extends Fragment {
             Integer maU = mainActivity.getMyVariable();
             database = getActivity().openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
             Cursor cursor = database.rawQuery("SELECT * " +
-                            "FROM Songs " ,null);
+                    "FROM Songs ", null);
 //                            "WHERE Songs.SongID NOT IN (SELECT Playlist_User_Song.SongID " +
 //                            "FROM Playlist_User_Song " +
 //                            "WHERE Playlist_User_Song.UserID = ?)",
