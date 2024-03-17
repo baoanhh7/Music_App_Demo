@@ -60,6 +60,7 @@ public class PlayMusicActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_music);
         addControls();
+
         arr = (ArrayList<Integer>) getIntent().getSerializableExtra("arrIDSongs");
         Integer IDSong = getIntent().getIntExtra("SongID", -1);
         shuffle = arr;

@@ -71,8 +71,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
-                if (id == R.id.allSongs) replace(new AllSongs_Fragment());
-                else if (id == R.id.logout) {
+                if (id == R.id.allSongs) {
+                    replace(new AllSongs_Fragment());
+                } else if (id == R.id.logout) {
                     startActivity(new Intent(MainActivity.this, LoginActivity.class));
                     finish();
                 } else if (id == R.id.home) {
@@ -127,4 +128,5 @@ public class MainActivity extends AppCompatActivity {
     public void replace(Fragment fragment) {
         getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, fragment).commit();
     }
+
 }
