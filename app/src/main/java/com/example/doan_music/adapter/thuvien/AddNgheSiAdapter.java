@@ -87,7 +87,6 @@ public class AddNgheSiAdapter extends RecyclerView.Adapter<AddNgheSiAdapter.View
                     arr.remove(position);
                     notifyItemRemoved(position);
                     notifyItemRangeChanged(position, arr.size()); // Cập nhật lại chỉ số của các item sau
-
                 }
             }
         });
