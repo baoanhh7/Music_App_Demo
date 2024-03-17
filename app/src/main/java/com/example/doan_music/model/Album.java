@@ -2,16 +2,16 @@ package com.example.doan_music.model;
 
 import java.io.Serializable;
 
-public class Ablum implements Serializable {
+public class Album implements Serializable {
     private Integer AlbumID;
     private String AlbumName;
     private byte[] AlbumImage;
     private Integer ArtistID;
 
-    public Ablum() {
+    public Album() {
     }
 
-    public Ablum(Integer albumID, String albumName, byte[] albumImage, Integer artistID) {
+    public Album(Integer albumID, String albumName, byte[] albumImage, Integer artistID) {
         AlbumID = albumID;
         AlbumName = albumName;
         AlbumImage = albumImage;

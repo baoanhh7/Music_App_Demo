@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,10 +22,10 @@ import com.example.doan_music.adapter.home.HomeAdapter;
 import com.example.doan_music.data.DatabaseManager;
 import com.example.doan_music.data.DbHelper;
 import com.example.doan_music.m_interface.IClickItemCategory;
-import com.example.doan_music.m_interface.IClickItemUser;
+import com.example.doan_music.m_interface.OnItemClickListener;
+import com.example.doan_music.model.Album;
 import com.example.doan_music.model.Category;
 import com.example.doan_music.model.Playlists;
-import com.example.doan_music.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,10 +34,12 @@ public class All_Fragment extends Fragment {
     private RecyclerView rcv_all_header, rcv_all_bottom;
     private HomeAdapter allAdapter_header;
     private CategoryAdapter allCateAdapter_bottom;
+    DbHelper dbHelper;
+    SQLiteDatabase database = null;
     View view;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_all_, container, false);
@@ -52,35 +55,42 @@ public class All_Fragment extends Fragment {
         rcv_all_bottom.setLayoutManager(linearLayoutManager);
 
         // set data cho recyclerView
-        allAdapter_header.setData(getlistuserHeader());
         allCateAdapter_bottom.setData(getlistuserBottom());
 
         return view;
     }
 
-    private List<User> getlistuserHeader() {
-        List<User> list = new ArrayList<>();
+    @NonNull
+    private List<Album> getlistuserHeader() {
+        List<Album> list = new ArrayList<>();
 
-        list.add(new User(R.drawable.music_logo, "Vũ.Radio", true));
-        list.add(new User(R.drawable.music_logo, "Ronboogz", true));
-        list.add(new User(R.drawable.music_logo, "GDucky", true));
-        list.add(new User(R.drawable.music_logo, "Hoàng Dũng", true));
+        dbHelper = DatabaseManager.dbHelper(requireContext());
+        database = dbHelper.getReadableDatabase();
 
-        list.add(new User(R.drawable.music_logo, "RPT MCK Radio", true));
-        list.add(new User(R.drawable.music_logo, "Low G Radio", true));
-        list.add(new User(R.drawable.music_logo, "Obito", true));
-        list.add(new User(R.drawable.music_logo, "Dalab Radio", true));
+        list.clear();
+        Cursor cursor = database.rawQuery("select * from Albums", null);
+        while (cursor.moveToNext()) {
+            int id = cursor.getInt(0);
+            String ten = cursor.getString(1);
+            byte[] anh = cursor.getBlob(2);
+            int idArtist = cursor.getInt(3);
+
+            list.add(new Album(id, ten, anh, idArtist));
+        }
+        cursor.close();
+        database.close();
 
         return list;
     }
 
+    @NonNull
     private List<Category> getlistuserBottom() {
         List<Playlists> list = new ArrayList<>();
 
-        DbHelper dbHelper = DatabaseManager.dbHelper(requireContext());
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        dbHelper = DatabaseManager.dbHelper(requireContext());
+        database = dbHelper.getReadableDatabase();
 
-        Cursor cursor = db.rawQuery("Select * from Playlists", null);
+        Cursor cursor = database.rawQuery("Select * from Playlists", null);
         while (cursor.moveToNext()) {
             int id = cursor.getInt(0);
             String name = cursor.getString(1);
@@ -90,7 +100,7 @@ public class All_Fragment extends Fragment {
             list.add(playlists);
         }
         cursor.close();
-        db.close();
+        database.close();
 
         List<Category> categoryList = new ArrayList<>();
         categoryList.add(new Category("Danh sách phát hàng đầu của bạn", list));
@@ -105,14 +115,24 @@ public class All_Fragment extends Fragment {
         rcv_all_header = view.findViewById(R.id.rcv_all_header);
         rcv_all_bottom = view.findViewById(R.id.rcv_all_bottom);
 
-
-        //put dữ liệu header có key là u, place get SongsAlbumActivity
-        allAdapter_header = new HomeAdapter(new IClickItemUser() {
+        allAdapter_header = new HomeAdapter(requireContext(), getlistuserHeader());
+        allAdapter_header.setOnItemClickListener(new OnItemClickListener() {
             @Override
-            public void onClickItemUser(User user) {
-                Intent i = new Intent(requireContext(), SongsAlbumActivity.class);
-                i.putExtra("u", user);
-                startActivity(i);
+            public void onItemClick(String data) {
+                dbHelper = DatabaseManager.dbHelper(requireContext());
+                database = dbHelper.getReadableDatabase();
+
+                Cursor cursor = database.rawQuery("select * from Albums", null);
+                while (cursor.moveToNext()) {
+                    int id = cursor.getInt(0);
+                    String name = cursor.getString(1);
+                    if (name.equals(data)) {
+                        Intent intent = new Intent(requireContext(), SongsAlbumActivity.class);
+                        intent.putExtra("albumID", id);
+                        startActivity(intent);
+                        break;
+                    }
+                }
             }
         });
 
@@ -126,7 +146,6 @@ public class All_Fragment extends Fragment {
         });
 
         rcv_all_header.setAdapter(allAdapter_header);
-
         rcv_all_bottom.setAdapter(allCateAdapter_bottom);
     }
 }

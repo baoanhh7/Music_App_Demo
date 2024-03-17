@@ -19,16 +19,16 @@ import com.example.doan_music.R;
 import com.example.doan_music.activity.admin.album.UpdateAlbumActivity;
 import com.example.doan_music.data.DatabaseManager;
 import com.example.doan_music.data.DbHelper;
-import com.example.doan_music.model.Ablum;
+import com.example.doan_music.model.Album;
 
 import java.util.ArrayList;
 
 public class AlbumAdminAdapter extends BaseAdapter {
-    ArrayList<Ablum> arr;
+    ArrayList<Album> arr;
     Context context;
 
 
-    public AlbumAdminAdapter(Context context, ArrayList<Ablum> arr) {
+    public AlbumAdminAdapter(Context context, ArrayList<Album> arr) {
         this.context = context;
         this.arr = arr;
     }
@@ -62,7 +62,7 @@ public class AlbumAdminAdapter extends BaseAdapter {
         txtTen = view.findViewById(R.id.txtTen_album_admin);
         txtID = view.findViewById(R.id.txtID_album_admin);
         txtIDArtist = view.findViewById(R.id.txtIDArtist_album_admin);
-        Ablum album = arr.get(position);
+        Album album = arr.get(position);
         // Hiển thị hình ảnh từ byte array
         byte[] hinhAlbumByteArray = album.getAlbumImage();
         Bitmap bitmap = BitmapFactory.decodeByteArray(hinhAlbumByteArray, 0, hinhAlbumByteArray.length);
@@ -118,7 +118,7 @@ public class AlbumAdminAdapter extends BaseAdapter {
             byte[] anh = cursor.getBlob(2);
             int idArtist = cursor.getInt(3);
 
-            arr.add(new Ablum(id, ten, anh, idArtist));
+            arr.add(new Album(id, ten, anh, idArtist));
         }
         notifyDataSetChanged();
     }

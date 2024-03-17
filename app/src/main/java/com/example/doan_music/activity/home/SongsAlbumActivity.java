@@ -1,6 +1,10 @@
 package com.example.doan_music.activity.home;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -12,8 +16,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_music.R;
-import com.example.doan_music.adapter.home.SongsAlbumAdapter;
-import com.example.doan_music.model.User;
+import com.example.doan_music.adapter.home.SongAdapter;
+import com.example.doan_music.model.Song;
+import com.example.doan_music.music.PlayMusicActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,14 +26,13 @@ import java.util.List;
 public class SongsAlbumActivity extends AppCompatActivity {
 
     RecyclerView rcv_songlist;
-    SongsAlbumAdapter songListAdapter;
+    SongAdapter songAdapter;
     ImageButton btn_back, btn_play;
-
     ImageView img_songlist;
     TextView txt_songlist;
-    Boolean flag = true;
-
-    Intent i = null;
+    Intent intent = null;
+    ArrayList<Integer> arr = new ArrayList<>();
+    SQLiteDatabase database = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +42,24 @@ public class SongsAlbumActivity extends AppCompatActivity {
         addControls();
         addEvents();
 
-        songListAdapter.setData(getList());
+        loadImgAlbum();
+    }
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        rcv_songlist.setLayoutManager(linearLayoutManager);
+    private void loadImgAlbum() {
+        int albumID = getIntent().getIntExtra("albumID", -1);
+        database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
+        Cursor cursor = database.rawQuery("select * from Albums", null);
+        while (cursor.moveToNext()) {
+            Integer idAlbum = cursor.getInt(0);
+            String name = cursor.getString(1);
+            byte[] img = cursor.getBlob(2);
+            if (idAlbum.equals(albumID)) {
+                Bitmap bitmap = BitmapFactory.decodeByteArray(img, 0, img.length);
+                txt_songlist.setText(name);
+                img_songlist.setImageBitmap(bitmap);
+
+            }
+        }
     }
 
     private void addEvents() {
@@ -55,44 +73,61 @@ public class SongsAlbumActivity extends AppCompatActivity {
         btn_play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (flag) {
-                    btn_play.setImageResource(R.drawable.ic_pause);
-                    flag = false;
-                } else {
-                    btn_play.setImageResource(R.drawable.ic_play);
-                    flag = true;
+                Integer idSong = arr.get(0);
+                database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
+                Cursor cursor = database.rawQuery("select * from Songs", null);
+                while (cursor.moveToNext()) {
+                    Integer Id = cursor.getInt(0);
+
+                    if (idSong.equals(Id)) {
+                        intent = new Intent(SongsAlbumActivity.this, PlayMusicActivity.class);
+                        intent.putExtra("SongID", Id);
+                        intent.putExtra("arrIDSongs", arr);
+                        break;
+                    }
                 }
+                cursor.close();
+                startActivity(intent);
             }
         });
     }
 
-    private List<User> getList() {
-        List<User> list = new ArrayList<>();
-        list.add(new User(R.drawable.music_logo, "Những lời hứa bỏ quên - Vũ Radio."));
-        list.add(new User(R.drawable.music_logo, "Những lời hứa bỏ quên - Vũ Radio."));
-        list.add(new User(R.drawable.music_logo, "Những lời hứa bỏ quên - Vũ Radio."));
-        list.add(new User(R.drawable.music_logo, "Những lời hứa bỏ quên - Vũ Radio."));
-        list.add(new User(R.drawable.music_logo, "Những lời hứa bỏ quên - Vũ Radio."));
-        list.add(new User(R.drawable.music_logo, "Những lời hứa bỏ quên - Vũ Radio."));
+    private List<Song> getList() {
+        List<Song> list = new ArrayList<>();
+
+        int albumID = getIntent().getIntExtra("albumID", -1);
+        database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
+        Cursor cursor = database.rawQuery("select * from Songs", null);
+        list.clear();
+        while (cursor.moveToNext()) {
+            Integer id = cursor.getInt(0);
+            Integer IDalbum = cursor.getInt(1);
+            String ten = cursor.getString(2);
+            byte[] img = cursor.getBlob(3);
+            if (IDalbum.equals(albumID)) {
+                Song song = new Song(id, IDalbum, ten, img);
+
+                arr.add(id);
+                list.add(song);
+            }
+        }
+        cursor.close();
 
         return list;
     }
 
     private void addControls() {
         rcv_songlist = findViewById(R.id.rcv_songlist);
-        songListAdapter = new SongsAlbumAdapter();
-        rcv_songlist.setAdapter(songListAdapter);
+
+        songAdapter = new SongAdapter(this, getList());
+        rcv_songlist.setAdapter(songAdapter);
+
+        rcv_songlist.setLayoutManager(new LinearLayoutManager(this));
 
         img_songlist = findViewById(R.id.img_songlist);
         txt_songlist = findViewById(R.id.txt_songlist);
 
         btn_back = findViewById(R.id.btn_back);
         btn_play = findViewById(R.id.btn_play);
-
-        //get dữ liệu từ All_Fragment
-        i = getIntent();
-        User user = (User) i.getSerializableExtra("u");
-        img_songlist.setImageResource(user.getResourceImage());
-        txt_songlist.setText(user.getName());
     }
 }

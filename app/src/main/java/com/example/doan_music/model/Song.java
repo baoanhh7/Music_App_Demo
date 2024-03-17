@@ -16,6 +16,13 @@ public class Song implements Serializable {
     public Song() {
     }
 
+    public Song(int songID, int albumID, String songName, byte[] songImage) {
+        SongID = songID;
+        AlbumID = albumID;
+        SongName = songName;
+        SongImage = songImage;
+    }
+
     public Song(int songID, String songName, byte[] songImage, String linkSong, int isFavorite) {
         SongID = songID;
         SongName = songName;
@@ -32,6 +39,7 @@ public class Song implements Serializable {
         ArtistID = artistID;
         this.isFavorite = isFavorite;
     }
+
 
     public int getSongID() {
         return SongID;

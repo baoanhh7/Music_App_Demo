@@ -14,7 +14,7 @@ import com.example.doan_music.R;
 import com.example.doan_music.activity.admin.AdminActivity;
 import com.example.doan_music.adapter.admin.AlbumAdminAdapter;
 import com.example.doan_music.data.DbHelper;
-import com.example.doan_music.model.Ablum;
+import com.example.doan_music.model.Album;
 
 import java.util.ArrayList;
 
@@ -26,7 +26,7 @@ public class AlbumActivity extends AppCompatActivity {
     DbHelper dbHelper;
     Button btn_add_ablum, btn_back_add_ablum_admin;
     AlbumAdminAdapter albumAdapter;
-    ArrayList<Ablum> arrayAblum;
+    ArrayList<Album> arrayAlbum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,14 +42,14 @@ public class AlbumActivity extends AppCompatActivity {
     private void loadData() {
         database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
         Cursor cursor = database.rawQuery("select * from Albums", null);
-        arrayAblum.clear();
+        arrayAlbum.clear();
         while (cursor.moveToNext()) {
             int ma = cursor.getInt(0);
             String ten = cursor.getString(1);
             byte[] img = cursor.getBlob(2);
             int maartist = cursor.getInt(3);
-            Ablum ablum = new Ablum(ma, ten, img, maartist);
-            arrayAblum.add(ablum);
+            Album album = new Album(ma, ten, img, maartist);
+            arrayAlbum.add(album);
         }
         albumAdapter.notifyDataSetChanged();
         cursor.close();
@@ -85,8 +85,8 @@ public class AlbumActivity extends AppCompatActivity {
         btn_add_ablum = findViewById(R.id.btn_add_ablum);
         btn_back_add_ablum_admin = findViewById(R.id.btn_back_add_ablum_admin);
         listView = findViewById(R.id.lvAblum_admin);
-        arrayAblum = new ArrayList<>();
-        albumAdapter = new AlbumAdminAdapter(AlbumActivity.this, arrayAblum);
+        arrayAlbum = new ArrayList<>();
+        albumAdapter = new AlbumAdminAdapter(AlbumActivity.this, arrayAlbum);
         listView.setAdapter(albumAdapter);
     }
 }

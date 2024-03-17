@@ -1,5 +1,8 @@
 package com.example.doan_music.adapter.home;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,112 +10,69 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_music.R;
-import com.example.doan_music.m_interface.IClickItemUser;
-import com.example.doan_music.model.User;
+import com.example.doan_music.m_interface.OnItemClickListener;
+import com.example.doan_music.model.Album;
 
 import java.util.List;
 
-public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.UserHeaderViewHolder> {
+    private OnItemClickListener onItemClickListener;
+    private List<Album> listAlbum;
+    private Context context;
 
-    private static final int type_header = 0;
-    private static final int type_bottom = 1;
-
-    private List<User> listUser;
-    private IClickItemUser iClickItemUser;
-
-    public HomeAdapter() {
+    public HomeAdapter(Context context, List<Album> songList) {
+        this.context = context;
+        this.listAlbum = songList;
     }
 
-    public HomeAdapter(IClickItemUser iClickItemUser) {
-        this.iClickItemUser = iClickItemUser;
-    }
-
-    public void setData(List<User> list) {
-        this.listUser = list;
-        notifyDataSetChanged();
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.onItemClickListener = listener;
     }
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if (type_header == viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_header, parent, false);
-            return new UserHeaderViewHolder(view);
-        } else if (type_bottom == viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_bottom, parent, false);
-            return new UserBottomViewHolder(view);
-        }
-        return null;
+    public UserHeaderViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_header, parent, false);
+        return new UserHeaderViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        final User user = listUser.get(position);
+    public void onBindViewHolder(@NonNull UserHeaderViewHolder holder, int position) {
+        Album album = listAlbum.get(position);
 
-        if (type_header == holder.getItemViewType()) {
-            UserHeaderViewHolder userHeaderViewHolder = (UserHeaderViewHolder) holder;
-            userHeaderViewHolder.img_home_header.setImageResource(user.getResourceImage());
-            userHeaderViewHolder.txt_home_header.setText(user.getName());
+        holder.txt_home_header.setText(album.getAlbumName());
+        Bitmap bitmap = BitmapFactory.decodeByteArray(album.getAlbumImage(), 0, album.getAlbumImage().length);
+        holder.img_home_album.setImageBitmap(bitmap);
 
-            //onClickItem in RecyclerView
-            userHeaderViewHolder.card_home_header.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    iClickItemUser.onClickItemUser(user);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onItemClickListener != null) {
+                    onItemClickListener.onItemClick(listAlbum.get(position).getAlbumName());
                 }
-            });
-
-        } else if (type_bottom == holder.getItemViewType()) {
-            UserBottomViewHolder userBottomViewHolder = (UserBottomViewHolder) holder;
-            userBottomViewHolder.img_home_bottom.setImageResource(user.getResourceImage());
-            userBottomViewHolder.txt_home_bottom.setText(user.getName());
-        }
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        if (listUser != null) return listUser.size();
+        if (listAlbum != null) return listAlbum.size();
         return 0;
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        User user = listUser.get(position);
-        if (user.getHeader()) return type_header;
-        else return type_bottom;
-    }
-
     public class UserHeaderViewHolder extends RecyclerView.ViewHolder {
-        private CardView card_home_header;
-        private ImageView img_home_header;
+        private ImageView img_home_album;
         private TextView txt_home_header;
 
         public UserHeaderViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            img_home_header = itemView.findViewById(R.id.img_home_header);
+            img_home_album = itemView.findViewById(R.id.img_home_album);
             txt_home_header = itemView.findViewById(R.id.txt_home_header);
 
-            card_home_header = itemView.findViewById(R.id.card_home_header);
-        }
-    }
-
-    public class UserBottomViewHolder extends RecyclerView.ViewHolder {
-        private ImageView img_home_bottom;
-        private TextView txt_home_bottom;
-        private CardView card_home_bottom;
-
-        public UserBottomViewHolder(@NonNull View itemView) {
-            super(itemView);
-
-            img_home_bottom = itemView.findViewById(R.id.img_home_bottom);
-            txt_home_bottom = itemView.findViewById(R.id.txt_home_bottom);
-
-            card_home_bottom = itemView.findViewById(R.id.card_home_bottom);
         }
     }
 }
