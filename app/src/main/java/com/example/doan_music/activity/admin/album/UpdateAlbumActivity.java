@@ -69,13 +69,12 @@ public class UpdateAlbumActivity extends AppCompatActivity {
                         values.put("AlbumImage", anh);
                         dbHelper = DatabaseManager.dbHelper(UpdateAlbumActivity.this);
                         Integer id = Integer.valueOf(edtMa.getText().toString());
-                        long kq = dbHelper.getReadableDatabase().update("Albums", values,"AlbumID=?",new String[]{id+""});
+                        long kq = dbHelper.getReadableDatabase().update("Albums", values, "AlbumID=?", new String[]{id + ""});
                         if (kq > 0) {
                             Toast.makeText(UpdateAlbumActivity.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
                             cursor.close();
                             finish();
-                        }
-                        else
+                        } else
                             Toast.makeText(UpdateAlbumActivity.this, "Thêm thất bại", Toast.LENGTH_SHORT).show();
                         break;
                     }

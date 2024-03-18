@@ -57,7 +57,31 @@ public class All_Fragment extends Fragment {
         // set data cho recyclerView
         allCateAdapter_bottom.setData(getlistuserBottom());
 
+        addEvents();
+
         return view;
+    }
+
+    private void addEvents() {
+        allAdapter_header.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(String data) {
+                dbHelper = DatabaseManager.dbHelper(requireContext());
+                database = dbHelper.getReadableDatabase();
+
+                Cursor cursor = database.rawQuery("select * from Albums", null);
+                while (cursor.moveToNext()) {
+                    int id = cursor.getInt(0);
+                    String name = cursor.getString(1);
+                    if (name.equals(data)) {
+                        Intent intent = new Intent(requireContext(), SongsAlbumActivity.class);
+                        intent.putExtra("albumID", id);
+                        startActivity(intent);
+                        break;
+                    }
+                }
+            }
+        });
     }
 
     @NonNull
@@ -116,25 +140,6 @@ public class All_Fragment extends Fragment {
         rcv_all_bottom = view.findViewById(R.id.rcv_all_bottom);
 
         allAdapter_header = new HomeAdapter(requireContext(), getlistuserHeader());
-        allAdapter_header.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(String data) {
-                dbHelper = DatabaseManager.dbHelper(requireContext());
-                database = dbHelper.getReadableDatabase();
-
-                Cursor cursor = database.rawQuery("select * from Albums", null);
-                while (cursor.moveToNext()) {
-                    int id = cursor.getInt(0);
-                    String name = cursor.getString(1);
-                    if (name.equals(data)) {
-                        Intent intent = new Intent(requireContext(), SongsAlbumActivity.class);
-                        intent.putExtra("albumID", id);
-                        startActivity(intent);
-                        break;
-                    }
-                }
-            }
-        });
 
         allCateAdapter_bottom = new CategoryAdapter(new IClickItemCategory() {
             @Override

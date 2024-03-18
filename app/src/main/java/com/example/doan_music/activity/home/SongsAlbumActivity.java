@@ -17,6 +17,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_music.R;
 import com.example.doan_music.adapter.home.SongAdapter;
+import com.example.doan_music.data.DatabaseManager;
+import com.example.doan_music.data.DbHelper;
+import com.example.doan_music.m_interface.OnItemClickListener;
 import com.example.doan_music.model.Song;
 import com.example.doan_music.music.PlayMusicActivity;
 
@@ -33,6 +36,7 @@ public class SongsAlbumActivity extends AppCompatActivity {
     Intent intent = null;
     ArrayList<Integer> arr = new ArrayList<>();
     SQLiteDatabase database = null;
+    DbHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,14 +44,17 @@ public class SongsAlbumActivity extends AppCompatActivity {
         setContentView(R.layout.activity_songs_album);
 
         addControls();
-        addEvents();
-
         loadImgAlbum();
+
+        addEvents();
     }
 
     private void loadImgAlbum() {
         int albumID = getIntent().getIntExtra("albumID", -1);
-        database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
+
+        dbHelper = DatabaseManager.dbHelper(this);
+        database = dbHelper.getReadableDatabase();
+
         Cursor cursor = database.rawQuery("select * from Albums", null);
         while (cursor.moveToNext()) {
             Integer idAlbum = cursor.getInt(0);
@@ -88,6 +95,29 @@ public class SongsAlbumActivity extends AppCompatActivity {
                 }
                 cursor.close();
                 startActivity(intent);
+            }
+        });
+
+        songAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(String data) {
+                dbHelper = DatabaseManager.dbHelper(SongsAlbumActivity.this);
+                database = dbHelper.getReadableDatabase();
+
+                Cursor cursor = database.rawQuery("select * from Songs", null);
+                while (cursor.moveToNext()) {
+                    int id = cursor.getInt(0);
+                    String songName = cursor.getString(2);
+
+                    if (data.equals(songName)) {
+                        Intent intent = new Intent(SongsAlbumActivity.this, PlayMusicActivity.class);
+                        intent.putExtra("SongID", id);
+                        intent.putExtra("arrIDSongs", arr);
+
+                        startActivity(intent);
+                        break;
+                    }
+                }
             }
         });
     }

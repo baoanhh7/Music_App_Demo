@@ -44,7 +44,6 @@ public class Song_Fragment extends Fragment {
         addControls();
 
         createData();
-
         favoriteSongAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(String data) {
@@ -65,16 +64,25 @@ public class Song_Fragment extends Fragment {
                     }
                 }
                 cursor.close();
+                favoriteSongAdapter.notifyDataSetChanged();
             }
         });
 
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+
+    }
+
     private void createData() {
         dbHelper = new DbHelper(requireContext());
         database = dbHelper.getReadableDatabase();
         Cursor cursor = database.rawQuery("select * from Songs", null);
+        songList = new ArrayList<>();
 //        songList.clear();
 
         while (cursor.moveToNext()) {
@@ -90,8 +98,8 @@ public class Song_Fragment extends Fragment {
                 arr.add(id);
             }
         }
-        favoriteSongAdapter.notifyDataSetChanged();
         cursor.close();
+        favoriteSongAdapter.notifyDataSetChanged();
     }
 
     private void addControls() {

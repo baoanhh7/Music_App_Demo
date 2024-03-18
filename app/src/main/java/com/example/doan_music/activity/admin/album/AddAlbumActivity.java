@@ -72,8 +72,7 @@ public class AddAlbumActivity extends AppCompatActivity {
                             Toast.makeText(AddAlbumActivity.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
                             cursor.close();
                             finish();
-                        }
-                        else
+                        } else
                             Toast.makeText(AddAlbumActivity.this, "Thêm thất bại", Toast.LENGTH_SHORT).show();
                         break;
                     }

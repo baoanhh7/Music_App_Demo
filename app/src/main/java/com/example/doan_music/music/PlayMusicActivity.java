@@ -156,7 +156,6 @@ public class PlayMusicActivity extends AppCompatActivity {
             String ten = cursor.getString(1);
             txt_artist_song.setText(ten);
         }
-
     }
 
     private void loadData() {
@@ -380,11 +379,11 @@ public class PlayMusicActivity extends AppCompatActivity {
                 frag_heart = !frag_heart;
 
                 if (frag_heart) {
-                    int value = 1;
+
                     btn_heart.setImageResource(R.drawable.ic_red_heart);
 
                     ContentValues values = new ContentValues();
-                    values.put("StateFavorite", value);
+                    values.put("StateFavorite", 1);
                     database.update("Songs", values, "SongID = ?", new String[]{String.valueOf(IDSong)});
                     addSongToLoveList(IDSong);
 
