@@ -109,6 +109,8 @@ public class All_Fragment extends Fragment {
 
     @NonNull
     private List<Category> getlistuserBottom() {
+
+        // list 0
         List<Playlists> list = new ArrayList<>();
 
         dbHelper = DatabaseManager.dbHelper(requireContext());
@@ -124,13 +126,63 @@ public class All_Fragment extends Fragment {
             list.add(playlists);
         }
         cursor.close();
-        database.close();
+
+        // list 1
+        List<Playlists> list1 = new ArrayList<>();
+
+        dbHelper = DatabaseManager.dbHelper(requireContext());
+        database = dbHelper.getReadableDatabase();
+
+        Cursor cursor1 = database.rawQuery("Select * from Playlists", null);
+        while (cursor1.moveToNext()) {
+            int id = cursor1.getInt(0);
+            String name = cursor1.getString(1);
+            byte[] img = cursor1.getBlob(2);
+
+            Playlists playlists = new Playlists(id, name, img);
+            list1.add(playlists);
+        }
+        cursor1.close();
+
+        // list 2
+        List<Playlists> list2 = new ArrayList<>();
+
+        dbHelper = DatabaseManager.dbHelper(requireContext());
+        database = dbHelper.getReadableDatabase();
+
+        Cursor cursor2 = database.rawQuery("Select * from Playlists", null);
+        while (cursor2.moveToNext()) {
+            int id = cursor2.getInt(0);
+            String name = cursor2.getString(1);
+            byte[] img = cursor2.getBlob(2);
+
+            Playlists playlists = new Playlists(id, name, img);
+            list1.add(playlists);
+        }
+        cursor2.close();
+
+        // list 3
+        List<Playlists> list3 = new ArrayList<>();
+
+        dbHelper = DatabaseManager.dbHelper(requireContext());
+        database = dbHelper.getReadableDatabase();
+
+        Cursor cursor3 = database.rawQuery("Select * from Playlists", null);
+        while (cursor3.moveToNext()) {
+            int id = cursor3.getInt(0);
+            String name = cursor3.getString(1);
+            byte[] img = cursor3.getBlob(2);
+
+            Playlists playlists = new Playlists(id, name, img);
+            list1.add(playlists);
+        }
+        cursor3.close();
 
         List<Category> categoryList = new ArrayList<>();
-        categoryList.add(new Category("Danh sách phát hàng đầu của bạn", list));
-        categoryList.add(new Category("Tập được yêu thích", list));
-        categoryList.add(new Category("Lựa chọn của Spotify", list));
-        categoryList.add(new Category("Mới nghe gần đây", list));
+        categoryList.add(new Category("Danh sách phát dành cho bạn", list));
+        categoryList.add(new Category("Bài hát được yêu thích", list1));
+        categoryList.add(new Category("Lựa chọn của Spotify", list2));
+        categoryList.add(new Category("Mới nghe gần đây", list3));
 
         return categoryList;
     }

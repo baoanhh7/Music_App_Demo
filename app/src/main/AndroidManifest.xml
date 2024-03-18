@@ -28,10 +28,6 @@
             android:name=".activity.admin.album.UpdateAlbumActivity"
             android:exported="false" />
 
-        <service
-            android:name=".service.MyService"
-            android:enabled="true"
-            android:exported="true" />
 
         <activity
             android:name=".activity.library.ArtistSongActivity"
