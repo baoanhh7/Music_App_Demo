@@ -68,14 +68,19 @@ public class UpdateAlbumActivity extends AppCompatActivity {
                         values.put("Ablum_ArtistID", edtMaArtist.getText().toString() + "");
                         values.put("AlbumImage", anh);
                         dbHelper = DatabaseManager.dbHelper(UpdateAlbumActivity.this);
-                        long kq = dbHelper.getReadableDatabase().insert("Albums", null, values);
-                        if (kq > 0)
-                            break;
+                        Integer id = Integer.valueOf(edtMa.getText().toString());
+                        long kq = dbHelper.getReadableDatabase().update("Albums", values,"AlbumID=?",new String[]{id+""});
+                        if (kq > 0) {
+                            Toast.makeText(UpdateAlbumActivity.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
+                            cursor.close();
+                            finish();
+                        }
                         else
-                            Toast.makeText(UpdateAlbumActivity.this, "Thêm thất bại", Toast.LENGTH_SHORT);
+                            Toast.makeText(UpdateAlbumActivity.this, "Thêm thất bại", Toast.LENGTH_SHORT).show();
+                        break;
                     }
                 }
-                finish();
+                Toast.makeText(UpdateAlbumActivity.this, "Không có Artist tương ứng", Toast.LENGTH_SHORT).show();
 
             }
         });

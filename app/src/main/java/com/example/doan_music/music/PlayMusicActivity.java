@@ -92,6 +92,7 @@ public class PlayMusicActivity extends AppCompatActivity {
                 @Override
                 public void onCompletion(MediaPlayer mp) {
                     playNextSong(arr);
+                    sendNotification();
                 }
             });
         }

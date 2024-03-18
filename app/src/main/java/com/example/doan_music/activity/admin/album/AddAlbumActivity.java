@@ -68,14 +68,17 @@ public class AddAlbumActivity extends AppCompatActivity {
                         values.put("AlbumImage", anh);
                         dbHelper = DatabaseManager.dbHelper(AddAlbumActivity.this);
                         long kq = dbHelper.getReadableDatabase().insert("Albums", null, values);
-                        if (kq > 0)
-                            break;
+                        if (kq > 0) {
+                            Toast.makeText(AddAlbumActivity.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
+                            cursor.close();
+                            finish();
+                        }
                         else
-                            Toast.makeText(AddAlbumActivity.this, "Thêm thất bại", Toast.LENGTH_SHORT);
+                            Toast.makeText(AddAlbumActivity.this, "Thêm thất bại", Toast.LENGTH_SHORT).show();
+                        break;
                     }
                 }
-                finish();
-
+                Toast.makeText(AddAlbumActivity.this, "Không có Artist tương ứng", Toast.LENGTH_SHORT).show();
             }
         });
         btncancel.setOnClickListener(new View.OnClickListener() {
