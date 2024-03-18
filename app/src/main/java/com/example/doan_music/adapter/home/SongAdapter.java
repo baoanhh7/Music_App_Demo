@@ -29,6 +29,11 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
         this.songList = songList;
     }
 
+    public void filterList(List<Song> filerList) {
+        this.songList = filerList;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public SongViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
