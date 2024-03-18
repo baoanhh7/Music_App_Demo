@@ -43,7 +43,8 @@ public class PlaylistHomeAdapter extends RecyclerView.Adapter<PlaylistHomeAdapte
 
     @Override
     public int getItemCount() {
-        return list.size();
+        if (list != null) return list.size();
+        return 0;
     }
 
     public class PlaylistViewHolder extends RecyclerView.ViewHolder {

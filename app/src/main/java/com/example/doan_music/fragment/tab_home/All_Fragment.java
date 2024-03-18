@@ -1,5 +1,7 @@
 package com.example.doan_music.fragment.tab_home;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -26,6 +28,7 @@ import com.example.doan_music.m_interface.OnItemClickListener;
 import com.example.doan_music.model.Album;
 import com.example.doan_music.model.Category;
 import com.example.doan_music.model.Playlists;
+import com.example.doan_music.model.Song;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -126,63 +129,82 @@ public class All_Fragment extends Fragment {
             list.add(playlists);
         }
         cursor.close();
+        allCateAdapter_bottom.notifyDataSetChanged();
 
         // list 1
-        List<Playlists> list1 = new ArrayList<>();
-
-        dbHelper = DatabaseManager.dbHelper(requireContext());
+        dbHelper = new DbHelper(requireContext());
         database = dbHelper.getReadableDatabase();
+        Cursor cursor1 = database.rawQuery("select * from Songs", null);
 
-        Cursor cursor1 = database.rawQuery("Select * from Playlists", null);
+        ArrayList<Integer> arr = new ArrayList<>();
+        List<Song> songList = new ArrayList<>();
+//        songList.clear();
+
         while (cursor1.moveToNext()) {
             int id = cursor1.getInt(0);
-            String name = cursor1.getString(1);
-            byte[] img = cursor1.getBlob(2);
+            String songName = cursor1.getString(2);
+            byte[] image = cursor1.getBlob(3);
+            String linkSong = cursor1.getString(5);
+            int favorite = cursor1.getInt(6);
 
-            Playlists playlists = new Playlists(id, name, img);
-            list1.add(playlists);
+            if (favorite == 1) {
+                Song song = new Song(id, songName, image, linkSong, favorite);
+                songList.add(song);
+                arr.add(id);
+            }
         }
         cursor1.close();
+        allCateAdapter_bottom.notifyDataSetChanged();
 
         // list 2
-        List<Playlists> list2 = new ArrayList<>();
+        dbHelper = new DbHelper(requireContext());
+        database = requireContext().openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
+        Cursor cursor2 = database.rawQuery("select * from Songs", null);
 
-        dbHelper = DatabaseManager.dbHelper(requireContext());
-        database = dbHelper.getReadableDatabase();
+        List<Song> allSong = new ArrayList<>();
 
-        Cursor cursor2 = database.rawQuery("Select * from Playlists", null);
         while (cursor2.moveToNext()) {
             int id = cursor2.getInt(0);
-            String name = cursor2.getString(1);
-            byte[] img = cursor2.getBlob(2);
+            String songName = cursor2.getString(2);
+            int artist = cursor2.getInt(4);
+            byte[] image = cursor2.getBlob(3);
+            String linkSong = cursor2.getString(5);
+            int favorite = cursor2.getInt(6);
 
-            Playlists playlists = new Playlists(id, name, img);
-            list1.add(playlists);
+            Song song = new Song(id, songName, artist, image, linkSong, favorite);
+            allSong.add(song);
+            arr.add(id);
         }
+        allCateAdapter_bottom.notifyDataSetChanged();
         cursor2.close();
 
         // list 3
-        List<Playlists> list3 = new ArrayList<>();
+        dbHelper = new DbHelper(requireContext());
+        database = requireContext().openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
+        Cursor cursor3 = database.rawQuery("select * from Songs order by 8 DESC", null);
 
-        dbHelper = DatabaseManager.dbHelper(requireContext());
-        database = dbHelper.getReadableDatabase();
+        List<Song> hotSong = new ArrayList<>();
 
-        Cursor cursor3 = database.rawQuery("Select * from Playlists", null);
         while (cursor3.moveToNext()) {
             int id = cursor3.getInt(0);
-            String name = cursor3.getString(1);
-            byte[] img = cursor3.getBlob(2);
+            String songName = cursor3.getString(2);
+            int artist = cursor3.getInt(4);
+            byte[] image = cursor3.getBlob(3);
+            String linkSong = cursor3.getString(5);
+            int favorite = cursor3.getInt(6);
 
-            Playlists playlists = new Playlists(id, name, img);
-            list1.add(playlists);
+            Song song = new Song(id, songName, artist, image, linkSong, favorite);
+            allSong.add(song);
+            arr.add(id);
         }
+        allCateAdapter_bottom.notifyDataSetChanged();
         cursor3.close();
 
         List<Category> categoryList = new ArrayList<>();
-        categoryList.add(new Category("Danh sách phát dành cho bạn", list));
-        categoryList.add(new Category("Bài hát được yêu thích", list1));
-        categoryList.add(new Category("Lựa chọn của Spotify", list2));
-        categoryList.add(new Category("Mới nghe gần đây", list3));
+        categoryList.add(new Category("Danh sách phát dành cho bạn", list, null));
+        categoryList.add(new Category("Bài hát được yêu thích", null, songList));
+        categoryList.add(new Category("Lựa chọn của Spotify", null, allSong));
+        categoryList.add(new Category("Những bài hát nhiều người nghe", null, hotSong));
 
         return categoryList;
     }

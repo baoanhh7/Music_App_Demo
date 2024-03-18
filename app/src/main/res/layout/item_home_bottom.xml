@@ -30,7 +30,7 @@
             android:gravity="center"
             android:paddingTop="5dp"
             android:text="id"
-            android:textColor="#74DD78"
+            android:textColor="#131313"
             android:textSize="15sp"
             android:textStyle="bold" />
 
