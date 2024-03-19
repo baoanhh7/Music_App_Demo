@@ -66,6 +66,7 @@ public class PlayMusicActivity extends AppCompatActivity {
         Integer IDSong = getIntent().getIntExtra("SongID", -1);
         shuffle = arr;
         currentPosition = arr.indexOf(IDSong);
+        SeekBar sbTime;
         myMusic = new MediaPlayer();
         //myMusic = MediaPlayer.create(this, R.raw.nhung_loi_hua_bo_quen);
         loadData();

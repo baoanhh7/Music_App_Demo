@@ -22,13 +22,17 @@
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".activity.admin.song.AddSongActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.admin.song.SongActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.library.PlaylistUserLoveActivity"
             android:exported="false" />
         <activity
             android:name=".activity.admin.album.UpdateAlbumActivity"
             android:exported="false" />
-
-
         <activity
             android:name=".activity.library.ArtistSongActivity"
             android:exported="false" />

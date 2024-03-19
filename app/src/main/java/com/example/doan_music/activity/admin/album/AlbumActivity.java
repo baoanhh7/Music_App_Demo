@@ -15,6 +15,7 @@ import com.example.doan_music.activity.admin.AdminActivity;
 import com.example.doan_music.adapter.admin.AlbumAdminAdapter;
 import com.example.doan_music.data.DbHelper;
 import com.example.doan_music.model.Album;
+import com.example.doan_music.model.Song;
 
 import java.util.ArrayList;
 

@@ -105,6 +105,7 @@ public class PlayListAdminAdapter extends BaseAdapter {
         return view;
     }
 
+
     private void delete(int playlistID) {
         DbHelper dbHelper = DatabaseManager.dbHelper(context);
         dbHelper.getWritableDatabase().delete("Playlists", "PlaylistID=?"

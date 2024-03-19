@@ -10,11 +10,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.doan_music.R;
 import com.example.doan_music.activity.admin.album.AlbumActivity;
 import com.example.doan_music.activity.admin.playlist.PlayListAdminActivity;
+import com.example.doan_music.activity.admin.song.SongActivity;
 import com.example.doan_music.loginPackage.LoginActivity;
 
 public class AdminActivity extends AppCompatActivity {
     Button btn_add_album, btn_add_artists, btn_add_playlists, btn_add_types, btn_add_song, btn_add_lovesongs, btn_logout;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +28,13 @@ public class AdminActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AdminActivity.this, AlbumActivity.class);
+                startActivity(intent);
+            }
+        });
+        btn_add_song.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AdminActivity.this, SongActivity.class);
                 startActivity(intent);
             }
         });
