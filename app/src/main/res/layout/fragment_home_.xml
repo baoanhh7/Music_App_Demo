@@ -69,5 +69,10 @@
 
     </androidx.viewpager.widget.ViewPager>
 
+    <FrameLayout
+        android:id="@+id/frame_home"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/linear" />
 
 </RelativeLayout>

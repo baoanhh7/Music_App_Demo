@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.doan_music.R;
@@ -17,12 +16,12 @@ import com.example.doan_music.adapter.home.TabLayoutAdapter;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
-public class Home_Fragment extends Fragment {
+public class Home_Fragment extends Fragment implements TabLayoutAdapter.FragmentChangeListener {
 
     TabLayout tabLayout;
     NavigationView navigationView;
     ViewPager home_viewpager;
-    TabLayoutAdapter adapter;
+    TabLayoutAdapter tabLayoutAdapter;
     // Trong Fragment khi muốn ánh xạ thì khai báo qua đối tượng trung gian là View
     View mView;
     TextView txt_nameUser;
@@ -53,16 +52,21 @@ public class Home_Fragment extends Fragment {
         return mView;
     }
 
+    @Override
+    public void replace(Fragment fragment) {
+        getChildFragmentManager().beginTransaction().replace(R.id.frame_home, fragment).commit();
+    }
+
     private void addControls() {
         tabLayout = mView.findViewById(R.id.tab_layout);
         home_viewpager = mView.findViewById(R.id.home_viewpager);
         navigationView = mView.findViewById(R.id.navigation_drawer);
 
-        txt_nameUser = (TextView) mView.findViewById(R.id.txt_nameUser);
+        txt_nameUser = mView.findViewById(R.id.txt_nameUser);
 
         // Khác với khai báo Adapter trong Activity, trong Fragment khai báo Adapter theo kiểu sau
-        adapter = new TabLayoutAdapter(getChildFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        home_viewpager.setAdapter(adapter);
 
+        tabLayoutAdapter = new TabLayoutAdapter(getChildFragmentManager(), TabLayoutAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        home_viewpager.setAdapter(tabLayoutAdapter);
     }
 }

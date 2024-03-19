@@ -14,6 +14,12 @@ public class TabLayoutAdapter extends FragmentStatePagerAdapter {
         super(fm, behavior);
     }
 
+    private FragmentChangeListener fragmentChangeListener;
+
+    public interface FragmentChangeListener {
+        void replace(Fragment fragment);
+    }
+
     // Hàm tạo id cho các fragment, hàm trả về là một fragment, tron đó position đóng vai trò là một id của item (item.getId())
     @NonNull
     @Override
@@ -47,5 +53,20 @@ public class TabLayoutAdapter extends FragmentStatePagerAdapter {
             default:
                 return "Tất cả";
         }
+    }
+
+    public void replaceFragment(int position) {
+        Fragment fragment;
+        switch (position) {
+            case 0:
+                fragment = new All_Fragment();
+                break;
+            case 1:
+                fragment = new Song_Fragment();
+                break;
+            default:
+                fragment = new All_Fragment();
+        }
+        fragmentChangeListener.replace(fragment);
     }
 }
