@@ -21,9 +21,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     List<Category> list;
     private IClickItemCategory iClickItemCategory;
 
-    public CategoryAdapter() {
-    }
-
     public CategoryAdapter(IClickItemCategory iClickItemCategory) {
         this.iClickItemCategory = iClickItemCategory;
     }
@@ -59,6 +56,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
                 iClickItemCategory.onClickItemCategory(category);
             }
         });
+
 
     }
 

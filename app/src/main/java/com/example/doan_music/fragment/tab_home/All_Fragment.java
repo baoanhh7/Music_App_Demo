@@ -93,13 +93,16 @@ public class All_Fragment extends Fragment {
 
         list.clear();
         Cursor cursor = database.rawQuery("select * from Albums", null);
-        while (cursor.moveToNext()) {
+
+        int count = 0;
+        while (cursor.moveToNext() && count < 8) {
             int id = cursor.getInt(0);
             String ten = cursor.getString(1);
             byte[] anh = cursor.getBlob(2);
             int idArtist = cursor.getInt(3);
 
             list.add(new Album(id, ten, anh, idArtist));
+            count++;
         }
         cursor.close();
         database.close();
@@ -109,21 +112,24 @@ public class All_Fragment extends Fragment {
 
     @NonNull
     private List<Category> getlistuserBottom() {
-
-        // list 0
         List<Playlists> list = new ArrayList<>();
 
         dbHelper = DatabaseManager.dbHelper(requireContext());
         database = dbHelper.getReadableDatabase();
 
+        list.clear();
         Cursor cursor = database.rawQuery("Select * from Playlists", null);
-        while (cursor.moveToNext()) {
+
+        int count = 0;
+        while (cursor.moveToNext() && count < 4) {
             int id = cursor.getInt(0);
             String name = cursor.getString(1);
             byte[] img = cursor.getBlob(2);
 
             Playlists playlists = new Playlists(id, name, img);
             list.add(playlists);
+
+            count++;
         }
         cursor.close();
         allCateAdapter_bottom.notifyDataSetChanged();
