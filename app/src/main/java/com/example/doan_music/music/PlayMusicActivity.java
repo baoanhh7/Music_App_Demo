@@ -54,6 +54,7 @@ public class PlayMusicActivity extends AppCompatActivity {
     private boolean frag_heart = false;
     SQLiteDatabase database = null;
     DbHelper dbHelper;
+    Animation animation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -212,13 +213,12 @@ public class PlayMusicActivity extends AppCompatActivity {
                 if (myMusic.isPlaying()) {
                     myMusic.pause();
                     btn_play.setImageResource(R.drawable.ic_play);
+                    imageView_songs.clearAnimation();
 
                 } else {
                     myMusic.start();
                     btn_play.setImageResource(R.drawable.ic_pause);
 
-                    // Load animation từ file xml
-                    Animation animation = AnimationUtils.loadAnimation(PlayMusicActivity.this, R.anim.animation);
                     // Áp dụng animation vào ImageView
                     imageView_songs.startAnimation(animation);
                 }
@@ -285,6 +285,7 @@ public class PlayMusicActivity extends AppCompatActivity {
                 myMusic.start();
 
                 updateHeartButtonUI();
+                imageView_songs.startAnimation(animation);
             }
         });
         btn_pre.setOnClickListener(new View.OnClickListener() {
@@ -353,6 +354,7 @@ public class PlayMusicActivity extends AppCompatActivity {
                 myMusic.start();
 
                 updateHeartButtonUI();
+                imageView_songs.startAnimation(animation);
             }
         });
 
@@ -628,7 +630,7 @@ public class PlayMusicActivity extends AppCompatActivity {
         btn_heart = findViewById(R.id.btn_heart);
 
         // Load animation từ file xml
-        Animation animation = AnimationUtils.loadAnimation(this, R.anim.animation);
+        animation = AnimationUtils.loadAnimation(this, R.anim.animation);
         // Áp dụng animation vào ImageView
         imageView_songs.startAnimation(animation);
     }
