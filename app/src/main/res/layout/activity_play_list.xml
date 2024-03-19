@@ -19,7 +19,7 @@
             android:id="@+id/btn_back"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             android:background="@drawable/ic_back"
             android:backgroundTint="@color/white" />
 
@@ -30,7 +30,7 @@
             android:layout_centerInParent="true"
             android:layout_marginBottom="5dp"
             android:background="@drawable/rounded_search"
-            android:backgroundTint="#333333"
+            android:backgroundTint="#494949"
             android:elevation="10dp"
             android:fontFamily="sans-serif-smallcaps"
             android:gravity="center"
