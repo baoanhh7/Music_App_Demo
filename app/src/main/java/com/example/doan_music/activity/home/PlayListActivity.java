@@ -16,6 +16,7 @@ import com.example.doan_music.R;
 import com.example.doan_music.adapter.home.PlayListAdapter;
 import com.example.doan_music.data.DatabaseManager;
 import com.example.doan_music.data.DbHelper;
+import com.example.doan_music.m_interface.OnItemClickListener;
 import com.example.doan_music.model.Playlists;
 
 import java.util.ArrayList;
@@ -27,6 +28,8 @@ public class PlayListActivity extends AppCompatActivity {
     Button btn_back;
     TextView txt_playlist;
     Playlists playlists;
+    DbHelper dbHelper;
+    SQLiteDatabase database = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +38,6 @@ public class PlayListActivity extends AppCompatActivity {
 
         addControls();
         addEvents();
-
-        playListAdapter.setData(getPlaylists());
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         rcv_playlist.setLayoutManager(linearLayoutManager);
@@ -71,11 +72,33 @@ public class PlayListActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        playListAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(String data) {
+                dbHelper = DatabaseManager.dbHelper(PlayListActivity.this);
+                database = dbHelper.getReadableDatabase();
+
+                Cursor cursor = database.rawQuery("select * from Playlists", null);
+                while (cursor.moveToNext()) {
+                    int id = cursor.getInt(0);
+                    String songPlayList = cursor.getString(1);
+
+                    if (data.equals(songPlayList)) {
+                        Intent intent = new Intent(PlayListActivity.this, SongsPlayListActivity.class);
+                        intent.putExtra("PlayListID", id);
+
+                        startActivity(intent);
+                        break;
+                    }
+                }
+            }
+        });
     }
 
     private void addControls() {
         rcv_playlist = findViewById(R.id.rcv_playlist);
-        playListAdapter = new PlayListAdapter();
+        playListAdapter = new PlayListAdapter(this, getPlaylists());
         rcv_playlist.setAdapter(playListAdapter);
 
         txt_playlist = findViewById(R.id.txt_playlist);

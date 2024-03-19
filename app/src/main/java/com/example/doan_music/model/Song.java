@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 public class Song implements Serializable {
     private int SongID;
-    private int AlbumID;
-    private int PlaylistID;
+    private Integer AlbumID;
+    private Integer PlaylistID;
     private String SongName;
     private byte[] SongImage;
     private int ArtistID;
@@ -25,12 +25,14 @@ public class Song implements Serializable {
     public Song() {
     }
 
-    public Song(int songID, int albumID, String songName, byte[] songImage) {
+    public Song(int songID, Integer albumID, Integer playlistID, String songName, byte[] songImage) {
         SongID = songID;
         AlbumID = albumID;
+        PlaylistID = playlistID;
         SongName = songName;
         SongImage = songImage;
     }
+
 
     public Song(int songID, String songName, byte[] songImage, String linkSong, int isFavorite) {
         SongID = songID;

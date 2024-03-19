@@ -26,47 +26,27 @@ import com.example.doan_music.music.PlayMusicActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SongsAlbumActivity extends AppCompatActivity {
-
-    RecyclerView rcv_songlist;
+public class SongsPlayListActivity extends AppCompatActivity {
+    RecyclerView rcv_songPlayList;
     SongAdapter songAdapter;
     ImageButton btn_back, btn_play;
-    ImageView img_songlist;
-    TextView txt_songlist;
+    ImageView img_songPlayList;
+    TextView txt_songPlayList;
     Intent intent = null;
-    ArrayList<Integer> arr = new ArrayList<>();
-    SQLiteDatabase database = null;
     DbHelper dbHelper;
+    SQLiteDatabase database = null;
+    ArrayList<Integer> arr = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_songs_album);
+
+        setContentView(R.layout.activity_songs_play_list);
 
         addControls();
-        loadImgAlbum();
+        loadImgPlayList();
 
         addEvents();
-    }
-
-    private void loadImgAlbum() {
-        int albumID = getIntent().getIntExtra("albumID", -1);
-
-        dbHelper = DatabaseManager.dbHelper(this);
-        database = dbHelper.getReadableDatabase();
-
-        Cursor cursor = database.rawQuery("select * from Albums", null);
-        while (cursor.moveToNext()) {
-            Integer idAlbum = cursor.getInt(0);
-            String name = cursor.getString(1);
-            byte[] img = cursor.getBlob(2);
-            if (idAlbum.equals(albumID)) {
-                Bitmap bitmap = BitmapFactory.decodeByteArray(img, 0, img.length);
-                txt_songlist.setText(name);
-                img_songlist.setImageBitmap(bitmap);
-
-            }
-        }
     }
 
     private void addEvents() {
@@ -87,7 +67,7 @@ public class SongsAlbumActivity extends AppCompatActivity {
                     Integer Id = cursor.getInt(0);
 
                     if (idSong.equals(Id)) {
-                        intent = new Intent(SongsAlbumActivity.this, PlayMusicActivity.class);
+                        intent = new Intent(SongsPlayListActivity.this, PlayMusicActivity.class);
                         intent.putExtra("SongID", Id);
                         intent.putExtra("arrIDSongs", arr);
                         break;
@@ -101,16 +81,16 @@ public class SongsAlbumActivity extends AppCompatActivity {
         songAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(String data) {
-                dbHelper = DatabaseManager.dbHelper(SongsAlbumActivity.this);
+                dbHelper = DatabaseManager.dbHelper(SongsPlayListActivity.this);
                 database = dbHelper.getReadableDatabase();
 
                 Cursor cursor = database.rawQuery("select * from Songs", null);
                 while (cursor.moveToNext()) {
                     int id = cursor.getInt(0);
-                    String songName = cursor.getString(2);
+                    String songName = cursor.getString(1);
 
                     if (data.equals(songName)) {
-                        Intent intent = new Intent(SongsAlbumActivity.this, PlayMusicActivity.class);
+                        Intent intent = new Intent(SongsPlayListActivity.this, PlayMusicActivity.class);
                         intent.putExtra("SongID", id);
                         intent.putExtra("arrIDSongs", arr);
 
@@ -122,20 +102,40 @@ public class SongsAlbumActivity extends AppCompatActivity {
         });
     }
 
-    private List<Song> getList() {
+    private void loadImgPlayList() {
+        int albumID = getIntent().getIntExtra("PlayListID", -1);
+
+        dbHelper = DatabaseManager.dbHelper(this);
+        database = dbHelper.getReadableDatabase();
+
+        Cursor cursor = database.rawQuery("select * from PlayLists", null);
+        while (cursor.moveToNext()) {
+            Integer idAlbum = cursor.getInt(0);
+            String name = cursor.getString(1);
+            byte[] img = cursor.getBlob(2);
+            if (idAlbum.equals(albumID)) {
+                Bitmap bitmap = BitmapFactory.decodeByteArray(img, 0, img.length);
+                txt_songPlayList.setText(name);
+                img_songPlayList.setImageBitmap(bitmap);
+
+            }
+        }
+    }
+
+    private List<Song> getPlayList() {
         List<Song> list = new ArrayList<>();
 
-        int albumID = getIntent().getIntExtra("albumID", -1);
+        int PlayListID = getIntent().getIntExtra("PlayListID", -1);
         database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
         Cursor cursor = database.rawQuery("select * from Songs", null);
         list.clear();
         while (cursor.moveToNext()) {
             Integer id = cursor.getInt(0);
-            Integer IDalbum = cursor.getInt(1);
+            Integer idPlayList = cursor.getInt(7);
             String ten = cursor.getString(2);
             byte[] img = cursor.getBlob(3);
-            if (IDalbum.equals(albumID)) {
-                Song song = new Song(id, IDalbum, null, ten, img);
+            if (idPlayList.equals(PlayListID)) {
+                Song song = new Song(id, null, idPlayList, ten, img);
 
                 arr.add(id);
                 list.add(song);
@@ -147,17 +147,15 @@ public class SongsAlbumActivity extends AppCompatActivity {
     }
 
     private void addControls() {
-        rcv_songlist = findViewById(R.id.rcv_songlist);
-
-        songAdapter = new SongAdapter(this, getList());
-        rcv_songlist.setAdapter(songAdapter);
-
-        rcv_songlist.setLayoutManager(new LinearLayoutManager(this));
-
-        img_songlist = findViewById(R.id.img_songlist);
-        txt_songlist = findViewById(R.id.txt_songlist);
+        rcv_songPlayList = findViewById(R.id.rcv_songPlayList);
+        songAdapter = new SongAdapter(SongsPlayListActivity.this, getPlayList());
+        rcv_songPlayList.setAdapter(songAdapter);
+        rcv_songPlayList.setLayoutManager(new LinearLayoutManager(this));
 
         btn_back = findViewById(R.id.btn_back);
         btn_play = findViewById(R.id.btn_play);
+        img_songPlayList = findViewById(R.id.img_songPlayList);
+        txt_songPlayList = findViewById(R.id.txt_songPlayList);
+
     }
 }

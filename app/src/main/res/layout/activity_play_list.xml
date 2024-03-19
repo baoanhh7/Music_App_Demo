@@ -24,27 +24,30 @@
             android:backgroundTint="@color/white" />
 
         <TextView
+            android:id="@+id/txt_dsp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/rounded_search"
+            android:backgroundTint="#333333"
+            android:elevation="10dp"
+            android:fontFamily="sans-serif-smallcaps"
+            android:gravity="center"
+            android:text="Danh sách phát"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <TextView
             android:id="@+id/txt_playlist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_below="@+id/txt_dsp"
             android:gravity="center"
             android:text="Play List Name"
             android:textColor="@color/white"
             android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <Button
-            android:layout_width="180dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txt_playlist"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/rounded_button"
-            android:backgroundTint="#47D84C"
-            android:text="PLAY NOW"
-            android:textColor="#FFFFFF"
-            android:textSize="15dp"
             android:textStyle="bold" />
 
 

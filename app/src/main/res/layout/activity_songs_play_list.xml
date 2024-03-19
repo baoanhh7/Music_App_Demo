@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="#131313"
     android:elevation="10dp"
-    tools:context=".activity.home.SongsAlbumActivity">
+    tools:context=".activity.home.SongsPlayListActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,7 +25,7 @@
                 android:backgroundTint="@color/white" />
 
             <ImageView
-                android:id="@+id/img_songlist"
+                android:id="@+id/img_songPlayList"
                 android:layout_width="250dp"
                 android:layout_height="250dp"
                 android:layout_marginStart="45dp"
@@ -41,17 +41,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Album của: "
+                android:text="Tên danh sách phát: "
                 android:textColor="@color/white"
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/txt_songlist"
+                android:id="@+id/txt_songPlayList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Vũ Radio."
+                android:text="Name PlayList"
                 android:textColor="#70FF76"
                 android:textSize="15sp"
                 android:textStyle="bold" />
@@ -104,7 +104,7 @@
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcv_songlist"
+            android:id="@+id/rcv_songPlayList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="15dp" />

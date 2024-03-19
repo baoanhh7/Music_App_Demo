@@ -1,5 +1,6 @@
 package com.example.doan_music.adapter.home;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
@@ -12,17 +13,25 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_music.R;
+import com.example.doan_music.m_interface.OnItemClickListener;
 import com.example.doan_music.model.Playlists;
 
 import java.util.List;
 
 public class PlayListAdapter extends RecyclerView.Adapter<PlayListAdapter.PlayListViewHolder> {
 
-    List<Playlists> list;
+    private List<Playlists> list;
+    Context context;
 
-    public void setData(List<Playlists> list) {
+    public PlayListAdapter(Context context, List<Playlists> list) {
         this.list = list;
-        notifyDataSetChanged();
+        this.context = context;
+    }
+
+    private OnItemClickListener onItemClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 
     @NonNull
@@ -41,6 +50,15 @@ public class PlayListAdapter extends RecyclerView.Adapter<PlayListAdapter.PlayLi
 
         Bitmap bitmap = BitmapFactory.decodeByteArray(playlists.getPlaylistImage(), 0, playlists.getPlaylistImage().length);
         holder.img_playlist.setImageBitmap(bitmap);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onItemClickListener != null) {
+                    onItemClickListener.onItemClick(list.get(position).getPlaylistName());
+                }
+            }
+        });
 
     }
 

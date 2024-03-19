@@ -82,7 +82,7 @@ public class Song_Fragment extends Fragment {
         dbHelper = new DbHelper(requireContext());
         database = dbHelper.getReadableDatabase();
         Cursor cursor = database.rawQuery("select * from Songs", null);
-//        songList.clear();
+        songList.clear();
 
         while (cursor.moveToNext()) {
             int id = cursor.getInt(0);
