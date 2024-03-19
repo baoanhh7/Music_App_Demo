@@ -15,6 +15,7 @@ import com.example.doan_music.loginPackage.LoginActivity;
 
 public class AdminActivity extends AppCompatActivity {
     Button btn_add_album, btn_add_artists, btn_add_playlists, btn_add_types, btn_add_song, btn_add_lovesongs, btn_logout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

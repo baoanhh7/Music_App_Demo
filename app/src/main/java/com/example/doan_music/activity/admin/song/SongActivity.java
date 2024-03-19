@@ -8,20 +8,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.doan_music.R;
 import com.example.doan_music.activity.admin.AdminActivity;
-import com.example.doan_music.activity.admin.album.AddAlbumActivity;
-import com.example.doan_music.activity.admin.album.AlbumActivity;
-import com.example.doan_music.adapter.admin.AlbumAdminAdapter;
 import com.example.doan_music.adapter.admin.SongAdminAdapter;
 import com.example.doan_music.data.DbHelper;
-import com.example.doan_music.model.Album;
 import com.example.doan_music.model.Song;
 
 import java.util.ArrayList;
@@ -33,6 +25,7 @@ public class SongActivity extends AppCompatActivity {
     Button btn_add_song, btn_back_add_song_admin;
     SongAdminAdapter songAdminAdapter;
     ArrayList<Song> songArrayList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,8 +51,8 @@ public class SongActivity extends AppCompatActivity {
             int maAlbum = cursor.getInt(1);
             byte[] img = cursor.getBlob(3);
             int maartist = cursor.getInt(4);
-            String linknhac= cursor.getString(5);
-            Song song = new Song(ma,maAlbum,ten,img,maartist,linknhac);
+            String linknhac = cursor.getString(5);
+            Song song = new Song(ma, maAlbum, ten, img, maartist, linknhac);
             songArrayList.add(song);
         }
         songAdminAdapter.notifyDataSetChanged();

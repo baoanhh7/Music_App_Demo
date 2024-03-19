@@ -7,7 +7,6 @@ import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -21,17 +20,11 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.doan_music.R;
-import com.example.doan_music.activity.admin.album.AddAlbumActivity;
-import com.example.doan_music.activity.admin.album.AlbumActivity;
 import com.example.doan_music.data.DatabaseManager;
 import com.example.doan_music.data.DbHelper;
 
@@ -40,12 +33,13 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 public class AddSongActivity extends AppCompatActivity {
-    EditText edtMa, edtTen, edtMaArtist,edtMaAlbum,Linknhac;
+    EditText edtMa, edtTen, edtMaArtist, edtMaAlbum, Linknhac;
     DbHelper dbHelper;
     Button btnSave, btncancel, btn_choose_image_addSongAdmin;
     ImageButton btn_camera;
     SQLiteDatabase database = null;
     ImageView imageView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,25 +56,25 @@ public class AddSongActivity extends AppCompatActivity {
                 String edtMaArtist1 = edtMaArtist.getText().toString();
                 database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
 //                Cursor cursor = database.rawQuery("select * from Artists", null);
-               //while (cursor.moveToNext()) {
-                   // Integer maArtist = Integer.valueOf(cursor.getString(0) + "");
-                        ContentValues values = new ContentValues();
-                        values.put("SongID",edtMa.getText().toString() + "");
-                        values.put("AlbumID", edtMaAlbum.getText().toString() + "");
-                        values.put("SongName", edtTen.getText().toString());
-                        values.put("ArtistID", edtMaArtist.getText().toString() + "");
-                        values.put("SongImage", anh);
-                        values.put("LinkSong",Linknhac.getText().toString());
+                //while (cursor.moveToNext()) {
+                // Integer maArtist = Integer.valueOf(cursor.getString(0) + "");
+                ContentValues values = new ContentValues();
+                values.put("SongID", edtMa.getText().toString() + "");
+                values.put("AlbumID", edtMaAlbum.getText().toString() + "");
+                values.put("SongName", edtTen.getText().toString());
+                values.put("ArtistID", edtMaArtist.getText().toString() + "");
+                values.put("SongImage", anh);
+                values.put("LinkSong", Linknhac.getText().toString());
 //                        values.put("StateFavorite",0);
 //                        values.put("PlaylistID",0);
 //                        values.put("View",0);
-                        dbHelper = DatabaseManager.dbHelper(AddSongActivity.this);
-                        long kq = dbHelper.getReadableDatabase().insert("Songs", null, values);
-                        if (kq > 0) {
-                            Toast.makeText(AddSongActivity.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
-                            finish();
-                        } else
-                            Toast.makeText(AddSongActivity.this, "Thêm thất bại", Toast.LENGTH_SHORT).show();
+                dbHelper = DatabaseManager.dbHelper(AddSongActivity.this);
+                long kq = dbHelper.getReadableDatabase().insert("Songs", null, values);
+                if (kq > 0) {
+                    Toast.makeText(AddSongActivity.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
+                    finish();
+                } else
+                    Toast.makeText(AddSongActivity.this, "Thêm thất bại", Toast.LENGTH_SHORT).show();
             }
         });
         btncancel.setOnClickListener(new View.OnClickListener() {
@@ -153,6 +147,7 @@ public class AddSongActivity extends AppCompatActivity {
             }
         }
     }
+
     private void addControls() {
         edtMa = findViewById(R.id.edt_id_songadmin);
         edtTen = findViewById(R.id.edt_name_songadmin);

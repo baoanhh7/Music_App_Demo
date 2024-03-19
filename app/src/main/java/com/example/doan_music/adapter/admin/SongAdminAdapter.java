@@ -1,10 +1,6 @@
 package com.example.doan_music.adapter.admin;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -20,15 +16,11 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.example.doan_music.R;
-import com.example.doan_music.activity.admin.album.UpdateAlbumActivity;
 import com.example.doan_music.data.DatabaseManager;
 import com.example.doan_music.data.DbHelper;
-import com.example.doan_music.model.Album;
 import com.example.doan_music.model.Song;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class SongAdminAdapter extends BaseAdapter {
     ArrayList<Song> arr;
@@ -39,13 +31,15 @@ public class SongAdminAdapter extends BaseAdapter {
     View view;
     String Linknhac;
     MediaPlayer musicPlayer;
-    TextView txtID, txtTen, txtIDArtist,txtIDAlbum;
+    TextView txtID, txtTen, txtIDArtist, txtIDAlbum;
     Button btn_update, btn_delete;
     ImageButton btn_play;
+
     public SongAdminAdapter(Activity context, ArrayList<Song> arr) {
         this.context = context;
         this.arr = arr;
     }
+
     @Override
     public int getCount() {
         return arr.size();
@@ -74,7 +68,7 @@ public class SongAdminAdapter extends BaseAdapter {
         txtID.setText(song.getSongID() + "");
         txtTen.setText(song.getSongName());
         txtIDArtist.setText(song.getArtistID() + "");
-        txtIDAlbum.setText(song.getAlbumID()+"");
+        txtIDAlbum.setText(song.getAlbumID() + "");
         Linknhac = song.getLinkSong();
 //        btn_update.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -111,7 +105,6 @@ public class SongAdminAdapter extends BaseAdapter {
 //        });
         return view;
     }
-
 
 
     private void addControls() {

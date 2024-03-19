@@ -1,65 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-android:id="@+id/main"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:orientation="vertical"
-android:padding="10dp"
-tools:context=".activity.admin.song.AddSongActivity">
-
-<LinearLayout
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <ImageView
-        android:id="@+id/img_addSongAdmin"
-        android:layout_width="130dp"
-        android:layout_height="130dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/cat" />
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    tools:context=".activity.admin.song.AddSongActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/btn_choose_image_addSongAdmin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Choose image" />
+        <ImageView
+            android:id="@+id/img_addSongAdmin"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/cat" />
 
-        <ImageButton
-            android:id="@+id/btn_camera_Songadmin"
-            android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/camera"
-            android:text="Choose image" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_height="match_parent">
 
+            <Button
+                android:id="@+id/btn_choose_image_addSongAdmin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Choose image" />
+
+            <ImageButton
+                android:id="@+id/btn_camera_Songadmin"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/camera"
+                android:text="Choose image" />
+
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
 
-<EditText
-    android:id="@+id/edt_id_songadmin"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="20dp"
-    android:layout_marginBottom="10dp"
-    android:hint="ID"
-    android:textSize="20sp"
-    android:textStyle="bold" />
+    <EditText
+        android:id="@+id/edt_id_songadmin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:hint="ID"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
-<EditText
-    android:id="@+id/edt_name_songadmin"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="20dp"
-    android:hint="Name"
-    android:textSize="20sp"
-    android:textStyle="bold" />
+    <EditText
+        android:id="@+id/edt_name_songadmin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:hint="Name"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
     <EditText
         android:id="@+id/edt_idAlbum_songadmin"
         android:layout_width="match_parent"
@@ -69,14 +70,15 @@ tools:context=".activity.admin.song.AddSongActivity">
         android:textSize="20sp"
         android:textStyle="bold" />
 
-<EditText
-    android:id="@+id/edt_idArtist_songadmin"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="20dp"
-    android:hint="ID Artist"
-    android:textSize="20sp"
-    android:textStyle="bold" />
+    <EditText
+        android:id="@+id/edt_idArtist_songadmin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:hint="ID Artist"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
     <EditText
         android:id="@+id/edt_linknhac_songadmin"
         android:layout_width="match_parent"
@@ -86,28 +88,28 @@ tools:context=".activity.admin.song.AddSongActivity">
         android:textSize="20sp"
         android:textStyle="bold" />
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center">
-
-    <Button
-        android:id="@+id/btn_save_songadmin"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="30dp"
-        android:text="Save" />
+        android:gravity="center">
 
-    <Button
-        android:id="@+id/btn_cancel_songadmin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginStart="10dp"
-        android:text="Cancel" />
+        <Button
+            android:id="@+id/btn_save_songadmin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="30dp"
+            android:text="Save" />
 
-</LinearLayout>
+        <Button
+            android:id="@+id/btn_cancel_songadmin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:text="Cancel" />
+
+    </LinearLayout>
 
 </LinearLayout>
