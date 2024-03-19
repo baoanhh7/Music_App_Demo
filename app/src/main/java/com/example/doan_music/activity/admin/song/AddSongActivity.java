@@ -68,9 +68,12 @@ public class AddSongActivity extends AppCompatActivity {
                         values.put("SongID",edtMa.getText().toString() + "");
                         values.put("AlbumID", edtMaAlbum.getText().toString() + "");
                         values.put("SongName", edtTen.getText().toString());
-                        values.put("ArtristID", edtMaArtist.getText().toString() + "");
+                        values.put("ArtistID", edtMaArtist.getText().toString() + "");
                         values.put("SongImage", anh);
                         values.put("LinkSong",Linknhac.getText().toString());
+//                        values.put("StateFavorite",0);
+//                        values.put("PlaylistID",0);
+//                        values.put("View",0);
                         dbHelper = DatabaseManager.dbHelper(AddSongActivity.this);
                         long kq = dbHelper.getReadableDatabase().insert("Songs", null, values);
                         if (kq > 0) {
