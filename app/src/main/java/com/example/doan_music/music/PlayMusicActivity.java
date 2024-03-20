@@ -81,7 +81,10 @@ public class PlayMusicActivity extends AppCompatActivity {
         txt_time.setText(duration);
         loadNameArtist();
         sendNotification();
-
+        if(Isshuffle)
+        {
+            arr = shuffle;
+        }
         addEvents();
 
         updateHeartButtonUI();
@@ -421,7 +424,7 @@ public class PlayMusicActivity extends AppCompatActivity {
                     Collections.shuffle(arr);
                 } else {
                     btn_shuffle.setImageResource(R.drawable.ic_shuffer);
-                    arr = shuffle;
+                   arr = shuffle;
                     Isshuffle = true;
                 }
             }
