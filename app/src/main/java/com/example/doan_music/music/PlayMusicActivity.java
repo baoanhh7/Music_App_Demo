@@ -6,6 +6,7 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -30,6 +31,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 
 import com.example.doan_music.R;
+import com.example.doan_music.activity.MainActivity;
 import com.example.doan_music.data.DatabaseManager;
 import com.example.doan_music.data.DbHelper;
 
@@ -39,7 +41,7 @@ import java.util.Collections;
 
 public class PlayMusicActivity extends AppCompatActivity {
 
-    ImageButton btn_play, btn_back, btn_next, btn_pre, btn_toggle, btn_shuffle, btn_volume, btn_heart;
+    ImageButton btn_home, btn_play, btn_back, btn_next, btn_pre, btn_toggle, btn_shuffle, btn_volume, btn_heart;
     SeekBar seekBar, seekbar1;
     TextView txt_time, txt_time_first;
     MediaPlayer myMusic;
@@ -81,8 +83,7 @@ public class PlayMusicActivity extends AppCompatActivity {
         txt_time.setText(duration);
         loadNameArtist();
         sendNotification();
-        if(Isshuffle)
-        {
+        if (Isshuffle) {
             arr = shuffle;
         }
         addEvents();
@@ -209,6 +210,20 @@ public class PlayMusicActivity extends AppCompatActivity {
                     seekbar1.setVisibility(View.VISIBLE);
                 } else
                     seekbar1.setVisibility(View.GONE);
+            }
+        });
+        btn_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (myMusic.isPlaying()) {
+                    myMusic.stop();
+                    myMusic.reset();
+                }
+
+                Intent intent = new Intent(PlayMusicActivity.this, MainActivity.class);
+                startActivity(intent);
+
+                finish();
             }
         });
         btn_play.setOnClickListener(new View.OnClickListener() {
@@ -424,7 +439,7 @@ public class PlayMusicActivity extends AppCompatActivity {
                     Collections.shuffle(arr);
                 } else {
                     btn_shuffle.setImageResource(R.drawable.ic_shuffer);
-                   arr = shuffle;
+                    arr = shuffle;
                     Isshuffle = true;
                 }
             }
@@ -617,6 +632,7 @@ public class PlayMusicActivity extends AppCompatActivity {
     }
 
     private void addControls() {
+        btn_home = findViewById(R.id.btn_home);
         btn_play = findViewById(R.id.btn_play);
         btn_back = findViewById(R.id.btn_back);
         txt_artist_song = findViewById(R.id.txt_artist_song);

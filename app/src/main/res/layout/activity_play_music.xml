@@ -8,12 +8,26 @@
     android:padding="10dp"
     tools:context=".music.PlayMusicActivity">
 
-    <ImageButton
-        android:id="@id/btn_back"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:background="@drawable/ic_back"
-        android:backgroundTint="@color/white" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@id/btn_back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="330dp"
+            android:background="@drawable/ic_back"
+            android:backgroundTint="@color/white" />
+
+        <ImageButton
+            android:id="@+id/btn_home"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/ic_home"
+            android:backgroundTint="@color/white" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/textView"

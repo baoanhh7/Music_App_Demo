@@ -90,6 +90,7 @@ public class Login_userActivity extends AppCompatActivity {
                         SharedPreferences preferences = getSharedPreferences("data", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = preferences.edit();
                         editor.putInt("maU1", ma);
+                        editor.putString("ten", Name);
                         editor.apply();
                     }
                     startActivity(intent);
