@@ -32,7 +32,7 @@ public class SongsAlbumActivity extends AppCompatActivity {
     SongAdapter songAdapter;
     ImageButton btn_back, btn_play;
     ImageView img_songlist;
-    TextView txt_songlist;
+    TextView txt_songlist, txt_album_view;
     Intent intent = null;
     ArrayList<Integer> arr = new ArrayList<>();
     SQLiteDatabase database = null;
@@ -42,14 +42,14 @@ public class SongsAlbumActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_songs_album);
-
         addControls();
-        loadImgAlbum();
+
+        loadInfoAlbum();
 
         addEvents();
     }
 
-    private void loadImgAlbum() {
+    private void loadInfoAlbum() {
         int albumID = getIntent().getIntExtra("albumID", -1);
 
         dbHelper = DatabaseManager.dbHelper(this);
@@ -60,10 +60,13 @@ public class SongsAlbumActivity extends AppCompatActivity {
             Integer idAlbum = cursor.getInt(0);
             String name = cursor.getString(1);
             byte[] img = cursor.getBlob(2);
+            int view = cursor.getInt(4);
+
             if (idAlbum.equals(albumID)) {
                 Bitmap bitmap = BitmapFactory.decodeByteArray(img, 0, img.length);
                 txt_songlist.setText(name);
                 img_songlist.setImageBitmap(bitmap);
+                txt_album_view.setText(view + "");
 
             }
         }
@@ -134,8 +137,11 @@ public class SongsAlbumActivity extends AppCompatActivity {
             Integer IDalbum = cursor.getInt(1);
             String ten = cursor.getString(2);
             byte[] img = cursor.getBlob(3);
+
+            int view = cursor.getInt(8);
+
             if (IDalbum.equals(albumID)) {
-                Song song = new Song(id, IDalbum, null, ten, img);
+                Song song = new Song(id, IDalbum, null, ten, img, view);
 
                 arr.add(id);
                 list.add(song);
@@ -156,6 +162,7 @@ public class SongsAlbumActivity extends AppCompatActivity {
 
         img_songlist = findViewById(R.id.img_songlist);
         txt_songlist = findViewById(R.id.txt_songlist);
+        txt_album_view = findViewById(R.id.txt_album_view);
 
         btn_back = findViewById(R.id.btn_back);
         btn_play = findViewById(R.id.btn_play);

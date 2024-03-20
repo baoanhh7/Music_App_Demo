@@ -34,7 +34,6 @@ public class PlaylistHomeAdapter extends RecyclerView.Adapter<PlaylistHomeAdapte
     @Override
     public void onBindViewHolder(@NonNull PlaylistViewHolder holder, int position) {
         Playlists playlists = list.get(position);
-        holder.txt_id_bottom.setText(playlists.getPlaylistID() + "");
         holder.txt_home_bottom.setText(playlists.getPlaylistName());
 
         Bitmap bitmap = BitmapFactory.decodeByteArray(playlists.getPlaylistImage(), 0, playlists.getPlaylistImage().length);
@@ -49,14 +48,13 @@ public class PlaylistHomeAdapter extends RecyclerView.Adapter<PlaylistHomeAdapte
 
     public class PlaylistViewHolder extends RecyclerView.ViewHolder {
         ImageView img_home_bottom;
-        TextView txt_home_bottom, txt_id_bottom;
+        TextView txt_home_bottom;
 
         public PlaylistViewHolder(@NonNull View itemView) {
             super(itemView);
 
             img_home_bottom = itemView.findViewById(R.id.img_home_bottom);
             txt_home_bottom = itemView.findViewById(R.id.txt_home_bottom);
-            txt_id_bottom = itemView.findViewById(R.id.txt_id_bottom);
         }
     }
 }

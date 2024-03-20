@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_music.R;
-import com.example.doan_music.adapter.home.SongAdapter;
+import com.example.doan_music.adapter.home.SongsPlayListAdapter;
 import com.example.doan_music.data.DatabaseManager;
 import com.example.doan_music.data.DbHelper;
 import com.example.doan_music.m_interface.OnItemClickListener;
@@ -24,11 +24,13 @@ import com.example.doan_music.model.Song;
 import com.example.doan_music.music.PlayMusicActivity;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class SongsPlayListActivity extends AppCompatActivity {
     RecyclerView rcv_songPlayList;
-    SongAdapter songAdapter;
+    SongsPlayListAdapter songsPlayListAdapter;
     ImageButton btn_back, btn_play;
     ImageView img_songPlayList;
     TextView txt_songPlayList;
@@ -44,7 +46,7 @@ public class SongsPlayListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_songs_play_list);
 
         addControls();
-        loadImgPlayList();
+        loadInfoPlayList();
 
         addEvents();
     }
@@ -78,7 +80,7 @@ public class SongsPlayListActivity extends AppCompatActivity {
             }
         });
 
-        songAdapter.setOnItemClickListener(new OnItemClickListener() {
+        songsPlayListAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(String data) {
                 dbHelper = DatabaseManager.dbHelper(SongsPlayListActivity.this);
@@ -102,7 +104,7 @@ public class SongsPlayListActivity extends AppCompatActivity {
         });
     }
 
-    private void loadImgPlayList() {
+    private void loadInfoPlayList() {
         int albumID = getIntent().getIntExtra("PlayListID", -1);
 
         dbHelper = DatabaseManager.dbHelper(this);
@@ -134,8 +136,11 @@ public class SongsPlayListActivity extends AppCompatActivity {
             Integer idPlayList = cursor.getInt(7);
             String ten = cursor.getString(2);
             byte[] img = cursor.getBlob(3);
+
+            int view = cursor.getInt(8);
+
             if (idPlayList.equals(PlayListID)) {
-                Song song = new Song(id, null, idPlayList, ten, img);
+                Song song = new Song(id, null, idPlayList, ten, img, view);
 
                 arr.add(id);
                 list.add(song);
@@ -143,13 +148,22 @@ public class SongsPlayListActivity extends AppCompatActivity {
         }
         cursor.close();
 
+        // Sắp xếp danh sách theo thứ tự giảm dần của trường view
+        // Comparator cho phép bạn xác định cách sắp xếp các đối tượng Song trong danh sách
+        Collections.sort(list, new Comparator<Song>() {
+            @Override
+            public int compare(Song s1, Song s2) {
+                return Integer.compare(s2.getView(), s1.getView());
+            }
+        });
+
         return list;
     }
 
     private void addControls() {
         rcv_songPlayList = findViewById(R.id.rcv_songPlayList);
-        songAdapter = new SongAdapter(SongsPlayListActivity.this, getPlayList());
-        rcv_songPlayList.setAdapter(songAdapter);
+        songsPlayListAdapter = new SongsPlayListAdapter(SongsPlayListActivity.this, getPlayList());
+        rcv_songPlayList.setAdapter(songsPlayListAdapter);
         rcv_songPlayList.setLayoutManager(new LinearLayoutManager(this));
 
         btn_back = findViewById(R.id.btn_back);

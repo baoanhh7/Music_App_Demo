@@ -13,6 +13,8 @@ public class Song implements Serializable {
     private int TypeID;
     private int isFavorite;
 
+    private int view;
+
     public Song(int songID, int albumID, String songName, byte[] songImage, int artistID, String linkSong) {
         SongID = songID;
         AlbumID = albumID;
@@ -22,15 +24,13 @@ public class Song implements Serializable {
         LinkSong = linkSong;
     }
 
-    public Song() {
-    }
-
-    public Song(int songID, Integer albumID, Integer playlistID, String songName, byte[] songImage) {
+    public Song(int songID, Integer albumID, Integer playlistID, String songName, byte[] songImage, int view) {
         SongID = songID;
         AlbumID = albumID;
         PlaylistID = playlistID;
         SongName = songName;
         SongImage = songImage;
+        this.view = view;
     }
 
 
@@ -123,4 +123,29 @@ public class Song implements Serializable {
     public void setisFavorite(int stateFavorite) {
         isFavorite = stateFavorite;
     }
+
+    public void setAlbumID(Integer albumID) {
+        AlbumID = albumID;
+    }
+
+    public void setPlaylistID(Integer playlistID) {
+        PlaylistID = playlistID;
+    }
+
+    public int getIsFavorite() {
+        return isFavorite;
+    }
+
+    public void setIsFavorite(int isFavorite) {
+        this.isFavorite = isFavorite;
+    }
+
+    public int getView() {
+        return view;
+    }
+
+    public void setView(int view) {
+        this.view = view;
+    }
+
 }

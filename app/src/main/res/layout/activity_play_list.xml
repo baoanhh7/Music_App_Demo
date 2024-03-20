@@ -25,17 +25,17 @@
 
         <TextView
             android:id="@+id/txt_dsp"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginBottom="5dp"
             android:background="@drawable/rounded_search"
-            android:backgroundTint="#494949"
+            android:backgroundTint="#333333"
             android:elevation="10dp"
             android:fontFamily="sans-serif-smallcaps"
             android:gravity="center"
             android:text="Danh sách phát"
-            android:textColor="@color/white"
+            android:textColor="#DCDCDC"
             android:textSize="30sp"
             android:textStyle="bold" />
 
@@ -46,7 +46,7 @@
             android:layout_below="@+id/txt_dsp"
             android:gravity="center"
             android:text="Play List Name"
-            android:textColor="@color/white"
+            android:textColor="#DADADA"
             android:textSize="18sp"
             android:textStyle="bold" />
 
