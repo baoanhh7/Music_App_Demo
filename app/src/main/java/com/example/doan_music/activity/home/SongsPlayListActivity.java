@@ -87,17 +87,17 @@ public class SongsPlayListActivity extends AppCompatActivity {
                 Cursor cursor = database.rawQuery("select * from Songs", null);
                 while (cursor.moveToNext()) {
                     int id = cursor.getInt(0);
-                    String songName = cursor.getString(1);
+                    String songName = cursor.getString(2);
 
                     if (data.equals(songName)) {
                         Intent intent = new Intent(SongsPlayListActivity.this, PlayMusicActivity.class);
                         intent.putExtra("SongID", id);
                         intent.putExtra("arrIDSongs", arr);
-
                         startActivity(intent);
                         break;
                     }
                 }
+
             }
         });
     }
