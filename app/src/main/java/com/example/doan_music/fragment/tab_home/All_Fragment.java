@@ -1,5 +1,6 @@
 package com.example.doan_music.fragment.tab_home;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -73,7 +74,15 @@ public class All_Fragment extends Fragment {
                 while (cursor.moveToNext()) {
                     int id = cursor.getInt(0);
                     String name = cursor.getString(1);
+                    int view = cursor.getInt(4);
+
                     if (name.equals(data)) {
+
+                        view++;
+                        ContentValues values = new ContentValues();
+                        values.put("AlbumView", view);
+                        database.update("Albums", values, "AlbumID=?", new String[]{String.valueOf(id)});
+
                         Intent intent = new Intent(requireContext(), SongsAlbumActivity.class);
                         intent.putExtra("albumID", id);
                         startActivity(intent);
@@ -105,7 +114,6 @@ public class All_Fragment extends Fragment {
             count++;
         }
         cursor.close();
-        database.close();
 
         return list;
     }
