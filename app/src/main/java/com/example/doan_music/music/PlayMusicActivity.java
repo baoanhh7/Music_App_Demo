@@ -37,7 +37,6 @@ import com.example.doan_music.data.DbHelper;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Random;
 
 public class PlayMusicActivity extends AppCompatActivity {
@@ -47,7 +46,7 @@ public class PlayMusicActivity extends AppCompatActivity {
     TextView txt_time, txt_time_first;
     MediaPlayer myMusic;
     AudioManager audioManager;
-    ArrayList<Integer> arr ;
+    ArrayList<Integer> arr;
     ArrayList<Integer> arr1 = new ArrayList<>();
     ArrayList<Integer> shuffle = new ArrayList<>();
     ImageView imageView_songs;
@@ -69,12 +68,9 @@ public class PlayMusicActivity extends AppCompatActivity {
 
         arr = (ArrayList<Integer>) getIntent().getSerializableExtra("arrIDSongs");
         Integer IDSong = getIntent().getIntExtra("SongID", -1);
-        if(Isshuffle)
-        {
-            currentPosition = getRandom(arr.size()-1);
-        }
-        else
-        {
+        if (Isshuffle) {
+            currentPosition = getRandom(arr.size() - 1);
+        } else {
             currentPosition = arr.indexOf(IDSong);
         }
         SeekBar sbTime;
@@ -114,7 +110,7 @@ public class PlayMusicActivity extends AppCompatActivity {
     private Integer getRandom(int i) {
         Random random = new Random();
 
-        return random.nextInt(i+1);
+        return random.nextInt(i + 1);
     }
 
 
@@ -262,13 +258,11 @@ public class PlayMusicActivity extends AppCompatActivity {
                 if (myMusic != null) {
                     btn_play.setImageResource(R.drawable.ic_pause);
                 }
-                if(frag) {
-                    if(Isshuffle)
-                    {
+                if (frag) {
+                    if (Isshuffle) {
                         Positionshuffle = currentPosition;
-                        currentPosition = getRandom(arr.size()-1);
-                    }
-                     else if (currentPosition < arr.size() - 1) {
+                        currentPosition = getRandom(arr.size() - 1);
+                    } else if (currentPosition < arr.size() - 1) {
                         currentPosition++;
                     } else {
                         currentPosition = 0;
@@ -326,8 +320,7 @@ public class PlayMusicActivity extends AppCompatActivity {
 
                     updateHeartButtonUI();
                     imageView_songs.startAnimation(animation);
-                }
-                else {
+                } else {
                     if (myMusic.isPlaying()) {
                         myMusic.stop();
                         myMusic.reset();
@@ -389,10 +382,9 @@ public class PlayMusicActivity extends AppCompatActivity {
                     btn_play.setImageResource(R.drawable.ic_pause);
                 }
                 if (frag) {
-                      if (Isshuffle) {
-                          currentPosition = Positionshuffle;
-                      }
-                    else if (currentPosition > 0) {
+                    if (Isshuffle) {
+                        currentPosition = Positionshuffle;
+                    } else if (currentPosition > 0) {
                         currentPosition--;
                     } else {
                         currentPosition = arr.size() - 1;

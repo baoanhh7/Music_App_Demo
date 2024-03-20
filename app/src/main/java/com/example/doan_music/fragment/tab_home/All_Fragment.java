@@ -136,9 +136,8 @@ public class All_Fragment extends Fragment {
 
 
         List<Category> categoryList = new ArrayList<>();
-        categoryList.add(new Category("Danh sách phát dành cho bạn", list));
-        categoryList.add(new Category("Bài hát được yêu thích", list));
         categoryList.add(new Category("Những bài hát nhiều người nghe", list));
+        categoryList.add(new Category("Bài hát được yêu thích", list));
         categoryList.add(new Category("Lựa chọn của Spotify", list));
 
         return categoryList;
