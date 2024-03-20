@@ -38,6 +38,7 @@ import com.example.doan_music.data.DbHelper;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 public class PlayMusicActivity extends AppCompatActivity {
 
@@ -46,12 +47,14 @@ public class PlayMusicActivity extends AppCompatActivity {
     TextView txt_time, txt_time_first;
     MediaPlayer myMusic;
     AudioManager audioManager;
-    ArrayList<Integer> arr = new ArrayList<>();
+    ArrayList<Integer> arr ;
+    ArrayList<Integer> arr1 = new ArrayList<>();
     ArrayList<Integer> shuffle = new ArrayList<>();
     ImageView imageView_songs;
     TextView txt_artist_song, txt_name_song;
     Integer currentPosition = -1;
-    boolean Isshuffle = true;
+    Integer Positionshuffle = -1;
+    boolean Isshuffle = false;
     private boolean frag = true;
     private boolean frag_heart = false;
     SQLiteDatabase database = null;
@@ -66,8 +69,14 @@ public class PlayMusicActivity extends AppCompatActivity {
 
         arr = (ArrayList<Integer>) getIntent().getSerializableExtra("arrIDSongs");
         Integer IDSong = getIntent().getIntExtra("SongID", -1);
-        shuffle = arr;
-        currentPosition = arr.indexOf(IDSong);
+        if(Isshuffle)
+        {
+            currentPosition = getRandom(arr.size()-1);
+        }
+        else
+        {
+            currentPosition = arr.indexOf(IDSong);
+        }
         SeekBar sbTime;
         myMusic = new MediaPlayer();
         //myMusic = MediaPlayer.create(this, R.raw.nhung_loi_hua_bo_quen);
@@ -83,9 +92,7 @@ public class PlayMusicActivity extends AppCompatActivity {
         txt_time.setText(duration);
         loadNameArtist();
         sendNotification();
-        if (Isshuffle) {
-            arr = shuffle;
-        }
+
         addEvents();
 
         updateHeartButtonUI();
@@ -102,6 +109,12 @@ public class PlayMusicActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    private Integer getRandom(int i) {
+        Random random = new Random();
+
+        return random.nextInt(i+1);
     }
 
 
@@ -249,62 +262,124 @@ public class PlayMusicActivity extends AppCompatActivity {
                 if (myMusic != null) {
                     btn_play.setImageResource(R.drawable.ic_pause);
                 }
-                if (currentPosition < arr.size() - 1) {
-                    currentPosition++;
-                } else {
-                    currentPosition = 0;
-                }
-                if (myMusic.isPlaying()) {
-                    myMusic.stop();
-                    myMusic.reset();
-                }
-                if (!myMusic.isPlaying()) {
-                    myMusic.stop();
-                    myMusic.reset();
-                }
-                Integer idSong = arr.get(currentPosition);
-                database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
-                Cursor cursor = database.rawQuery("select * from Songs", null);
-                while (cursor.moveToNext()) {
-                    Integer Id = cursor.getInt(0);
-                    String ten = cursor.getString(2);
-                    byte[] img = cursor.getBlob(3);
-                    String linkSong = cursor.getString(5);
-                    if (idSong.equals(Id)) {
-                        Bitmap bitmap = BitmapFactory.decodeByteArray(img, 0, img.length);
-                        imageView_songs.setImageBitmap(bitmap);
-                        try {
-                            myMusic.setDataSource(linkSong);
-                            myMusic.prepare();
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                        txt_name_song.setText(ten);
+                if(frag) {
+                    if(Isshuffle)
+                    {
+                        Positionshuffle = currentPosition;
+                        currentPosition = getRandom(arr.size()-1);
+                    }
+                     else if (currentPosition < arr.size() - 1) {
+                        currentPosition++;
+                    } else {
+                        currentPosition = 0;
                     }
 
-                    int farovite = cursor.getInt(6);
-                    setFavorite(farovite);
 
+                    if (myMusic.isPlaying()) {
+                        myMusic.stop();
+                        myMusic.reset();
+                    }
+                    if (!myMusic.isPlaying()) {
+                        myMusic.stop();
+                        myMusic.reset();
+                    }
+                    Integer idSong = arr.get(currentPosition);
+                    database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
+                    Cursor cursor = database.rawQuery("select * from Songs", null);
+                    while (cursor.moveToNext()) {
+                        Integer Id = cursor.getInt(0);
+                        String ten = cursor.getString(2);
+                        byte[] img = cursor.getBlob(3);
+                        String linkSong = cursor.getString(5);
+                        if (idSong.equals(Id)) {
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(img, 0, img.length);
+                            imageView_songs.setImageBitmap(bitmap);
+                            try {
+                                myMusic.setDataSource(linkSong);
+                                myMusic.prepare();
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                            txt_name_song.setText(ten);
+                        }
+
+                        int farovite = cursor.getInt(6);
+                        setFavorite(farovite);
+
+                    }
+                    cursor.close();
+                    database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
+                    Cursor cursor1 = database.rawQuery("select * " +
+                            "from Artists " +
+                            "JOIN Songs ON Artists.ArtistID =Songs.ArtistID " +
+                            "WHERE Songs.SongID = ? ", new String[]{String.valueOf(idSong)});
+                    while (cursor1.moveToNext()) {
+                        String ten = cursor1.getString(1);
+                        txt_artist_song.setText(ten);
+                    }
+
+                    sendNotification();
+                    String duration = timeSeekbar(myMusic.getDuration());
+                    txt_time.setText(duration);
+                    seekBar.setMax(myMusic.getDuration());
+                    myMusic.start();
+
+                    updateHeartButtonUI();
+                    imageView_songs.startAnimation(animation);
                 }
-                cursor.close();
-                database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
-                Cursor cursor1 = database.rawQuery("select * " +
-                        "from Artists " +
-                        "JOIN Songs ON Artists.ArtistID =Songs.ArtistID " +
-                        "WHERE Songs.SongID = ? ", new String[]{String.valueOf(idSong)});
-                while (cursor1.moveToNext()) {
-                    String ten = cursor1.getString(1);
-                    txt_artist_song.setText(ten);
+                else {
+                    if (myMusic.isPlaying()) {
+                        myMusic.stop();
+                        myMusic.reset();
+                    }
+                    if (!myMusic.isPlaying()) {
+                        myMusic.stop();
+                        myMusic.reset();
+                    }
+                    Integer idSong = arr.get(currentPosition);
+                    database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
+                    Cursor cursor = database.rawQuery("select * from Songs", null);
+                    while (cursor.moveToNext()) {
+                        Integer Id = cursor.getInt(0);
+                        String ten = cursor.getString(2);
+                        byte[] img = cursor.getBlob(3);
+                        String linkSong = cursor.getString(5);
+                        if (idSong.equals(Id)) {
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(img, 0, img.length);
+                            imageView_songs.setImageBitmap(bitmap);
+                            try {
+                                myMusic.setDataSource(linkSong);
+                                myMusic.prepare();
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                            txt_name_song.setText(ten);
+                        }
+
+                        int farovite = cursor.getInt(6);
+                        setFavorite(farovite);
+
+                    }
+                    cursor.close();
+                    database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
+                    Cursor cursor1 = database.rawQuery("select * " +
+                            "from Artists " +
+                            "JOIN Songs ON Artists.ArtistID =Songs.ArtistID " +
+                            "WHERE Songs.SongID = ? ", new String[]{String.valueOf(idSong)});
+                    while (cursor1.moveToNext()) {
+                        String ten = cursor1.getString(1);
+                        txt_artist_song.setText(ten);
+                    }
+
+                    sendNotification();
+                    String duration = timeSeekbar(myMusic.getDuration());
+                    txt_time.setText(duration);
+                    seekBar.setMax(myMusic.getDuration());
+                    myMusic.start();
+
+                    updateHeartButtonUI();
+                    imageView_songs.startAnimation(animation);
                 }
-
-                sendNotification();
-                String duration = timeSeekbar(myMusic.getDuration());
-                txt_time.setText(duration);
-                seekBar.setMax(myMusic.getDuration());
-                myMusic.start();
-
-                updateHeartButtonUI();
-                imageView_songs.startAnimation(animation);
             }
         });
         btn_pre.setOnClickListener(new View.OnClickListener() {
@@ -313,67 +388,121 @@ public class PlayMusicActivity extends AppCompatActivity {
                 if (myMusic != null) {
                     btn_play.setImageResource(R.drawable.ic_pause);
                 }
-                if (currentPosition > 0) {
-                    currentPosition--;
-                } else {
-                    currentPosition = arr.size() - 1;
-                }
-                if (myMusic.isPlaying()) {
-                    myMusic.stop();
-                    myMusic.reset();
-                }
-                if (!myMusic.isPlaying()) {
-                    myMusic.stop();
-                    myMusic.reset();
-                }
-                Integer idSong = arr.get(currentPosition);
-                database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
-                Cursor cursor = database.rawQuery("select * from Songs", null);
-                while (cursor.moveToNext()) {
-                    Integer Id = cursor.getInt(0);
-                    String ten = cursor.getString(2);
-                    byte[] img = cursor.getBlob(3);
-                    String linkSong = cursor.getString(5);
-
-                    if (idSong.equals(Id)) {
-                        Bitmap bitmap = BitmapFactory.decodeByteArray(img, 0, img.length);
-                        imageView_songs.setImageBitmap(bitmap);
-                        try {
-                            myMusic.setDataSource(linkSong);
-                            myMusic.prepare();
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                        txt_name_song.setText(ten);
+                if (frag) {
+                      if (Isshuffle) {
+                          currentPosition = Positionshuffle;
+                      }
+                    else if (currentPosition > 0) {
+                        currentPosition--;
+                    } else {
+                        currentPosition = arr.size() - 1;
                     }
 
-                    int farovite = cursor.getInt(6);
-                    setFavorite(farovite);
 
+                    if (myMusic.isPlaying()) {
+                        myMusic.stop();
+                        myMusic.reset();
+                    }
+                    if (!myMusic.isPlaying()) {
+                        myMusic.stop();
+                        myMusic.reset();
+                    }
+                    Integer idSong = arr.get(currentPosition);
+                    database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
+                    Cursor cursor = database.rawQuery("select * from Songs", null);
+                    while (cursor.moveToNext()) {
+                        Integer Id = cursor.getInt(0);
+                        String ten = cursor.getString(2);
+                        byte[] img = cursor.getBlob(3);
+                        String linkSong = cursor.getString(5);
+                        if (idSong.equals(Id)) {
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(img, 0, img.length);
+                            imageView_songs.setImageBitmap(bitmap);
+                            try {
+                                myMusic.setDataSource(linkSong);
+                                myMusic.prepare();
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                            txt_name_song.setText(ten);
+                        }
+
+                        int farovite = cursor.getInt(6);
+                        setFavorite(farovite);
+
+                    }
+                    cursor.close();
+                    database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
+                    Cursor cursor1 = database.rawQuery("select * " +
+                            "from Artists " +
+                            "JOIN Songs ON Artists.ArtistID =Songs.ArtistID " +
+                            "WHERE Songs.SongID = ? ", new String[]{String.valueOf(idSong)});
+                    while (cursor1.moveToNext()) {
+                        String ten = cursor1.getString(1);
+                        txt_artist_song.setText(ten);
+                    }
+
+                    sendNotification();
+                    String duration = timeSeekbar(myMusic.getDuration());
+                    txt_time.setText(duration);
+                    seekBar.setMax(myMusic.getDuration());
+                    myMusic.start();
+
+                    updateHeartButtonUI();
+                    imageView_songs.startAnimation(animation);
+                } else {
+                    if (myMusic.isPlaying()) {
+                        myMusic.stop();
+                        myMusic.reset();
+                    }
+                    if (!myMusic.isPlaying()) {
+                        myMusic.stop();
+                        myMusic.reset();
+                    }
+                    Integer idSong = arr.get(currentPosition);
+                    database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
+                    Cursor cursor = database.rawQuery("select * from Songs", null);
+                    while (cursor.moveToNext()) {
+                        Integer Id = cursor.getInt(0);
+                        String ten = cursor.getString(2);
+                        byte[] img = cursor.getBlob(3);
+                        String linkSong = cursor.getString(5);
+                        if (idSong.equals(Id)) {
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(img, 0, img.length);
+                            imageView_songs.setImageBitmap(bitmap);
+                            try {
+                                myMusic.setDataSource(linkSong);
+                                myMusic.prepare();
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                            txt_name_song.setText(ten);
+                        }
+
+                        int farovite = cursor.getInt(6);
+                        setFavorite(farovite);
+
+                    }
+                    cursor.close();
+                    database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
+                    Cursor cursor1 = database.rawQuery("select * " +
+                            "from Artists " +
+                            "JOIN Songs ON Artists.ArtistID =Songs.ArtistID " +
+                            "WHERE Songs.SongID = ? ", new String[]{String.valueOf(idSong)});
+                    while (cursor1.moveToNext()) {
+                        String ten = cursor1.getString(1);
+                        txt_artist_song.setText(ten);
+                    }
+
+                    sendNotification();
+                    String duration = timeSeekbar(myMusic.getDuration());
+                    txt_time.setText(duration);
+                    seekBar.setMax(myMusic.getDuration());
+                    myMusic.start();
+
+                    updateHeartButtonUI();
+                    imageView_songs.startAnimation(animation);
                 }
-                cursor.close();
-
-                database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
-                Cursor cursor1 = database.rawQuery("select * " +
-                        "from Artists " +
-                        "JOIN Songs ON Artists.ArtistID =Songs.ArtistID " +
-                        "WHERE Songs.SongID = ? ", new String[]{String.valueOf(idSong)});
-                while (cursor1.moveToNext()) {
-                    String ten = cursor1.getString(1);
-                    txt_artist_song.setText(ten);
-                    break;
-
-                }
-
-                String duration = timeSeekbar(myMusic.getDuration());
-                txt_time.setText(duration);
-                seekBar.setMax(myMusic.getDuration());
-
-                sendNotification();
-                myMusic.start();
-
-                updateHeartButtonUI();
-                imageView_songs.startAnimation(animation);
             }
         });
 
@@ -434,12 +563,12 @@ public class PlayMusicActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (Isshuffle) {
-                    btn_shuffle.setImageResource(R.drawable.ic_shufferactive);
-                    Isshuffle = false;
-                    Collections.shuffle(arr);
-                } else {
                     btn_shuffle.setImageResource(R.drawable.ic_shuffer);
-                    arr = shuffle;
+                    Isshuffle = false;
+//                    Collections.shuffle(arr);
+                } else {
+                    btn_shuffle.setImageResource(R.drawable.ic_shufferactive);
+//                    arr = shuffle;
                     Isshuffle = true;
                 }
             }
