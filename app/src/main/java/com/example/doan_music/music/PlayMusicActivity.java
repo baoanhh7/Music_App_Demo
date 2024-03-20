@@ -43,7 +43,7 @@ public class PlayMusicActivity extends AppCompatActivity {
 
     ImageButton btn_home, btn_play, btn_back, btn_next, btn_pre, btn_toggle, btn_shuffle, btn_volume, btn_heart;
     SeekBar seekBar, seekbar1;
-    TextView txt_time, txt_time_first;
+    TextView txt_time, txt_time_first, txt_view_playmusic;
     MediaPlayer myMusic;
     AudioManager audioManager;
     ArrayList<Integer> arr;
@@ -182,16 +182,21 @@ public class PlayMusicActivity extends AppCompatActivity {
             String ten = cursor.getString(2);
             byte[] img = cursor.getBlob(3);
             String linkSong = cursor.getString(5);
+            int view = cursor.getInt(8);
+
             if (IDSong.equals(Id)) {
                 Bitmap bitmap = BitmapFactory.decodeByteArray(img, 0, img.length);
+
                 imageView_songs.setImageBitmap(bitmap);
+                txt_name_song.setText(ten);
+                txt_view_playmusic.setText(view + "");
+
                 try {
                     myMusic.setDataSource(linkSong);
                     myMusic.prepare();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                txt_name_song.setText(ten);
             }
         }
         cursor.close();
@@ -769,6 +774,8 @@ public class PlayMusicActivity extends AppCompatActivity {
         btn_toggle = findViewById(R.id.btn_toggle);
         btn_shuffle = findViewById(R.id.btn_shuffle);
         btn_heart = findViewById(R.id.btn_heart);
+
+        txt_view_playmusic = findViewById(R.id.txt_view_playmusic);
 
         // Load animation từ file xml
         animation = AnimationUtils.loadAnimation(this, R.anim.animation);

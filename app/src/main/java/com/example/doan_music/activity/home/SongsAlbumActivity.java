@@ -1,5 +1,6 @@
 package com.example.doan_music.activity.home;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -111,8 +112,15 @@ public class SongsAlbumActivity extends AppCompatActivity {
                 while (cursor.moveToNext()) {
                     int id = cursor.getInt(0);
                     String songName = cursor.getString(2);
+                    int view = cursor.getInt(8);
 
                     if (data.equals(songName)) {
+
+                        view++;
+                        ContentValues values = new ContentValues();
+                        values.put("View", view);
+                        database.update("Songs", values, "SongID=?", new String[]{String.valueOf(id)});
+
                         Intent intent = new Intent(SongsAlbumActivity.this, PlayMusicActivity.class);
                         intent.putExtra("SongID", id);
                         intent.putExtra("arrIDSongs", arr);
