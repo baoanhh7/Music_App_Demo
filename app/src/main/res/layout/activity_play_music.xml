@@ -16,7 +16,7 @@
             android:id="@id/btn_back"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginRight="330dp"
+            android:layout_marginRight="333dp"
             android:background="@drawable/ic_back"
             android:backgroundTint="@color/white" />
 
@@ -57,7 +57,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
@@ -73,7 +73,7 @@
 
             <TextView
                 android:id="@+id/txt_name_song"
-                android:layout_width="260dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="15dp"
                 android:text="Những Lời Hứa Bỏ Quên"
@@ -234,7 +234,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
             android:progressTint="@color/white"
-            android:thumbTint="#3FC3FF" />
+            android:thumbTint="#B7E8FF" />
     </LinearLayout>
 
 </LinearLayout>
