@@ -2,6 +2,7 @@ package com.example.doan_music.fragment.drawer;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -75,8 +76,15 @@ public class AllSongs_Fragment extends Fragment {
                 while (cursor.moveToNext()) {
                     int id = cursor.getInt(0);
                     String songName = cursor.getString(2);
+                    int view = cursor.getInt(8);
 
                     if (data.equals(songName)) {
+
+                        view++;
+                        ContentValues values = new ContentValues();
+                        values.put("View", view);
+                        database.update("Songs", values, "SongID=?", new String[]{String.valueOf(id)});
+
                         Intent intent = new Intent(requireContext(), PlayMusicActivity.class);
                         intent.putExtra("SongID", id);
                         intent.putExtra("arrIDSongs", arr);
