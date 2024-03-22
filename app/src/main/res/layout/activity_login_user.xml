@@ -19,9 +19,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="serif-monospace"
         android:text="Login"
         android:textColor="@color/white"
-        android:textSize="40sp"
+        android:textSize="50sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -30,7 +31,7 @@
         app:layout_constraintVertical_bias="0.13" />
 
     <LinearLayout
-        android:layout_width="400dp"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="200dp"
         android:background="@drawable/rounded_button_3"
@@ -41,8 +42,9 @@
 
         <EditText
             android:id="@+id/EdtEmail"
-            android:layout_width="350dp"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_marginStart="10dp"
             android:drawableLeft="@drawable/ic_mail"
             android:drawablePadding="10dp"
             android:hint="Email"
@@ -54,7 +56,7 @@
 
 
     <LinearLayout
-        android:layout_width="400dp"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="260dp"
         android:background="@drawable/rounded_button_3"
@@ -65,8 +67,9 @@
 
         <EditText
             android:id="@+id/EdtPassword"
-            android:layout_width="350dp"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_marginStart="10dp"
             android:drawableLeft="@drawable/ic_password"
             android:drawablePadding="10dp"
             android:hint="Password"
