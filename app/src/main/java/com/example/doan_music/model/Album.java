@@ -18,6 +18,11 @@ public class Album implements Serializable {
         ArtistID = artistID;
     }
 
+    public Album(Integer albumID, String albumName) {
+        AlbumID = albumID;
+        AlbumName = albumName;
+    }
+
     public Integer getAlbumID() {
         return AlbumID;
     }

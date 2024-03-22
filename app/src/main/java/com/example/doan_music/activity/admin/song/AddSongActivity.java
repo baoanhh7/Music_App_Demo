@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,10 +15,13 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -31,6 +35,8 @@ import com.example.doan_music.data.DbHelper;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AddSongActivity extends AppCompatActivity {
     EditText edtMa, edtTen, edtMaArtist, edtMaAlbum, Linknhac;
@@ -39,6 +45,7 @@ public class AddSongActivity extends AppCompatActivity {
     ImageButton btn_camera;
     SQLiteDatabase database = null;
     ImageView imageView;
+    Spinner sp_idAlbum_songadmin, sp_idArtist_songadmin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +53,97 @@ public class AddSongActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_song);
         addControls();
         addEvents();
+
+        createData();
+    }
+
+    private void createData() {
+        DbHelper dbHelper1 = DatabaseManager.dbHelper(this);
+        SQLiteDatabase database1 = dbHelper1.getReadableDatabase();
+
+        // Album
+        List<String> listAlbum = new ArrayList<>();
+        listAlbum.add("null");
+
+        Cursor cursor = database1.rawQuery("select * from Albums", null);
+        while (cursor.moveToNext()) {
+            int id = cursor.getInt(0);
+            String name = cursor.getString(1);
+
+            listAlbum.add(name);
+        }
+        cursor.close();
+
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listAlbum);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sp_idAlbum_songadmin.setAdapter(adapter);
+        sp_idAlbum_songadmin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String ten = listAlbum.get(position);
+                if(ten == "null")
+                {
+                    edtMaAlbum.setText("null");
+                }
+                Cursor cursor = database1.rawQuery("select * from Albums", null);
+                while (cursor.moveToNext()) {
+                    int id1 = cursor.getInt(0);
+                    String name = cursor.getString(1);
+                    if (ten.equals(name)) {
+                        edtMaAlbum.setText(String.valueOf(id1));
+                        break;
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        // Artist
+        List<String> listArtist = new ArrayList<>();
+
+        Cursor cursor1 = database1.rawQuery("select * from Artists", null);
+        while (cursor1.moveToNext()) {
+            int id = cursor1.getInt(0);
+            String name = cursor1.getString(1);
+
+            listArtist.add(name);
+        }
+        cursor1.close();
+
+        ArrayAdapter adapter1 = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listArtist);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sp_idArtist_songadmin.setAdapter(adapter1);
+        sp_idArtist_songadmin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String ten = listArtist.get(position);
+
+                Cursor cursor = database1.rawQuery("select * from Artists", null);
+                while (cursor.moveToNext()) {
+                    int id1 = cursor.getInt(0);
+                    String name = cursor.getString(1);
+                    if (ten.equals(name)) {
+                        edtMaArtist.setText(String.valueOf(id1));
+                        break;
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
     }
 
     private void addEvents() {
@@ -159,5 +257,8 @@ public class AddSongActivity extends AppCompatActivity {
         btncancel = findViewById(R.id.btn_cancel_songadmin);
         btn_choose_image_addSongAdmin = findViewById(R.id.btn_choose_image_addSongAdmin);
         btn_camera = findViewById(R.id.btn_camera_Songadmin);
+
+        sp_idAlbum_songadmin = findViewById(R.id.sp_idAlbum_songadmin);
+        sp_idArtist_songadmin = findViewById(R.id.sp_idArtist_songadmin);
     }
 }
