@@ -51,10 +51,11 @@
         </LinearLayout>
 
         <ImageView
+            android:id="@+id/btn_heart"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="center"
-            android:background="@drawable/ic_headphone" />
+            android:background="@drawable/ic_heart" />
 
     </LinearLayout>
 

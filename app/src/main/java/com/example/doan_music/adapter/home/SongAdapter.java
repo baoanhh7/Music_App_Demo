@@ -1,6 +1,9 @@
 package com.example.doan_music.adapter.home;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
@@ -13,6 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_music.R;
+import com.example.doan_music.data.DatabaseManager;
+import com.example.doan_music.data.DbHelper;
 import com.example.doan_music.m_interface.OnItemClickListener;
 import com.example.doan_music.model.Song;
 
@@ -59,6 +64,37 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
                 }
             }
         });
+
+        // Đặt trạng thái cho nút thả tim dựa trên isFavorite
+        if (song.getIsFavorite() == 1) {
+            holder.btn_heart.setImageResource(R.drawable.ic_red_heart); // Đổi màu thành đỏ
+        } else {
+            holder.btn_heart.setImageResource(R.drawable.ic_heart); // Màu xám
+        }
+
+        holder.btn_heart.setOnClickListener(v -> {
+
+            DbHelper dbHelper = DatabaseManager.dbHelper(context);
+            SQLiteDatabase database = dbHelper.getReadableDatabase();
+            Cursor cursor = database.rawQuery("select * from Songs where SongID=?", new String[]{song.getSongID() + ""});
+
+            int newState = song.getIsFavorite();
+
+            if (newState == 1) {
+                newState = 0;
+            } else {
+                newState = 1;
+            }
+            song.setIsFavorite(newState);
+
+            ContentValues values = new ContentValues();
+            values.put("StateFavorite", song.getIsFavorite());
+
+            database.update("Songs", values, "SongID=?", new String[]{song.getSongID() + ""});
+
+            notifyItemChanged(position); // Cập nhật lại giao diện
+            cursor.close();
+        });
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -74,13 +110,14 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
 
     public static class SongViewHolder extends RecyclerView.ViewHolder {
         TextView txt_song, txt_id;
-        ImageView img_song;
+        ImageView img_song, btn_heart;
 
         public SongViewHolder(@NonNull View itemView) {
             super(itemView);
             txt_song = itemView.findViewById(R.id.txt_song);
             txt_id = itemView.findViewById(R.id.txt_id);
             img_song = itemView.findViewById(R.id.img_song);
+            btn_heart = itemView.findViewById(R.id.btn_heart);
         }
     }
 }

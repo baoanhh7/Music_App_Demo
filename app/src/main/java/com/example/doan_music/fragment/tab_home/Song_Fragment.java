@@ -9,7 +9,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,12 +30,10 @@ public class Song_Fragment extends Fragment {
     RecyclerView rcv_lovesong;
     List<Song> songList;
     ArrayList<Integer> arr = new ArrayList<>();
-
     FavoriteSongAdapter favoriteSongAdapter;
-
     DbHelper dbHelper;
     SQLiteDatabase database = null;
-
+    TextView txt_noidung;
     View view;
 
     @Override
@@ -43,7 +43,6 @@ public class Song_Fragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_song_, container, false);
         addControls();
 
-        createData();
         favoriteSongAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(String data) {
@@ -74,8 +73,7 @@ public class Song_Fragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
-
+        createData();
     }
 
     private void createData() {
@@ -95,6 +93,9 @@ public class Song_Fragment extends Fragment {
                 Song song = new Song(id, songName, image, linkSong, favorite);
                 songList.add(song);
                 arr.add(id);
+
+                int color = ContextCompat.getColor(requireContext(), R.color.mauNen);
+                txt_noidung.setTextColor(color);
             }
         }
         cursor.close();
@@ -102,6 +103,8 @@ public class Song_Fragment extends Fragment {
     }
 
     private void addControls() {
+        txt_noidung = view.findViewById(R.id.txt_noidung);
+
         rcv_lovesong = view.findViewById(R.id.rcv_lovesong);
         songList = new ArrayList<>();
 

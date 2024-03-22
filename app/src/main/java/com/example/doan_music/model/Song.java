@@ -116,14 +116,6 @@ public class Song implements Serializable {
         TypeID = typeID;
     }
 
-    public int getisFavorite() {
-        return isFavorite;
-    }
-
-    public void setisFavorite(int stateFavorite) {
-        isFavorite = stateFavorite;
-    }
-
     public void setAlbumID(Integer albumID) {
         AlbumID = albumID;
     }
