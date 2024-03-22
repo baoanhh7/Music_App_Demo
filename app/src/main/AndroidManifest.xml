@@ -22,6 +22,15 @@
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".activity.admin.artist.AddArtistActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.admin.artist.UpdateArtistActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.admin.artist.ArtistActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.home.SongsPlayListActivity"
             android:exported="false" />
         <activity

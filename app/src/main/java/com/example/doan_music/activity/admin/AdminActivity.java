@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.doan_music.R;
 import com.example.doan_music.activity.admin.album.AlbumActivity;
+import com.example.doan_music.activity.admin.artist.ArtistActivity;
 import com.example.doan_music.activity.admin.playlist.PlayListAdminActivity;
 import com.example.doan_music.activity.admin.song.SongActivity;
 import com.example.doan_music.loginPackage.LoginActivity;
@@ -25,6 +26,13 @@ public class AdminActivity extends AppCompatActivity {
     }
 
     private void addEvents() {
+        btn_add_artists.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AdminActivity.this, ArtistActivity.class);
+                startActivity(intent);
+            }
+        });
         btn_add_album.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
