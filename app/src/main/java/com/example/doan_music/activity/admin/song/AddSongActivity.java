@@ -67,7 +67,6 @@ public class AddSongActivity extends AppCompatActivity {
 
         Cursor cursor = database1.rawQuery("select * from Albums", null);
         while (cursor.moveToNext()) {
-            int id = cursor.getInt(0);
             String name = cursor.getString(1);
 
             listAlbum.add(name);
@@ -109,7 +108,6 @@ public class AddSongActivity extends AppCompatActivity {
 
         Cursor cursor1 = database1.rawQuery("select * from Artists", null);
         while (cursor1.moveToNext()) {
-            int id = cursor1.getInt(0);
             String name = cursor1.getString(1);
 
             listArtist.add(name);
