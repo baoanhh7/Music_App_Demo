@@ -58,14 +58,14 @@ public class AddSongActivity extends AppCompatActivity {
     }
 
     private void createData() {
-        DbHelper dbHelper1 = DatabaseManager.dbHelper(this);
-        SQLiteDatabase database1 = dbHelper1.getReadableDatabase();
+        dbHelper = DatabaseManager.dbHelper(this);
+        database = dbHelper.getReadableDatabase();
 
         // Album
         List<String> listAlbum = new ArrayList<>();
         listAlbum.add("null");
 
-        Cursor cursor = database1.rawQuery("select * from Albums", null);
+        Cursor cursor = database.rawQuery("select * from Albums", null);
         while (cursor.moveToNext()) {
             String name = cursor.getString(1);
 
@@ -80,33 +80,29 @@ public class AddSongActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String ten = listAlbum.get(position);
-                if(ten == "null")
-                {
+                if (ten == "null") {
                     edtMaAlbum.setText("null");
                 }
-                Cursor cursor = database1.rawQuery("select * from Albums", null);
+                Cursor cursor = database.rawQuery("select * from Albums", null);
                 while (cursor.moveToNext()) {
-                    int id1 = cursor.getInt(0);
+                    int idAlbum = cursor.getInt(0);
                     String name = cursor.getString(1);
                     if (ten.equals(name)) {
-                        edtMaAlbum.setText(String.valueOf(id1));
+                        edtMaAlbum.setText(String.valueOf(idAlbum));
                         break;
                     }
                 }
-
-
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
 
         // Artist
         List<String> listArtist = new ArrayList<>();
 
-        Cursor cursor1 = database1.rawQuery("select * from Artists", null);
+        Cursor cursor1 = database.rawQuery("select * from Artists", null);
         while (cursor1.moveToNext()) {
             String name = cursor1.getString(1);
 
@@ -122,26 +118,21 @@ public class AddSongActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String ten = listArtist.get(position);
 
-                Cursor cursor = database1.rawQuery("select * from Artists", null);
+                Cursor cursor = database.rawQuery("select * from Artists", null);
                 while (cursor.moveToNext()) {
-                    int id1 = cursor.getInt(0);
+                    int idArtist = cursor.getInt(0);
                     String name = cursor.getString(1);
                     if (ten.equals(name)) {
-                        edtMaArtist.setText(String.valueOf(id1));
+                        edtMaArtist.setText(String.valueOf(idArtist));
                         break;
                     }
                 }
-
-
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
-
-
     }
 
     private void addEvents() {
@@ -151,9 +142,7 @@ public class AddSongActivity extends AppCompatActivity {
                 byte[] anh = getByteArrayFromImageView(imageView);
                 String edtMaArtist1 = edtMaArtist.getText().toString();
                 database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
-//                Cursor cursor = database.rawQuery("select * from Artists", null);
-                //while (cursor.moveToNext()) {
-                // Integer maArtist = Integer.valueOf(cursor.getString(0) + "");
+
                 ContentValues values = new ContentValues();
                 values.put("SongID", edtMa.getText().toString() + "");
                 values.put("AlbumID", edtMaAlbum.getText().toString() + "");
@@ -161,9 +150,7 @@ public class AddSongActivity extends AppCompatActivity {
                 values.put("ArtistID", edtMaArtist.getText().toString() + "");
                 values.put("SongImage", anh);
                 values.put("LinkSong", Linknhac.getText().toString());
-//                        values.put("StateFavorite",0);
-//                        values.put("PlaylistID",0);
-//                        values.put("View",0);
+
                 dbHelper = DatabaseManager.dbHelper(AddSongActivity.this);
                 long kq = dbHelper.getReadableDatabase().insert("Songs", null, values);
                 if (kq > 0) {
