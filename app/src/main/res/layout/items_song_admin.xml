@@ -34,7 +34,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/txtID_song_admin"
+                android:id="@+id/txt_id_song_admin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -58,7 +58,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/txtTen_song_admin"
+                android:id="@+id/txt_name_song_admin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -82,7 +82,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/txtIDAlbum_song_admin"
+                android:id="@+id/txt_idAlbum_song_admin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -106,7 +106,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/txtIDArtist_song_admin"
+                android:id="@+id/txt_idArtist_song_admin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"

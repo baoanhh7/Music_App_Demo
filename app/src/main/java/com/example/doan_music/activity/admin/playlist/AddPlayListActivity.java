@@ -8,10 +8,12 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,11 +28,12 @@ import java.io.InputStream;
 
 public class AddPlayListActivity extends AppCompatActivity {
     ImageView img_add;
-    Button btn_choose_image, btn_save, btn_cancel;
+    Button btn_choose_image, btn_save, btn_cancel, btn_camera;
     EditText edt_id_playlist, edt_name_playlist;
-    final int choose_img = 1;
     DbHelper dbHelper;
     SQLiteDatabase database = null;
+    final int choose_img = 1;
+    final int photo_img = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +49,12 @@ public class AddPlayListActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 choosePhoto();
+            }
+        });
+        btn_camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                takePhoto();
             }
         });
         btn_save.setOnClickListener(new View.OnClickListener() {
@@ -65,9 +74,13 @@ public class AddPlayListActivity extends AppCompatActivity {
                 dbHelper = DatabaseManager.dbHelper(AddPlayListActivity.this);
                 database = dbHelper.getWritableDatabase();
 
-                database.insert("Playlists", null, values);
+                long kq = database.insert("Playlists", null, values);
 
-                finish();
+                if (kq > 0) {
+                    Toast.makeText(AddPlayListActivity.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
+                    finish();
+                } else
+                    Toast.makeText(AddPlayListActivity.this, "Thêm thất bại", Toast.LENGTH_SHORT).show();
             }
         });
         btn_cancel.setOnClickListener(new View.OnClickListener() {
@@ -94,6 +107,7 @@ public class AddPlayListActivity extends AppCompatActivity {
         btn_choose_image = findViewById(R.id.btn_choose_image);
         btn_save = findViewById(R.id.btn_save);
         btn_cancel = findViewById(R.id.btn_cancel);
+        btn_camera = findViewById(R.id.btn_camera);
 
         edt_id_playlist = findViewById(R.id.edt_id_playlist);
         edt_name_playlist = findViewById(R.id.edt_name_playlist);
@@ -103,6 +117,11 @@ public class AddPlayListActivity extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
         startActivityForResult(intent, choose_img);
+    }
+
+    private void takePhoto() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, photo_img);
     }
 
     @Override
@@ -117,6 +136,9 @@ public class AddPlayListActivity extends AppCompatActivity {
                 } catch (FileNotFoundException e) {
                     throw new RuntimeException(e);
                 }
+            } else if (requestCode == photo_img) {
+                Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+                img_add.setImageBitmap(bitmap);
             }
         }
         super.onActivityResult(requestCode, resultCode, data);

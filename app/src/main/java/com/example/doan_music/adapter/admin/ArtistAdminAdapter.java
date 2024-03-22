@@ -16,11 +16,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.doan_music.R;
-import com.example.doan_music.activity.admin.album.UpdateAlbumActivity;
 import com.example.doan_music.activity.admin.artist.UpdateArtistActivity;
 import com.example.doan_music.data.DatabaseManager;
 import com.example.doan_music.data.DbHelper;
-import com.example.doan_music.model.Album;
 import com.example.doan_music.model.Artists;
 
 import java.util.ArrayList;
@@ -34,9 +32,10 @@ public class ArtistAdminAdapter extends BaseAdapter {
         this.context = context;
         this.arr = arr;
     }
+
     @Override
     public int getCount() {
-        return  arr.size();
+        return arr.size();
     }
 
     @Override
@@ -61,7 +60,7 @@ public class ArtistAdminAdapter extends BaseAdapter {
         img = view.findViewById(R.id.img_artist_admin);
         txtTen = view.findViewById(R.id.txtTen_artist_admin);
         txtID = view.findViewById(R.id.txtID_artist_admin);
-        Artists artists = arr.get(position) ;
+        Artists artists = arr.get(position);
         // Hiển thị hình ảnh từ byte array
         byte[] hinhAlbumByteArray = artists.getArtistImage();
         Bitmap bitmap = BitmapFactory.decodeByteArray(hinhAlbumByteArray, 0, hinhAlbumByteArray.length);

@@ -20,7 +20,7 @@ import com.example.doan_music.model.Playlists;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayListAdminActivity extends AppCompatActivity {
+public class PlayListActivity extends AppCompatActivity {
 
     ListView lv_playlist_admin;
     DbHelper dbHelper;
@@ -45,14 +45,14 @@ public class PlayListAdminActivity extends AppCompatActivity {
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PlayListAdminActivity.this, AddPlayListActivity.class);
+                Intent intent = new Intent(PlayListActivity.this, AddPlayListActivity.class);
                 startActivity(intent);
             }
         });
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(PlayListAdminActivity.this, AdminActivity.class));
+                startActivity(new Intent(PlayListActivity.this, AdminActivity.class));
                 finish();
             }
         });

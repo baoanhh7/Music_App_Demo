@@ -38,19 +38,19 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddSongActivity extends AppCompatActivity {
+public class UpdateSongActivity extends AppCompatActivity {
     EditText edt_id_songadmin, edt_name_songadmin, edt_idAlbum_songadmin, edt_idArtist_songadmin, edt_linknhac_songadmin;
-    DbHelper dbHelper;
-    Button btnSave, btnCancel, btn_choose_image_addSongAdmin;
-    ImageButton btn_camera;
+    DbHelper dbHelper = DatabaseManager.dbHelper(this);
     SQLiteDatabase database = null;
+    Button btnUpdate, btnCancel, btn_choose_image_updateSongAdmin;
+    ImageButton btn_camera;
     ImageView imageView;
     Spinner sp_idAlbum_songadmin, sp_idArtist_songadmin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_song);
+        setContentView(R.layout.activity_update_song);
         addControls();
         addEvents();
 
@@ -58,12 +58,10 @@ public class AddSongActivity extends AppCompatActivity {
     }
 
     private void createData() {
-        dbHelper = DatabaseManager.dbHelper(this);
         database = dbHelper.getReadableDatabase();
 
         // Album
         List<String> listAlbum = new ArrayList<>();
-        listAlbum.add("null");
 
         Cursor cursor = database.rawQuery("select * from Albums", null);
         while (cursor.moveToNext()) {
@@ -71,25 +69,32 @@ public class AddSongActivity extends AppCompatActivity {
 
             listAlbum.add(name);
         }
+        listAlbum.add("Null");
         cursor.close();
 
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listAlbum);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sp_idAlbum_songadmin.setAdapter(adapter);
+
         sp_idAlbum_songadmin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String ten = listAlbum.get(position);
-                if (ten == "null") {
-                    edt_idAlbum_songadmin.setText("null");
-                }
-                Cursor cursor = database.rawQuery("select * from Albums", null);
+
+                int idSong = getIntent().getIntExtra("id", -1);
+                Cursor cursor = database.rawQuery("select * from Albums " +
+                        "join Songs on Albums.AlbumID = Songs.AlbumID " +
+                        "where Songs.SongID=?", new String[]{idSong + ""});
                 while (cursor.moveToNext()) {
                     int idAlbum = cursor.getInt(0);
                     String name = cursor.getString(1);
                     if (ten.equals(name)) {
                         edt_idAlbum_songadmin.setText(String.valueOf(idAlbum));
                         break;
+                    } else {
+                        if (ten.equals("Null")) {
+                            edt_idAlbum_songadmin.setText("Nhạc không có Album");
+                        }
                     }
                 }
             }
@@ -113,15 +118,21 @@ public class AddSongActivity extends AppCompatActivity {
         ArrayAdapter adapter1 = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listArtist);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sp_idArtist_songadmin.setAdapter(adapter1);
+
         sp_idArtist_songadmin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String ten = listArtist.get(position);
 
-                Cursor cursor = database.rawQuery("select * from Artists", null);
+                int idSong = getIntent().getIntExtra("id", -1);
+
+                Cursor cursor = database.rawQuery("select * from Artists " +
+                        "join Songs on Artists.ArtistID = Songs.ArtistID " +
+                        "where Songs.SongID=?", new String[]{idSong + ""});
                 while (cursor.moveToNext()) {
                     int idArtist = cursor.getInt(0);
                     String name = cursor.getString(1);
+
                     if (ten.equals(name)) {
                         edt_idArtist_songadmin.setText(String.valueOf(idArtist));
                         break;
@@ -133,10 +144,34 @@ public class AddSongActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+
+        int id = getIntent().getIntExtra("id", -1);
+        Cursor cursorInfo = database.rawQuery("select * from Songs", null);
+        while (cursorInfo.moveToNext()) {
+            Integer ma = cursorInfo.getInt(0);
+
+            if (ma.equals(id)) {
+                edt_id_songadmin.setText(String.valueOf(id));
+                edt_id_songadmin.setEnabled(false);
+
+                edt_name_songadmin.setText(cursorInfo.getString(2));
+                edt_linknhac_songadmin.setText(cursorInfo.getString(5));
+
+                int idAlbum = cursorInfo.getInt(1);
+                int idArtist = cursorInfo.getInt(4);
+                edt_idAlbum_songadmin.setText(idAlbum + "");
+                edt_idArtist_songadmin.setText(idArtist + "");
+
+                byte[] anh = cursorInfo.getBlob(3);
+                Bitmap bitmap = BitmapFactory.decodeByteArray(anh, 0, anh.length);
+                imageView.setImageBitmap(bitmap);
+                break;
+            }
+        }
     }
 
     private void addEvents() {
-        btnSave.setOnClickListener(new View.OnClickListener() {
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 byte[] anh = getByteArrayFromImageView(imageView);
@@ -144,20 +179,21 @@ public class AddSongActivity extends AppCompatActivity {
                 database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
 
                 ContentValues values = new ContentValues();
-                values.put("SongID", edt_id_songadmin.getText().toString() + "");
-                values.put("AlbumID", edt_idAlbum_songadmin.getText().toString() + "");
+                values.put("SongID", edt_id_songadmin.getText().toString());
+                values.put("AlbumID", edt_idAlbum_songadmin.getText().toString());
                 values.put("SongName", edt_name_songadmin.getText().toString());
-                values.put("ArtistID", edt_idArtist_songadmin.getText().toString() + "");
+                values.put("ArtistID", edt_idArtist_songadmin.getText().toString());
                 values.put("SongImage", anh);
                 values.put("LinkSong", edt_linknhac_songadmin.getText().toString());
 
-                dbHelper = DatabaseManager.dbHelper(AddSongActivity.this);
-                long kq = dbHelper.getReadableDatabase().insert("Songs", null, values);
+
+                int id = getIntent().getIntExtra("id", -1);
+                long kq = dbHelper.getReadableDatabase().update("Songs", values, "SongID=?", new String[]{id + ""});
                 if (kq > 0) {
-                    Toast.makeText(AddSongActivity.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UpdateSongActivity.this, "Cập nhật thành công", Toast.LENGTH_SHORT).show();
                     finish();
                 } else
-                    Toast.makeText(AddSongActivity.this, "Thêm thất bại", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UpdateSongActivity.this, "Cập nhật thất bại", Toast.LENGTH_SHORT).show();
             }
         });
         btnCancel.setOnClickListener(new View.OnClickListener() {
@@ -167,7 +203,7 @@ public class AddSongActivity extends AppCompatActivity {
                 edt_name_songadmin.setText("");
                 edt_idAlbum_songadmin.setText("");
 
-                startActivity(new Intent(AddSongActivity.this, SongActivity.class));
+                startActivity(new Intent(UpdateSongActivity.this, SongActivity.class));
             }
         });
         btn_camera.setOnClickListener(new View.OnClickListener() {
@@ -176,7 +212,7 @@ public class AddSongActivity extends AppCompatActivity {
                 openCamera();
             }
         });
-        btn_choose_image_addSongAdmin.setOnClickListener(new View.OnClickListener() {
+        btn_choose_image_updateSongAdmin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 choosePhoto();
@@ -196,8 +232,8 @@ public class AddSongActivity extends AppCompatActivity {
 
     private void openCamera() {
         Intent takePictureIntent = new Intent(ACTION_IMAGE_CAPTURE);
-        if (ActivityCompat.checkSelfPermission(AddSongActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(AddSongActivity.this, new String[]{Manifest.permission.CAMERA}, 1);
+        if (ActivityCompat.checkSelfPermission(UpdateSongActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(UpdateSongActivity.this, new String[]{Manifest.permission.CAMERA}, 1);
             return;
         }
         //if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
@@ -240,11 +276,11 @@ public class AddSongActivity extends AppCompatActivity {
         edt_idAlbum_songadmin = findViewById(R.id.edt_idAlbum_songadmin);
         edt_linknhac_songadmin = findViewById(R.id.edt_linknhac_songadmin);
 
-        imageView = findViewById(R.id.img_addSongAdmin);
+        imageView = findViewById(R.id.img_updateSongAdmin);
 
-        btnSave = findViewById(R.id.btn_save_songadmin);
+        btnUpdate = findViewById(R.id.btn_update_songadmin);
         btnCancel = findViewById(R.id.btn_cancel_songadmin);
-        btn_choose_image_addSongAdmin = findViewById(R.id.btn_choose_image_addSongAdmin);
+        btn_choose_image_updateSongAdmin = findViewById(R.id.btn_choose_image_updateSongAdmin);
         btn_camera = findViewById(R.id.btn_camera_Songadmin);
 
         sp_idAlbum_songadmin = findViewById(R.id.sp_idAlbum_songadmin);

@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,7 +35,6 @@ public class UpdatePlayListActivity extends AppCompatActivity {
     int id = -1;
     final int choose_img = 1;
     final int photo_img = 2;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,9 +66,12 @@ public class UpdatePlayListActivity extends AppCompatActivity {
                 SQLiteDatabase database = dbHelper.getWritableDatabase();
 
                 id = intent.getIntExtra("id", -1);
-                database.update("Playlists", values, "PlaylistID=?", new String[]{id + ""});
-
-                finish();
+                long kq = database.update("Playlists", values, "PlaylistID=?", new String[]{id + ""});
+                if (kq > 0) {
+                    Toast.makeText(UpdatePlayListActivity.this, "Cập nhật thành công", Toast.LENGTH_SHORT).show();
+                    finish();
+                } else
+                    Toast.makeText(UpdatePlayListActivity.this, "Cập nhật thất bại", Toast.LENGTH_SHORT).show();
             }
         });
         btn_choose_image.setOnClickListener(new View.OnClickListener() {

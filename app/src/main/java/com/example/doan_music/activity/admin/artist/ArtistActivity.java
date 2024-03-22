@@ -8,20 +8,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.doan_music.R;
 import com.example.doan_music.activity.admin.AdminActivity;
-import com.example.doan_music.activity.admin.album.AddAlbumActivity;
-import com.example.doan_music.activity.admin.album.AlbumActivity;
-import com.example.doan_music.adapter.admin.AlbumAdminAdapter;
 import com.example.doan_music.adapter.admin.ArtistAdminAdapter;
 import com.example.doan_music.data.DbHelper;
-import com.example.doan_music.model.Album;
 import com.example.doan_music.model.Artists;
 
 import java.util.ArrayList;
@@ -33,6 +25,7 @@ public class ArtistActivity extends AppCompatActivity {
     Button btn_add_artist, btn_back_artist_admin;
     ArtistAdminAdapter artistAdminAdapter;
     ArrayList<Artists> artistsArrayList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +33,7 @@ public class ArtistActivity extends AppCompatActivity {
         addControls();
         addEvents();
     }
+
     @Override
     protected void onResume() {
         super.onResume();

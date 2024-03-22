@@ -8,10 +8,12 @@
     tools:context=".activity.admin.AdminActivity">
 
     <Button
-        android:id="@+id/btn_ablum"
+        android:id="@+id/btn_song"
         android:layout_width="wrap_content"
-        android:layout_height="38dp"
-        android:text="Album" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:text="Song" />
 
     <Button
         android:id="@+id/btn_artists"
@@ -20,6 +22,13 @@
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:text="Artists" />
+
+    <Button
+        android:id="@+id/btn_ablum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Album" />
 
     <Button
         android:id="@+id/btn_playlists"
@@ -36,22 +45,6 @@
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:text="Types" />
-
-    <Button
-        android:id="@+id/btn_song"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:text="Song" />
-
-    <Button
-        android:id="@+id/btn_lovesongs"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:text="LoveSongs" />
 
     <Button
         android:id="@+id/btn_logout"

@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:orientation="vertical"
-tools:context=".activity.admin.artist.ArtistActivity">
-
-<LinearLayout
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="50dp">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.admin.artist.ArtistActivity">
 
-    <Button
-        android:id="@+id/btn_back_artist_admin"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_gravity="center"
-        android:background="@drawable/ic_back" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
 
-    <Button
-        android:id="@+id/btn_add_artist"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="250dp"
-        android:text="Thêm Artist" />
+        <Button
+            android:id="@+id/btn_back_artist_admin"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:background="@drawable/ic_back" />
 
-</LinearLayout>
+        <Button
+            android:id="@+id/btn_add_artist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="250dp"
+            android:text="Thêm Artist" />
 
-<ListView
-    android:id="@+id/lvArtist_admin"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/lvArtist_admin"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>
