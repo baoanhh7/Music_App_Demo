@@ -39,18 +39,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AddSongActivity extends AppCompatActivity {
-    EditText edt_id_songadmin, edt_name_songadmin, edt_idAlbum_songadmin, edt_idArtist_songadmin, edt_linknhac_songadmin;
+    EditText edt_idPlaylist_songadmin, edt_id_songadmin, edt_name_songadmin, edt_idAlbum_songadmin, edt_idArtist_songadmin, edt_linknhac_songadmin;
     DbHelper dbHelper;
     Button btnSave, btnCancel, btn_choose_image_addSongAdmin;
     ImageButton btn_camera;
     SQLiteDatabase database = null;
     ImageView imageView;
-    Spinner sp_idAlbum_songadmin, sp_idArtist_songadmin;
+    Spinner sp_idAlbum_songadmin, sp_idArtist_songadmin, sp_playlist_songadmin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_song);
+
         addControls();
         addEvents();
 
@@ -63,7 +64,7 @@ public class AddSongActivity extends AppCompatActivity {
 
         // Album
         List<String> listAlbum = new ArrayList<>();
-        listAlbum.add("Null");
+        listAlbum.add(0, "Null");
 
         Cursor cursor = database.rawQuery("select * from Albums", null);
         while (cursor.moveToNext()) {
@@ -133,6 +134,46 @@ public class AddSongActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+
+        // Playlist
+        List<String> listPlaylist = new ArrayList<>();
+        listPlaylist.add(0, "Null");
+
+        Cursor cursor2 = database.rawQuery("select * from Playlists", null);
+        while (cursor2.moveToNext()) {
+            String name = cursor2.getString(1);
+
+            listPlaylist.add(name);
+        }
+        cursor2.close();
+
+        ArrayAdapter adapter2 = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listPlaylist);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sp_playlist_songadmin.setAdapter(adapter2);
+        sp_playlist_songadmin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String ten = listPlaylist.get(position);
+
+                if (ten.equals("Null")) {
+                    edt_idPlaylist_songadmin.setText("0");
+                }
+
+                Cursor cursor = database.rawQuery("select * from Playlists", null);
+                while (cursor.moveToNext()) {
+                    int idPlaylist = cursor.getInt(0);
+                    String name = cursor.getString(1);
+                    if (ten.equals(name)) {
+                        edt_idPlaylist_songadmin.setText(String.valueOf(idPlaylist));
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
     }
 
     private void addEvents() {
@@ -144,10 +185,11 @@ public class AddSongActivity extends AppCompatActivity {
                 database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
 
                 ContentValues values = new ContentValues();
-                values.put("SongID", edt_id_songadmin.getText().toString() + "");
-                values.put("AlbumID", edt_idAlbum_songadmin.getText().toString() + "");
+                values.put("SongID", edt_id_songadmin.getText().toString());
+                values.put("AlbumID", edt_idAlbum_songadmin.getText().toString());
                 values.put("SongName", edt_name_songadmin.getText().toString());
-                values.put("ArtistID", edt_idArtist_songadmin.getText().toString() + "");
+                values.put("ArtistID", edt_idArtist_songadmin.getText().toString());
+                values.put("PlaylistID", edt_idPlaylist_songadmin.getText().toString());
                 values.put("SongImage", anh);
                 values.put("LinkSong", edt_linknhac_songadmin.getText().toString());
 
@@ -235,6 +277,7 @@ public class AddSongActivity extends AppCompatActivity {
         edt_idArtist_songadmin = findViewById(R.id.edt_idArtist_songadmin);
         edt_idAlbum_songadmin = findViewById(R.id.edt_idAlbum_songadmin);
         edt_linknhac_songadmin = findViewById(R.id.edt_linknhac_songadmin);
+        edt_idPlaylist_songadmin = findViewById(R.id.edt_idPlaylist_songadmin);
 
         imageView = findViewById(R.id.img_addSongAdmin);
 
@@ -245,5 +288,6 @@ public class AddSongActivity extends AppCompatActivity {
 
         sp_idAlbum_songadmin = findViewById(R.id.sp_idAlbum_songadmin);
         sp_idArtist_songadmin = findViewById(R.id.sp_idArtist_songadmin);
+        sp_playlist_songadmin = findViewById(R.id.sp_playlist_songadmin);
     }
 }

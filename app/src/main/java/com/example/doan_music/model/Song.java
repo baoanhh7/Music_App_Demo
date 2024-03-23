@@ -15,13 +15,14 @@ public class Song implements Serializable {
 
     private int view;
 
-    public Song(int songID, int albumID, String songName, byte[] songImage, int artistID, String linkSong) {
+    public Song(int songID, int albumID, String songName, byte[] songImage, int artistID, String linkSong, int playlistID) {
         SongID = songID;
         AlbumID = albumID;
         SongName = songName;
         SongImage = songImage;
         ArtistID = artistID;
         LinkSong = linkSong;
+        this.PlaylistID = playlistID;
     }
 
     public Song(int songID, Integer albumID, Integer playlistID, String songName, byte[] songImage, int view, int isFavorite) {

@@ -30,9 +30,9 @@ public class SongActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_song);
+
         addControls();
         addEvents();
-        xulaycapnhat();
     }
 
     @Override
@@ -51,16 +51,14 @@ public class SongActivity extends AppCompatActivity {
             int maAlbum = cursor.getInt(1);
             byte[] img = cursor.getBlob(3);
             int maartist = cursor.getInt(4);
+            int maPlaylist = cursor.getInt(7);
+
             String linknhac = cursor.getString(5);
-            Song song = new Song(ma, maAlbum, ten, img, maartist, linknhac);
+            Song song = new Song(ma, maAlbum, ten, img, maartist, linknhac, maPlaylist);
             songArrayList.add(song);
         }
         songAdminAdapter.notifyDataSetChanged();
         cursor.close();
-    }
-
-    private void xulaycapnhat() {
-
     }
 
     private void addEvents() {

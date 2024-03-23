@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
@@ -24,22 +25,22 @@ import com.example.doan_music.model.Song;
 import java.util.ArrayList;
 
 public class SongAdminAdapter extends BaseAdapter {
-    ArrayList<Song> arr;
+    ArrayList<Song> arrSong;
     Activity context;
     ImageView img;
     View view;
     String songLink;
-    TextView txt_id_song_admin, txt_name_song_admin, txt_idAlbum_song_admin, txt_idArtist_song_admin;
+    TextView txt_id_song_admin, txt_name_song_admin, txt_idAlbum_song_admin, txt_idArtist_song_admin, txt_idPlaylist_song_admin;
     Button btn_update, btn_delete;
 
     public SongAdminAdapter(Activity context, ArrayList<Song> arr) {
         this.context = context;
-        this.arr = arr;
+        this.arrSong = arr;
     }
 
     @Override
     public int getCount() {
-        return arr.size();
+        return arrSong.size();
     }
 
     @Override
@@ -57,7 +58,7 @@ public class SongAdminAdapter extends BaseAdapter {
         view = LayoutInflater.from(context).inflate(R.layout.items_song_admin, parent, false);
         addControls();
 
-        Song song = arr.get(position);
+        Song song = arrSong.get(position);
         // Hiển thị hình ảnh từ byte array
         byte[] hinhAlbumByteArray = song.getSongImage();
         Bitmap bitmap = BitmapFactory.decodeByteArray(hinhAlbumByteArray, 0, hinhAlbumByteArray.length);
@@ -66,6 +67,7 @@ public class SongAdminAdapter extends BaseAdapter {
         txt_name_song_admin.setText(song.getSongName());
         txt_idArtist_song_admin.setText(song.getArtistID() + "");
         txt_idAlbum_song_admin.setText(song.getAlbumID() + "");
+        txt_idPlaylist_song_admin.setText(song.getPlaylistID() + "");
         songLink = song.getLinkSong();
         btn_update.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,6 +76,7 @@ public class SongAdminAdapter extends BaseAdapter {
                 intent.putExtra("id", song.getSongID());
                 intent.putExtra("idAlbum", song.getAlbumID());
                 intent.putExtra("idArtist", song.getArtistID());
+                intent.putExtra("idPlaylist", song.getPlaylistID());
 
                 context.startActivity(intent);
             }
@@ -88,7 +91,7 @@ public class SongAdminAdapter extends BaseAdapter {
                 builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        delete(song.getAlbumID());
+                        delete(song.getSongID());
                     }
                 });
                 builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
@@ -114,22 +117,30 @@ public class SongAdminAdapter extends BaseAdapter {
         txt_name_song_admin = view.findViewById(R.id.txt_name_song_admin);
         txt_idArtist_song_admin = view.findViewById(R.id.txt_idArtist_song_admin);
         txt_idAlbum_song_admin = view.findViewById(R.id.txt_idAlbum_song_admin);
+        txt_idPlaylist_song_admin = view.findViewById(R.id.txt_idPlaylist_song_admin);
     }
 
-    private void delete(int ID) {
+    private void delete(int songID) {
         DbHelper dbHelper = DatabaseManager.dbHelper(context);
-        dbHelper.getWritableDatabase().delete("Albums", "AlbumID=?"
-                , new String[]{ID + ""});
-        arr.clear();
-        Cursor cursor = dbHelper.getWritableDatabase().rawQuery("select * from Albums", null);
+        SQLiteDatabase database = dbHelper.getReadableDatabase();
+        database.delete("Songs", "SongID=?"
+                , new String[]{songID + ""});
+        arrSong.clear();
+        Cursor cursor = database.rawQuery("select * from Songs", null);
+        arrSong.clear();
         while (cursor.moveToNext()) {
-            int id = cursor.getInt(0);
-            String ten = cursor.getString(1);
-            byte[] anh = cursor.getBlob(2);
-            int idArtist = cursor.getInt(3);
+            int ma = cursor.getInt(0);
+            String ten = cursor.getString(2);
+            int maAlbum = cursor.getInt(1);
+            byte[] img = cursor.getBlob(3);
+            int maartist = cursor.getInt(4);
+            String linknhac = cursor.getString(5);
+            int maPlaylist = cursor.getInt(7);
 
-            //arr.add(new Album(id, ten, anh, idArtist));
+            Song song = new Song(ma, maAlbum, ten, img, maartist, linknhac, maPlaylist);
+            arrSong.add(song);
         }
         notifyDataSetChanged();
+        cursor.close();
     }
 }

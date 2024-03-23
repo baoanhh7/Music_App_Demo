@@ -39,18 +39,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UpdateSongActivity extends AppCompatActivity {
-    EditText edt_id_songadmin, edt_name_songadmin, edt_idAlbum_songadmin, edt_idArtist_songadmin, edt_linknhac_songadmin;
+    EditText edt_idPlaylist_songadmin, edt_id_songadmin, edt_name_songadmin, edt_idAlbum_songadmin, edt_idArtist_songadmin, edt_linknhac_songadmin;
     DbHelper dbHelper = DatabaseManager.dbHelper(this);
     SQLiteDatabase database = null;
     Button btnUpdate, btnCancel, btn_choose_image_updateSongAdmin;
     ImageButton btn_camera;
     ImageView imageView;
-    Spinner sp_idAlbum_songadmin, sp_idArtist_songadmin;
+    Spinner sp_idAlbum_songadmin, sp_idArtist_songadmin, sp_playlist_songadmin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_song);
+
         addControls();
         addEvents();
 
@@ -132,6 +133,49 @@ public class UpdateSongActivity extends AppCompatActivity {
                     String name = cursor.getString(1);
                     if (ten.equals(name)) {
                         edt_idArtist_songadmin.setText(String.valueOf(idArtist));
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        // Playlist
+        List<String> listPlaylist = new ArrayList<>();
+        listPlaylist.add("Null");
+        Cursor cursor2 = database.rawQuery("select * from Playlists", null);
+        while (cursor2.moveToNext()) {
+            String name = cursor2.getString(1);
+
+            listPlaylist.add(name);
+        }
+
+        cursor2.close();
+
+        ArrayAdapter adapter2 = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listPlaylist);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sp_playlist_songadmin.setAdapter(adapter2);
+
+        int PlaylistID = getIntent().getIntExtra("idPlaylist", -1);
+        // set vị trí spiner theo albumID
+        sp_playlist_songadmin.setSelection(PlaylistID);
+        sp_playlist_songadmin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String ten = listPlaylist.get(position);
+
+                if (ten.equals("Null")) {
+                    edt_idAlbum_songadmin.setText("0");
+                }
+                Cursor cursor = database.rawQuery("select * from Playlists", null);
+                while (cursor.moveToNext()) {
+                    int idPlaylist = cursor.getInt(0);
+                    String name = cursor.getString(1);
+                    if (ten.equals(name)) {
+                        edt_idPlaylist_songadmin.setText(String.valueOf(idPlaylist));
                         break;
                     }
                 }
@@ -268,6 +312,7 @@ public class UpdateSongActivity extends AppCompatActivity {
         edt_idArtist_songadmin = findViewById(R.id.edt_idArtist_songadmin);
         edt_idAlbum_songadmin = findViewById(R.id.edt_idAlbum_songadmin);
         edt_linknhac_songadmin = findViewById(R.id.edt_linknhac_songadmin);
+        edt_idPlaylist_songadmin = findViewById(R.id.edt_idPlaylist_songadmin);
 
         imageView = findViewById(R.id.img_updateSongAdmin);
 
@@ -278,5 +323,6 @@ public class UpdateSongActivity extends AppCompatActivity {
 
         sp_idAlbum_songadmin = findViewById(R.id.sp_idAlbum_songadmin);
         sp_idArtist_songadmin = findViewById(R.id.sp_idArtist_songadmin);
+        sp_playlist_songadmin = findViewById(R.id.sp_playlist_songadmin);
     }
 }

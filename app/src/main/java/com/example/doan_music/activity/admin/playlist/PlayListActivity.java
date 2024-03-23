@@ -66,8 +66,6 @@ public class PlayListActivity extends AppCompatActivity {
     }
 
     private void createData() {
-//        database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
-
         dbHelper = DatabaseManager.dbHelper(this);
         database = dbHelper.getReadableDatabase();
 
