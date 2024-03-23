@@ -24,13 +24,14 @@ public class Song implements Serializable {
         LinkSong = linkSong;
     }
 
-    public Song(int songID, Integer albumID, Integer playlistID, String songName, byte[] songImage, int view) {
+    public Song(int songID, Integer albumID, Integer playlistID, String songName, byte[] songImage, int view, int isFavorite) {
         SongID = songID;
         AlbumID = albumID;
         PlaylistID = playlistID;
         SongName = songName;
         SongImage = songImage;
         this.view = view;
+        this.isFavorite = isFavorite;
     }
 
 

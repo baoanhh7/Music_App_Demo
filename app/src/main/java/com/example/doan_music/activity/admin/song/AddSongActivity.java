@@ -63,7 +63,6 @@ public class AddSongActivity extends AppCompatActivity {
 
         // Album
         List<String> listAlbum = new ArrayList<>();
-        listAlbum.add("null");
 
         Cursor cursor = database.rawQuery("select * from Albums", null);
         while (cursor.moveToNext()) {
@@ -71,6 +70,7 @@ public class AddSongActivity extends AppCompatActivity {
 
             listAlbum.add(name);
         }
+        listAlbum.add("null");
         cursor.close();
 
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listAlbum);

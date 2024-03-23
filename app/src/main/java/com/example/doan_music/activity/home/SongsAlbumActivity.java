@@ -145,11 +145,12 @@ public class SongsAlbumActivity extends AppCompatActivity {
             Integer IDalbum = cursor.getInt(1);
             String ten = cursor.getString(2);
             byte[] img = cursor.getBlob(3);
+            int fav = cursor.getInt(6);
 
             int view = cursor.getInt(8);
 
             if (IDalbum.equals(albumID)) {
-                Song song = new Song(id, IDalbum, null, ten, img, view);
+                Song song = new Song(id, IDalbum, null, ten, img, view, fav);
 
                 arr.add(id);
                 list.add(song);

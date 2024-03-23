@@ -97,6 +97,7 @@ public class Song_Fragment extends Fragment {
                 int color = ContextCompat.getColor(requireContext(), R.color.mauNen);
                 txt_noidung.setTextColor(color);
             }
+
         }
         cursor.close();
         favoriteSongAdapter.notifyDataSetChanged();

@@ -93,7 +93,7 @@ public class UpdateSongActivity extends AppCompatActivity {
                         break;
                     } else {
                         if (ten.equals("Null")) {
-                            edt_idAlbum_songadmin.setText("Nhạc không có Album");
+                            edt_idAlbum_songadmin.setText("Null");
                         }
                     }
                 }
