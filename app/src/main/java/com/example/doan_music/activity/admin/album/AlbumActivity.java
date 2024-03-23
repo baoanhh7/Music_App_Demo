@@ -37,7 +37,6 @@ public class AlbumActivity extends AppCompatActivity {
     }
 
 
-
     private void loadData() {
         database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
         Cursor cursor = database.rawQuery("select * from Albums", null);

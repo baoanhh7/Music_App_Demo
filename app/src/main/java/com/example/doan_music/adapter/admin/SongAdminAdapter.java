@@ -72,6 +72,8 @@ public class SongAdminAdapter extends BaseAdapter {
             public void onClick(View v) {
                 Intent intent = new Intent(context, UpdateSongActivity.class);
                 intent.putExtra("id", song.getSongID());
+                intent.putExtra("idAlbum", song.getAlbumID());
+                intent.putExtra("idArtist", song.getArtistID());
 
                 context.startActivity(intent);
             }

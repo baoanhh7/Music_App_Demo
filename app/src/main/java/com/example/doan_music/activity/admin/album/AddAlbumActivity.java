@@ -46,7 +46,7 @@ public class AddAlbumActivity extends AppCompatActivity {
     ImageButton btn_camera;
     SQLiteDatabase database = null;
     ImageView imageView;
-    Spinner sp_id_artist_albumadmin,sp_id_albumadmin;
+    Spinner sp_id_artist_albumadmin, sp_id_albumadmin;
     List<Integer> listIDAlbum = new ArrayList<>();
     List<String> listIDArtist = new ArrayList<>();
 
@@ -126,7 +126,7 @@ public class AddAlbumActivity extends AppCompatActivity {
                     } else
                         Isid = true;
                 }
-                if(Isid) {
+                if (Isid) {
                     ContentValues values = new ContentValues();
                     values.put("AlbumID", edtMa.getText().toString() + "");
                     values.put("AlbumName", edtTen.getText().toString());
@@ -139,8 +139,7 @@ public class AddAlbumActivity extends AppCompatActivity {
                         finish();
                     } else
                         Toast.makeText(AddAlbumActivity.this, "Thêm thất bại", Toast.LENGTH_SHORT).show();
-                }
-                else
+                } else
                     Toast.makeText(AddAlbumActivity.this, "ID Album đã có", Toast.LENGTH_SHORT).show();
             }
         });

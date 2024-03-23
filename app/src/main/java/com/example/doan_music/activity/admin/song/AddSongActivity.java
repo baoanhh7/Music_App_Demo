@@ -63,6 +63,7 @@ public class AddSongActivity extends AppCompatActivity {
 
         // Album
         List<String> listAlbum = new ArrayList<>();
+        listAlbum.add("Null");
 
         Cursor cursor = database.rawQuery("select * from Albums", null);
         while (cursor.moveToNext()) {
@@ -70,7 +71,6 @@ public class AddSongActivity extends AppCompatActivity {
 
             listAlbum.add(name);
         }
-        listAlbum.add("null");
         cursor.close();
 
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listAlbum);
@@ -80,8 +80,8 @@ public class AddSongActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String ten = listAlbum.get(position);
-                if (ten == "null") {
-                    edt_idAlbum_songadmin.setText("null");
+                if (ten.equals("Null")) {
+                    edt_idAlbum_songadmin.setText("0");
                 }
                 Cursor cursor = database.rawQuery("select * from Albums", null);
                 while (cursor.moveToNext()) {
@@ -163,11 +163,7 @@ public class AddSongActivity extends AppCompatActivity {
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                edt_id_songadmin.setText("");
-                edt_name_songadmin.setText("");
-                edt_idAlbum_songadmin.setText("");
-
-                startActivity(new Intent(AddSongActivity.this, SongActivity.class));
+                finish();
             }
         });
         btn_camera.setOnClickListener(new View.OnClickListener() {

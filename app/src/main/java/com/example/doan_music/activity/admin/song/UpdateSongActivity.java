@@ -62,39 +62,38 @@ public class UpdateSongActivity extends AppCompatActivity {
 
         // Album
         List<String> listAlbum = new ArrayList<>();
-
+        listAlbum.add("Null");
         Cursor cursor = database.rawQuery("select * from Albums", null);
         while (cursor.moveToNext()) {
             String name = cursor.getString(1);
 
             listAlbum.add(name);
         }
-        listAlbum.add("Null");
+
         cursor.close();
 
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listAlbum);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sp_idAlbum_songadmin.setAdapter(adapter);
 
+        int albumID = getIntent().getIntExtra("idAlbum", -1);
+        // set vị trí spiner theo albumID
+        sp_idAlbum_songadmin.setSelection(albumID);
         sp_idAlbum_songadmin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String ten = listAlbum.get(position);
 
-                int idSong = getIntent().getIntExtra("id", -1);
-                Cursor cursor = database.rawQuery("select * from Albums " +
-                        "join Songs on Albums.AlbumID = Songs.AlbumID " +
-                        "where Songs.SongID=?", new String[]{idSong + ""});
+                if (ten.equals("Null")) {
+                    edt_idAlbum_songadmin.setText("0");
+                }
+                Cursor cursor = database.rawQuery("select * from Albums", null);
                 while (cursor.moveToNext()) {
                     int idAlbum = cursor.getInt(0);
                     String name = cursor.getString(1);
                     if (ten.equals(name)) {
                         edt_idAlbum_songadmin.setText(String.valueOf(idAlbum));
                         break;
-                    } else {
-                        if (ten.equals("Null")) {
-                            edt_idAlbum_songadmin.setText("Null");
-                        }
                     }
                 }
             }
@@ -119,20 +118,18 @@ public class UpdateSongActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sp_idArtist_songadmin.setAdapter(adapter1);
 
+        int artistID = getIntent().getIntExtra("idArtist", -1);
+        // set vị trí spiner theo albumID
+        sp_idArtist_songadmin.setSelection(artistID - 1);
         sp_idArtist_songadmin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String ten = listArtist.get(position);
 
-                int idSong = getIntent().getIntExtra("id", -1);
-
-                Cursor cursor = database.rawQuery("select * from Artists " +
-                        "join Songs on Artists.ArtistID = Songs.ArtistID " +
-                        "where Songs.SongID=?", new String[]{idSong + ""});
+                Cursor cursor = database.rawQuery("select * from Artists", null);
                 while (cursor.moveToNext()) {
                     int idArtist = cursor.getInt(0);
                     String name = cursor.getString(1);
-
                     if (ten.equals(name)) {
                         edt_idArtist_songadmin.setText(String.valueOf(idArtist));
                         break;
@@ -199,11 +196,7 @@ public class UpdateSongActivity extends AppCompatActivity {
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                edt_id_songadmin.setText("");
-                edt_name_songadmin.setText("");
-                edt_idAlbum_songadmin.setText("");
-
-                startActivity(new Intent(UpdateSongActivity.this, SongActivity.class));
+                finish();
             }
         });
         btn_camera.setOnClickListener(new View.OnClickListener() {

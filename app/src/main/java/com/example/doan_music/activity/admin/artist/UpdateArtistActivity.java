@@ -19,16 +19,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.doan_music.R;
 import com.example.doan_music.data.DatabaseManager;
@@ -49,6 +44,7 @@ public class UpdateArtistActivity extends AppCompatActivity {
     SQLiteDatabase database = null;
     ImageView imageView;
     List<Integer> listIDArtist = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,18 +58,18 @@ public class UpdateArtistActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 byte[] anh = getByteArrayFromImageView(imageView);
-                    ContentValues values = new ContentValues();
-                    values.put("ArtistName", edtTen.getText().toString());
-                    values.put("ArtistImage", anh);
-                    dbHelper = DatabaseManager.dbHelper(UpdateArtistActivity.this);
-                    Integer id = Integer.valueOf(edtMa.getText().toString());
-                    long kq = dbHelper.getReadableDatabase().update("Artists", values,"ArtistID=?",new String[]{id + ""});
-                    if (kq > 0) {
-                        Toast.makeText(UpdateArtistActivity.this, "Update thành công", Toast.LENGTH_SHORT).show();
-                        finish();
-                    } else
-                        Toast.makeText(UpdateArtistActivity.this, "Update thất bại", Toast.LENGTH_SHORT).show();
-                }
+                ContentValues values = new ContentValues();
+                values.put("ArtistName", edtTen.getText().toString());
+                values.put("ArtistImage", anh);
+                dbHelper = DatabaseManager.dbHelper(UpdateArtistActivity.this);
+                Integer id = Integer.valueOf(edtMa.getText().toString());
+                long kq = dbHelper.getReadableDatabase().update("Artists", values, "ArtistID=?", new String[]{id + ""});
+                if (kq > 0) {
+                    Toast.makeText(UpdateArtistActivity.this, "Update thành công", Toast.LENGTH_SHORT).show();
+                    finish();
+                } else
+                    Toast.makeText(UpdateArtistActivity.this, "Update thất bại", Toast.LENGTH_SHORT).show();
+            }
         });
         btncancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,7 +102,7 @@ public class UpdateArtistActivity extends AppCompatActivity {
         btncancel = findViewById(R.id.btn_cancel_updateartistadmin);
         btn_choose_image_updateArtistAdmin = findViewById(R.id.btn_choose_image_updateArtistAdmin);
         btn_camera = findViewById(R.id.btn_camera_updateartistadmin);
-        edtMa.setText(getIntent().getIntExtra("id", -1)+"");
+        edtMa.setText(getIntent().getIntExtra("id", -1) + "");
         edtTen.setText(getIntent().getStringExtra("name"));
         database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
         Cursor cursor = database.rawQuery("SELECT * FROM Artists where ArtistID=?"
@@ -120,6 +116,7 @@ public class UpdateArtistActivity extends AppCompatActivity {
         imageView.setImageBitmap(bitmap);
         edtMa.setEnabled(false);
     }
+
     private byte[] getByteArrayFromImageView(ImageView img) {
         BitmapDrawable drawable = (BitmapDrawable) img.getDrawable();
         Bitmap bitmap = drawable.getBitmap();

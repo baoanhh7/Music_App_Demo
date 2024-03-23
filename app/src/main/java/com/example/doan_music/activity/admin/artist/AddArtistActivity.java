@@ -23,17 +23,11 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.doan_music.R;
-import com.example.doan_music.activity.admin.album.AddAlbumActivity;
-import com.example.doan_music.activity.admin.album.AlbumActivity;
 import com.example.doan_music.data.DatabaseManager;
 import com.example.doan_music.data.DbHelper;
 
@@ -52,6 +46,7 @@ public class AddArtistActivity extends AppCompatActivity {
     ImageView imageView;
     Spinner sp_id_artistadmin;
     List<Integer> listIDArtist = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,7 +102,7 @@ public class AddArtistActivity extends AppCompatActivity {
                         finish();
                     } else
                         Toast.makeText(AddArtistActivity.this, "Thêm thất bại", Toast.LENGTH_SHORT).show();
-                }else
+                } else
                     Toast.makeText(AddArtistActivity.this, "Id Artist đã có", Toast.LENGTH_SHORT).show();
             }
         });
@@ -143,6 +138,7 @@ public class AddArtistActivity extends AppCompatActivity {
         btn_camera = findViewById(R.id.btn_camera_artistadmin);
         sp_id_artistadmin = findViewById(R.id.sp_id_artistadmin);
     }
+
     private byte[] getByteArrayFromImageView(ImageView img) {
         BitmapDrawable drawable = (BitmapDrawable) img.getDrawable();
         Bitmap bitmap = drawable.getBitmap();
