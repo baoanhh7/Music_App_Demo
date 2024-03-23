@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "598897425193",
+    "project_id": "register-ff307",
+    "storage_bucket": "register-ff307.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:598897425193:android:615d107b78dd24ad8f1538",
+        "android_client_info": {
+          "package_name": "com.example.doan_music"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcMVHtPnjRRmDJvvv8QDvJ1OzzFDiGr5o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

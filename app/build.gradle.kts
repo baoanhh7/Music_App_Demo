@@ -2,7 +2,6 @@ plugins {
     id("com.android.application")
     // Add the Google services Gradle plugin
     id("com.google.gms.google-services")
-
 }
 
 android {
@@ -61,7 +60,7 @@ dependencies {
     implementation("io.github.chaosleung:pinview:1.4.4")
     implementation("com.sendgrid:sendgrid-java:4.7.0")
     implementation("androidx.media:media:1.7.0")
-    //bottom sheet
+
     // Import the Firebase BoM
     implementation(platform("com.google.firebase:firebase-bom:32.7.4"))
     //sqlite
@@ -71,6 +70,7 @@ dependencies {
     // When using the BoM, don't specify versions in Firebase dependencies
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-database")
 
     implementation("com.sun.mail:android-mail:1.6.0")
     implementation("com.sun.mail:android-activation:1.6.0")
