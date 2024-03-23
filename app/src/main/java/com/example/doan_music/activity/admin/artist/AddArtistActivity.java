@@ -91,6 +91,7 @@ public class AddArtistActivity extends AppCompatActivity {
                 for (int i = 0; i < listIDArtist.size(); i++) {
                     if (id1 == listIDArtist.get(i)) {
                         Isid = false;
+                        break;
                     } else
                         Isid = true;
                 }

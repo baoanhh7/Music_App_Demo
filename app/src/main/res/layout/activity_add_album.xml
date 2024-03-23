@@ -42,15 +42,28 @@
         </LinearLayout>
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/edt_id_albumadmin"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="10dp"
-        android:hint="ID"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/edt_id_albumadmin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="ID"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/sp_id_albumadmin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp" />
+
+    </LinearLayout>
 
     <EditText
         android:id="@+id/edt_name_albumadmin"
@@ -60,15 +73,27 @@
         android:hint="Name"
         android:textSize="20sp"
         android:textStyle="bold" />
-
-    <EditText
-        android:id="@+id/edt_idArtist_albumadmin"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:hint="ID Artist"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/edt_idArtist_albumadmin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="ID  Artist"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/sp_id_artist_albumadmin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
