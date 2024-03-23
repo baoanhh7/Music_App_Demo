@@ -34,9 +34,8 @@ public class AlbumActivity extends AppCompatActivity {
         setContentView(R.layout.activity_ablum);
         addControls();
         addEvents();
-        xulaycapnhat();
-
     }
+
 
 
     private void loadData() {
@@ -61,8 +60,6 @@ public class AlbumActivity extends AppCompatActivity {
         loadData();
     }
 
-    private void xulaycapnhat() {
-    }
 
     private void addEvents() {
         btn_add_ablum.setOnClickListener(new View.OnClickListener() {

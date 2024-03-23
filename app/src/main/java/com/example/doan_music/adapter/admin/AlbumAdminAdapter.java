@@ -76,7 +76,6 @@ public class AlbumAdminAdapter extends BaseAdapter {
                 Intent intent = new Intent(context, UpdateAlbumActivity.class);
                 intent.putExtra("id", album.getAlbumID());
                 intent.putExtra("name", album.getAlbumName());
-                intent.putExtra("Image", album.getAlbumImage());
                 intent.putExtra("IDArtist", album.getArtistID());
                 context.startActivity(intent);
             }

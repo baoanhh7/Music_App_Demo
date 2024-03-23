@@ -15,10 +15,13 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -33,6 +36,8 @@ import com.example.doan_music.data.DbHelper;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UpdateAlbumActivity extends AppCompatActivity {
     EditText edtMa, edtTen, edtMaArtist;
@@ -41,6 +46,8 @@ public class UpdateAlbumActivity extends AppCompatActivity {
     ImageButton btn_camera;
     SQLiteDatabase database = null;
     ImageView imageView;
+    Spinner sp_id_artist_updatealbumadmin;
+    List<String> listIDArtist = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +55,44 @@ public class UpdateAlbumActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_update_album);
         addControls();
+        createDataSpinner();
         addEvents();
+    }
+
+    private void createDataSpinner() {
+        // Artist
+
+        Cursor cursor1 = database.rawQuery("select * from Artists", null);
+        while (cursor1.moveToNext()) {
+            String name = cursor1.getString(1);
+
+            listIDArtist.add(name);
+        }
+        cursor1.close();
+
+        ArrayAdapter adapter1 = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listIDArtist);
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sp_id_artist_updatealbumadmin.setAdapter(adapter1);
+        sp_id_artist_updatealbumadmin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String ten = listIDArtist.get(position);
+
+                Cursor cursor = database.rawQuery("select * from Artists", null);
+                while (cursor.moveToNext()) {
+                    int idArtist = cursor.getInt(0);
+                    String name = cursor.getString(1);
+                    if (ten.equals(name)) {
+                        edtMaArtist.setText(String.valueOf(idArtist));
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
     }
 
     private void addEvents() {
@@ -56,37 +100,24 @@ public class UpdateAlbumActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 byte[] anh = getByteArrayFromImageView(imageView);
-                String edtMaArtist1 = edtMaArtist.getText().toString();
-                database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
-                Cursor cursor = database.rawQuery("select * from Artists", null);
-                while (cursor.moveToNext()) {
-                    Integer maArtist = Integer.valueOf(cursor.getString(0) + "");
-                    if (Integer.valueOf(edtMaArtist1) == maArtist) {
-                        ContentValues values = new ContentValues();
-                        values.put("AlbumID", edtMa.getText().toString() + "");
-                        values.put("AlbumName", edtTen.getText().toString());
-                        values.put("Ablum_ArtistID", edtMaArtist.getText().toString() + "");
-                        values.put("AlbumImage", anh);
-                        dbHelper = DatabaseManager.dbHelper(UpdateAlbumActivity.this);
-                        Integer id = Integer.valueOf(edtMa.getText().toString());
-                        long kq = dbHelper.getReadableDatabase().update("Albums", values, "AlbumID=?", new String[]{id + ""});
-                        if (kq > 0) {
-                            Toast.makeText(UpdateAlbumActivity.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
-                            cursor.close();
-                            finish();
-                        } else
-                            Toast.makeText(UpdateAlbumActivity.this, "Thêm thất bại", Toast.LENGTH_SHORT).show();
-                        break;
-                    }
-                }
-                Toast.makeText(UpdateAlbumActivity.this, "Không có Artist tương ứng", Toast.LENGTH_SHORT).show();
-
+                ContentValues values = new ContentValues();
+                values.put("AlbumID", edtMa.getText().toString() + "");
+                values.put("AlbumName", edtTen.getText().toString());
+                values.put("ArtistID", edtMaArtist.getText().toString() + "");
+                values.put("AlbumImage", anh);
+                dbHelper = DatabaseManager.dbHelper(UpdateAlbumActivity.this);
+                Integer id = Integer.valueOf(edtMa.getText().toString());
+                long kq = dbHelper.getReadableDatabase().update("Albums", values, "AlbumID=?", new String[]{id + ""});
+                if (kq > 0) {
+                    Toast.makeText(UpdateAlbumActivity.this, "Update thành công", Toast.LENGTH_SHORT).show();
+                    finish();
+                } else
+                    Toast.makeText(UpdateAlbumActivity.this, "Update thất bại", Toast.LENGTH_SHORT).show();
             }
         });
         btncancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                edtMa.setText("");
                 edtTen.setText("");
                 edtMaArtist.setText("");
                 startActivity(new Intent(UpdateAlbumActivity.this, AlbumActivity.class));
@@ -159,6 +190,7 @@ public class UpdateAlbumActivity extends AppCompatActivity {
         edtTen = findViewById(R.id.edt_name_updatealbumadmin);
         imageView = findViewById(R.id.img_updateAblumAdmin);
         edtMaArtist = findViewById(R.id.edt_idArtist_updatealbumadmin);
+        sp_id_artist_updatealbumadmin = findViewById(R.id.sp_id_artist_updatealbumadmin);
         btnSave = findViewById(R.id.btn_save_updatealbumadmin);
         btncancel = findViewById(R.id.btn_cancel_updatealbumadmin);
         btn_choose_image_addAblumAdmin = findViewById(R.id.btn_choose_image_updateAblumAdmin);

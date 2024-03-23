@@ -73,7 +73,6 @@ public class ArtistAdminAdapter extends BaseAdapter {
                 Intent intent = new Intent(context, UpdateArtistActivity.class);
                 intent.putExtra("id", artists.getArtistID());
                 intent.putExtra("name", artists.getArtistName());
-                intent.putExtra("Image", artists.getArtistImage());
                 context.startActivity(intent);
             }
         });
@@ -104,7 +103,7 @@ public class ArtistAdminAdapter extends BaseAdapter {
 
     private void delete(int ID) {
         DbHelper dbHelper = DatabaseManager.dbHelper(context);
-        dbHelper.getWritableDatabase().delete("Albums", "AlbumID=?"
+        dbHelper.getWritableDatabase().delete("Artists", "ArtistID=?"
                 , new String[]{ID + ""});
         arr.clear();
         Cursor cursor = dbHelper.getWritableDatabase().rawQuery("select * from Artists", null);
