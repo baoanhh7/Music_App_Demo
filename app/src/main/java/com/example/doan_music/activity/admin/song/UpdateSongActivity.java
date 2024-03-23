@@ -168,7 +168,7 @@ public class UpdateSongActivity extends AppCompatActivity {
                 String ten = listPlaylist.get(position);
 
                 if (ten.equals("Null")) {
-                    edt_idAlbum_songadmin.setText("0");
+                    edt_idPlaylist_songadmin.setText("0");
                 }
                 Cursor cursor = database.rawQuery("select * from Playlists", null);
                 while (cursor.moveToNext()) {
