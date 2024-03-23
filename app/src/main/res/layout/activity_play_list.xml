@@ -10,7 +10,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:background="@drawable/rounded_search"
         android:backgroundTint="#333333">
@@ -28,15 +28,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_marginBottom="5dp"
             android:background="@drawable/rounded_search"
-            android:backgroundTint="#333333"
+            android:backgroundTint="#6E6E6E"
             android:elevation="10dp"
             android:fontFamily="sans-serif-smallcaps"
             android:gravity="center"
+            android:padding="10dp"
             android:text="Danh sách phát"
             android:textColor="#DCDCDC"
-            android:textSize="30sp"
+            android:textSize="25sp"
             android:textStyle="bold" />
 
         <TextView
@@ -44,12 +44,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/txt_dsp"
+            android:layout_marginTop="40dp"
             android:gravity="center"
+            android:padding="10dp"
             android:text="Play List Name"
-            android:textColor="#DADADA"
+            android:textColor="#ECECEC"
             android:textSize="18sp"
             android:textStyle="bold" />
-
 
     </RelativeLayout>
 
