@@ -13,13 +13,14 @@ import com.example.doan_music.data.DbHelper;
 
 public class LoginActivity extends AppCompatActivity {
 
-    Button LoginID, RegisterID;
+    Button LoginID, RegisterID, RegisterGmail;
     DbHelper dbHelper = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         addControls();
         LoginID.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,11 +36,18 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        RegisterGmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, Register_GmailActivity.class));
+            }
+        });
     }
 
     private void addControls() {
         LoginID = findViewById(R.id.LoginID);
         RegisterID = findViewById(R.id.RegisterID);
+        RegisterGmail = findViewById(R.id.RegisterGmail);
 
         // tạo db trong device
         dbHelper = DatabaseManager.dbHelper(this);
