@@ -1,5 +1,8 @@
 buildscript {
     val agp_version by extra("8.2.1")
+    dependencies {
+        classpath("com.google.gms:google-services:4.4.1")
+    }
 }
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
