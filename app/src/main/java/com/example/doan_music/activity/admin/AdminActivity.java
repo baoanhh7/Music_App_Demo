@@ -12,7 +12,7 @@ import com.example.doan_music.activity.admin.album.AlbumActivity;
 import com.example.doan_music.activity.admin.artist.ArtistActivity;
 import com.example.doan_music.activity.admin.playlist.PlayListActivity;
 import com.example.doan_music.activity.admin.song.SongActivity;
-import com.example.doan_music.loginPackage.LoginActivity;
+import com.example.doan_music.loginPackage.Login_userActivity;
 
 public class AdminActivity extends AppCompatActivity {
     Button btn_add_album, btn_add_artists, btn_add_playlists, btn_add_types, btn_add_song, btn_logout;
@@ -58,7 +58,7 @@ public class AdminActivity extends AppCompatActivity {
         btn_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AdminActivity.this, LoginActivity.class));
+                startActivity(new Intent(AdminActivity.this, Login_userActivity.class));
                 finish();
             }
         });
