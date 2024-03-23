@@ -26,22 +26,22 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-medium"
+                android:fontFamily="serif-monospace"
                 android:gravity="center"
                 android:padding="10dp"
-                android:text="Tạo tài khoản mới"
-                android:textColor="#94CCF6"
-                android:textSize="22sp"
+                android:text="Create New Account"
+                android:textColor="#B4DFFF"
+                android:textSize="25sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-light"
+                android:fontFamily="serif-monospace"
                 android:gravity="center"
-                android:text="Điền vào thông tin bên dưới"
-                android:textColor="#D3D3D3"
-                android:textSize="20sp"
+                android:text="Please fill information"
+                android:textColor="#EAEAEA"
+                android:textSize="22sp"
                 android:textStyle="bold" />
 
             <LinearLayout

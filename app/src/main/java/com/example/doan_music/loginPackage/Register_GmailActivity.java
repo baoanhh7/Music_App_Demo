@@ -93,6 +93,7 @@ public class Register_GmailActivity extends AppCompatActivity {
                                 }
 
                             });
+                            break;
                         }
                     }
                     cursor.close();
