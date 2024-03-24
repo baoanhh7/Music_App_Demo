@@ -90,8 +90,6 @@ public class Register_GmailActivity extends AppCompatActivity {
                                                 startActivity(intent);
 
                                                 Toast.makeText(Register_GmailActivity.this, "Registered Successfully", Toast.LENGTH_LONG).show();
-                                                edt_password.setText("");
-                                                edt_confirm_password.setText("");
                                             } else {
                                                 Toast.makeText(Register_GmailActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                                             }
