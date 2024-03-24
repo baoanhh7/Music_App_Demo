@@ -290,6 +290,8 @@ public class PlayMusicActivity extends AppCompatActivity {
                         String ten = cursor.getString(2);
                         byte[] img = cursor.getBlob(3);
                         String linkSong = cursor.getString(5);
+                        int view = cursor.getInt(8);
+
                         if (idSong.equals(Id)) {
                             Bitmap bitmap = BitmapFactory.decodeByteArray(img, 0, img.length);
                             imageView_songs.setImageBitmap(bitmap);
@@ -300,6 +302,7 @@ public class PlayMusicActivity extends AppCompatActivity {
                                 throw new RuntimeException(e);
                             }
                             txt_name_song.setText(ten);
+                            txt_view_playmusic.setText(view + "");
                         }
 
                         int farovite = cursor.getInt(6);
@@ -316,8 +319,8 @@ public class PlayMusicActivity extends AppCompatActivity {
                         String ten = cursor1.getString(1);
                         txt_artist_song.setText(ten);
                     }
-
                     sendNotification();
+
                     String duration = timeSeekbar(myMusic.getDuration());
                     txt_time.setText(duration);
                     seekBar.setMax(myMusic.getDuration());
@@ -342,6 +345,8 @@ public class PlayMusicActivity extends AppCompatActivity {
                         String ten = cursor.getString(2);
                         byte[] img = cursor.getBlob(3);
                         String linkSong = cursor.getString(5);
+                        int view = cursor.getInt(8);
+
                         if (idSong.equals(Id)) {
                             Bitmap bitmap = BitmapFactory.decodeByteArray(img, 0, img.length);
                             imageView_songs.setImageBitmap(bitmap);
@@ -352,6 +357,7 @@ public class PlayMusicActivity extends AppCompatActivity {
                                 throw new RuntimeException(e);
                             }
                             txt_name_song.setText(ten);
+                            txt_view_playmusic.setText(view + "");
                         }
 
                         int farovite = cursor.getInt(6);
@@ -412,6 +418,8 @@ public class PlayMusicActivity extends AppCompatActivity {
                         String ten = cursor.getString(2);
                         byte[] img = cursor.getBlob(3);
                         String linkSong = cursor.getString(5);
+                        int view = cursor.getInt(8);
+
                         if (idSong.equals(Id)) {
                             Bitmap bitmap = BitmapFactory.decodeByteArray(img, 0, img.length);
                             imageView_songs.setImageBitmap(bitmap);
@@ -422,6 +430,7 @@ public class PlayMusicActivity extends AppCompatActivity {
                                 throw new RuntimeException(e);
                             }
                             txt_name_song.setText(ten);
+                            txt_view_playmusic.setText(view + "");
                         }
 
                         int farovite = cursor.getInt(6);
@@ -464,6 +473,8 @@ public class PlayMusicActivity extends AppCompatActivity {
                         String ten = cursor.getString(2);
                         byte[] img = cursor.getBlob(3);
                         String linkSong = cursor.getString(5);
+                        int view = cursor.getInt(8);
+
                         if (idSong.equals(Id)) {
                             Bitmap bitmap = BitmapFactory.decodeByteArray(img, 0, img.length);
                             imageView_songs.setImageBitmap(bitmap);
@@ -474,6 +485,7 @@ public class PlayMusicActivity extends AppCompatActivity {
                                 throw new RuntimeException(e);
                             }
                             txt_name_song.setText(ten);
+                            txt_view_playmusic.setText(view + "");
                         }
 
                         int farovite = cursor.getInt(6);
