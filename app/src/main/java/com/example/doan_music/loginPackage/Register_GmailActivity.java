@@ -81,6 +81,14 @@ public class Register_GmailActivity extends AppCompatActivity {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
+
+                                                Intent intent = new Intent(Register_GmailActivity.this, ConfirmGmailActivity.class);
+                                                intent.putExtra("email", email);
+                                                intent.putExtra("password", password);
+                                                intent.putExtra("name", name);
+
+                                                startActivity(intent);
+
                                                 Toast.makeText(Register_GmailActivity.this, "Registered Successfully", Toast.LENGTH_LONG).show();
                                                 edt_password.setText("");
                                                 edt_confirm_password.setText("");
@@ -98,13 +106,6 @@ public class Register_GmailActivity extends AppCompatActivity {
                         }
                     }
                     cursor.close();
-
-                    Intent intent = new Intent(Register_GmailActivity.this, ConfirmGmailActivity.class);
-                    intent.putExtra("email", email);
-                    intent.putExtra("password", password);
-                    intent.putExtra("name", name);
-
-                    startActivity(intent);
                 }
             }
         });
