@@ -31,12 +31,12 @@
             android:background="@drawable/rounded_search"
             android:backgroundTint="#6E6E6E"
             android:elevation="10dp"
-            android:fontFamily="sans-serif-smallcaps"
+            android:fontFamily="serif-monospace"
             android:gravity="center"
             android:padding="10dp"
-            android:text="Danh sách phát"
+            android:text="PLAY-LISTS"
             android:textColor="#DCDCDC"
-            android:textSize="25sp"
+            android:textSize="30sp"
             android:textStyle="bold" />
 
         <TextView
@@ -48,7 +48,7 @@
             android:gravity="center"
             android:padding="10dp"
             android:text="Play List Name"
-            android:textColor="#ECECEC"
+            android:textColor="#7DEC81"
             android:textSize="18sp"
             android:textStyle="bold" />
 
