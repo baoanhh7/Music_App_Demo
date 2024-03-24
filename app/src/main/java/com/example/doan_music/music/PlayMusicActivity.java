@@ -401,7 +401,6 @@ public class PlayMusicActivity extends AppCompatActivity {
                         currentPosition = arr.size() - 1;
                     }
 
-
                     if (myMusic.isPlaying()) {
                         myMusic.stop();
                         myMusic.reset();
@@ -461,6 +460,7 @@ public class PlayMusicActivity extends AppCompatActivity {
                         myMusic.stop();
                         myMusic.reset();
                     }
+
                     if (!myMusic.isPlaying()) {
                         myMusic.stop();
                         myMusic.reset();
