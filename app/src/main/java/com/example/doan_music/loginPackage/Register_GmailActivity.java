@@ -54,7 +54,7 @@ public class Register_GmailActivity extends AppCompatActivity {
 
                 if (name.isEmpty()) {
                     edt_name.setError("Your name is not valid!");
-                } else if (email.isEmpty() || !email.contains("@")) {
+                } else if (email.isEmpty() || !email.contains("@gmail.com")) {
                     edt_email.setError("Your Email is not valid!");
                 } else if (password.isEmpty() || password.length() < 7) {
                     edt_password.setError("Your password must be at least 8 character");
