@@ -91,7 +91,6 @@ public class ConfirmGmailActivity extends AppCompatActivity {
                 final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
                 intent = getIntent();
                 String email = intent.getStringExtra("email");
-                String password = intent.getStringExtra("password");
 
                 progressDialog.show();
 
@@ -105,9 +104,9 @@ public class ConfirmGmailActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
-                                        Toast.makeText(ConfirmGmailActivity.this, "Resent email verification link", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(ConfirmGmailActivity.this, "Resent email verification link", Toast.LENGTH_SHORT).show();
                                     } else {
-                                        Toast.makeText(ConfirmGmailActivity.this, "Failed to resend email verification link", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(ConfirmGmailActivity.this, "Failed to resend email verification link", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
