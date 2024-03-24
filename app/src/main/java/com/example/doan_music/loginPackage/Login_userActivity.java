@@ -95,7 +95,7 @@ public class Login_userActivity extends AppCompatActivity {
                     }
                     startActivity(intent);
                     break;
-                } else if (!email.equals(Email) && !password.equals(Password)) {
+                } else {
                     showError(EdtPassword, "Your password not valid");
                 }
             }

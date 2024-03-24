@@ -22,6 +22,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.UUID;
+
 public class Register_GmailActivity extends AppCompatActivity {
 
     EditText edt_name, edt_email;
@@ -97,6 +99,17 @@ public class Register_GmailActivity extends AppCompatActivity {
                         }
                     }
                     cursor.close();
+
+                    String token = UUID.randomUUID().toString();
+                    String confirmLink = "https://example.com/confirm?token=" + token;
+
+                    Intent intent = new Intent(Register_GmailActivity.this, ConfirmGmailActivity.class);
+                    intent.putExtra("email", email);
+                    intent.putExtra("password", password);
+                    intent.putExtra("name", name);
+
+                    startActivity(intent);
+
                 }
             }
         });

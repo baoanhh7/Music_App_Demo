@@ -22,6 +22,9 @@
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".loginPackage.ConfirmGmailActivity"
+            android:exported="false" />
+        <activity
             android:name=".loginPackage.Register_GmailActivity"
             android:exported="false" />
         <activity
