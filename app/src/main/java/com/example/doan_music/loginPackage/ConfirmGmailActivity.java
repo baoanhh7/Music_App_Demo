@@ -86,24 +86,33 @@ public class ConfirmGmailActivity extends AppCompatActivity {
 
                 final ProgressDialog progressDialog = new ProgressDialog(ConfirmGmailActivity.this);
                 progressDialog.setTitle("Loading...");
-                progressDialog.setMessage("Please wait...");
+                progressDialog.setMessage("Resend email...");
 
                 final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
                 intent = getIntent();
                 String email = intent.getStringExtra("email");
                 String password = intent.getStringExtra("password");
 
-
                 progressDialog.show();
-                firebaseAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+
+                firebaseAuth.getCurrentUser().updateEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         progressDialog.dismiss();
 
                         if (task.isSuccessful()) {
-                            Toast.makeText(ConfirmGmailActivity.this, "Resend your email", Toast.LENGTH_LONG).show();
+                            firebaseAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Toast.makeText(ConfirmGmailActivity.this, "Resent email verification link", Toast.LENGTH_LONG).show();
+                                    } else {
+                                        Toast.makeText(ConfirmGmailActivity.this, "Failed to resend email verification link", Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            });
                         } else {
-                            Toast.makeText(ConfirmGmailActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(ConfirmGmailActivity.this, "Failed to update email address", Toast.LENGTH_LONG).show();
                         }
                     }
                 });
