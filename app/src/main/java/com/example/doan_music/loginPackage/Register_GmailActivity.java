@@ -22,8 +22,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.util.UUID;
-
 public class Register_GmailActivity extends AppCompatActivity {
 
     EditText edt_name, edt_email;

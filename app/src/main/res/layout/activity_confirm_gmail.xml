@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
         android:layout_marginLeft="100dp"
-        android:layout_marginTop="600dp"
+        android:layout_marginTop="570dp"
         app:cardCornerRadius="20dp">
 
         <LinearLayout
@@ -51,11 +51,24 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="60dp"
                 android:layout_marginRight="60dp"
+                android:layout_marginBottom="5dp"
                 android:background="@drawable/rounded_search"
                 android:backgroundTint="#A2ABFF"
                 android:elevation="10dp"
                 android:text="Confirm"
                 android:textColor="#FFFFFF"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txt_resendEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="serif-monospace"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="Resend email?"
+                android:textColor="#5A5A5A"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
         </LinearLayout>

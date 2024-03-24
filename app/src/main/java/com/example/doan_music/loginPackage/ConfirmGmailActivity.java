@@ -10,16 +10,19 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.doan_music.R;
 import com.example.doan_music.data.DatabaseManager;
 import com.example.doan_music.data.DbHelper;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class ConfirmGmailActivity extends AppCompatActivity {
 
-    TextView txt_myGmail, txt_sendAgain;
+    TextView txt_myGmail, txt_resendEmail;
     Button btn_confirm;
 
     DbHelper dbHelper;
@@ -76,11 +79,42 @@ public class ConfirmGmailActivity extends AppCompatActivity {
                 });
             }
         });
+
+        txt_resendEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                final ProgressDialog progressDialog = new ProgressDialog(ConfirmGmailActivity.this);
+                progressDialog.setTitle("Loading...");
+                progressDialog.setMessage("Please wait...");
+
+                final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                intent = getIntent();
+                String email = intent.getStringExtra("email");
+                String password = intent.getStringExtra("password");
+
+
+                progressDialog.show();
+                firebaseAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        progressDialog.dismiss();
+
+                        if (task.isSuccessful()) {
+                            Toast.makeText(ConfirmGmailActivity.this, "Resend your email", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(ConfirmGmailActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+            }
+        });
     }
 
     private void addControls() {
         txt_myGmail = findViewById(R.id.txt_myGmail);
         btn_confirm = findViewById(R.id.btn_confirm);
+        txt_resendEmail = findViewById(R.id.txt_resendEmail);
 
         intent = getIntent();
         String email = intent.getStringExtra("email");
