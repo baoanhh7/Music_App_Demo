@@ -27,13 +27,13 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 public class AddPlayListActivity extends AppCompatActivity {
+    final int choose_img = 1;
+    final int photo_img = 2;
     ImageView img_add;
     Button btn_choose_image, btn_save, btn_cancel, btn_camera;
     EditText edt_id_playlist, edt_name_playlist;
     DbHelper dbHelper;
     SQLiteDatabase database = null;
-    final int choose_img = 1;
-    final int photo_img = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -70,11 +70,19 @@ public class Song implements Serializable {
         AlbumID = albumID;
     }
 
+    public void setAlbumID(Integer albumID) {
+        AlbumID = albumID;
+    }
+
     public int getPlaylistID() {
         return PlaylistID;
     }
 
     public void setPlaylistID(int playlistID) {
+        PlaylistID = playlistID;
+    }
+
+    public void setPlaylistID(Integer playlistID) {
         PlaylistID = playlistID;
     }
 
@@ -116,14 +124,6 @@ public class Song implements Serializable {
 
     public void setTypeID(int typeID) {
         TypeID = typeID;
-    }
-
-    public void setAlbumID(Integer albumID) {
-        AlbumID = albumID;
-    }
-
-    public void setPlaylistID(Integer playlistID) {
-        PlaylistID = playlistID;
     }
 
     public int getIsFavorite() {

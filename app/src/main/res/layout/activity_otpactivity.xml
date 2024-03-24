@@ -18,41 +18,41 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Enter your OTP"
-        android:textColor="@color/white"
-        android:textSize="24sp"
         android:layout_marginTop="24dp"
-        android:textAlignment="center" />
+        android:text="Enter your OTP"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="24sp" />
 
     <EditText
         android:id="@+id/otpEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:hint="OTP Code"
         android:inputType="number"
         android:maxLength="6"
+        android:textAlignment="center"
         android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        android:hint="OTP Code"
-        android:textAlignment="center" />
+        android:textColorHint="@color/white" />
 
     <TextView
         android:id="@+id/txt_sendOtpAgain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="I didn't receive otp code"
-        android:textColor="@color/white"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
+        android:text="I didn't receive otp code"
+        android:textColor="@color/white"
         android:textSize="15dp" />
 
     <Button
         android:id="@+id/verifyButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Verify"
+        android:layout_marginTop="24dp"
         android:backgroundTint="@color/spotifyGreen"
-        android:textColor="@color/white"
-        android:layout_marginTop="24dp" />
+        android:text="Verify"
+        android:textColor="@color/white" />
 
 </LinearLayout>

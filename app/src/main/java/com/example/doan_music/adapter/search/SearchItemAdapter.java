@@ -52,19 +52,6 @@ public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.se
         return 0;
     }
 
-    public class search_itemViewHolder extends RecyclerView.ViewHolder {
-        private ImageView imgItem;
-        private TextView tvName;
-        private TextView tvDescribe;
-
-        public search_itemViewHolder(@NonNull View itemView) {
-            super(itemView);
-            imgItem = itemView.findViewById(R.id.img_search_song);
-            tvName = itemView.findViewById(R.id.tv_search_song_name);
-            tvDescribe = itemView.findViewById(R.id.tv_search_song_describe);
-        }
-    }
-
     @Override
     public Filter getFilter() {
         return new Filter() {
@@ -93,5 +80,18 @@ public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.se
                 notifyDataSetChanged();
             }
         };
+    }
+
+    public class search_itemViewHolder extends RecyclerView.ViewHolder {
+        private ImageView imgItem;
+        private TextView tvName;
+        private TextView tvDescribe;
+
+        public search_itemViewHolder(@NonNull View itemView) {
+            super(itemView);
+            imgItem = itemView.findViewById(R.id.img_search_song);
+            tvName = itemView.findViewById(R.id.tv_search_song_name);
+            tvDescribe = itemView.findViewById(R.id.tv_search_song_describe);
+        }
     }
 }

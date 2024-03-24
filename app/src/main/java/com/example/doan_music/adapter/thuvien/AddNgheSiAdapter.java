@@ -22,8 +22,8 @@ import java.util.ArrayList;
 
 public class AddNgheSiAdapter extends RecyclerView.Adapter<AddNgheSiAdapter.ViewHolder> implements Filterable {
     Context context;
-    private OnItemClickListener onItemClickListener;
     ArrayList<AddNgheSi_ThuVien> arr, arr1;
+    private OnItemClickListener onItemClickListener;
 
     public AddNgheSiAdapter(Context context, ArrayList<AddNgheSi_ThuVien> arr) {
         this.context = context;

@@ -20,15 +20,14 @@ import java.util.List;
 
 public class PlayListAdapter extends RecyclerView.Adapter<PlayListAdapter.PlayListViewHolder> {
 
-    private List<Playlists> list;
     Context context;
+    private List<Playlists> list;
+    private OnItemClickListener onItemClickListener;
 
     public PlayListAdapter(Context context, List<Playlists> list) {
         this.list = list;
         this.context = context;
     }
-
-    private OnItemClickListener onItemClickListener;
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;

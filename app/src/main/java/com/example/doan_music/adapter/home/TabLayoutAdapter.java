@@ -10,14 +10,10 @@ import com.example.doan_music.fragment.tab_home.All_Fragment;
 import com.example.doan_music.fragment.tab_home.Song_Fragment;
 
 public class TabLayoutAdapter extends FragmentStatePagerAdapter {
-    public TabLayoutAdapter(@NonNull FragmentManager fm, int behavior) {
-        super(fm, behavior);
-    }
-
     private FragmentChangeListener fragmentChangeListener;
 
-    public interface FragmentChangeListener {
-        void replace(Fragment fragment);
+    public TabLayoutAdapter(@NonNull FragmentManager fm, int behavior) {
+        super(fm, behavior);
     }
 
     // Hàm tạo id cho các fragment, hàm trả về là một fragment, tron đó position đóng vai trò là một id của item (item.getId())
@@ -68,5 +64,9 @@ public class TabLayoutAdapter extends FragmentStatePagerAdapter {
                 fragment = new All_Fragment();
         }
         fragmentChangeListener.replace(fragment);
+    }
+
+    public interface FragmentChangeListener {
+        void replace(Fragment fragment);
     }
 }

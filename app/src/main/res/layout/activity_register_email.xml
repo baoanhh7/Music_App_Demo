@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".loginPackage.Register_emailActivity"
-    android:background="@color/black">
+    android:background="@color/black"
+    tools:context=".loginPackage.Register_emailActivity">
 
 
     <Button
@@ -151,9 +151,9 @@
         android:layout_width="400dp"
         android:layout_height="60dp"
         android:layout_marginTop="520dp"
+        android:background="@drawable/rounded_button_4"
         android:text="Register"
         android:textSize="20sp"
-        android:background="@drawable/rounded_button_4"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

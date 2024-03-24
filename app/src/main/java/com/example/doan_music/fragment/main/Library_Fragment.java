@@ -52,6 +52,12 @@ public class Library_Fragment extends Fragment implements OnItemClickListener {
     SearchView btn_thuvien_search;
     TableRow tbr_bottom_sheet_thuvien_adddanhsachphat, tbr_bottom_sheet_thuvien_addnghesy;
 
+    public static byte[] convertDrawableToByteArray(Context context, int drawableId) {
+        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), drawableId);
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        return stream.toByteArray();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -172,7 +178,6 @@ public class Library_Fragment extends Fragment implements OnItemClickListener {
         }
     }
 
-
     private void addControl() {
         btn_thuvien_search = view.findViewById(R.id.btn_thuvien_search);
 
@@ -229,13 +234,6 @@ public class Library_Fragment extends Fragment implements OnItemClickListener {
         });
         //recyclerViewNV.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.HORIZONTAL));
         // Lấy Bundle từ Fragment
-    }
-
-    public static byte[] convertDrawableToByteArray(Context context, int drawableId) {
-        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), drawableId);
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        return stream.toByteArray();
     }
 
     @Override

@@ -28,13 +28,13 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 public class UpdatePlayListActivity extends AppCompatActivity {
+    final int choose_img = 1;
+    final int photo_img = 2;
     ImageView img_update;
     Button btn_choose_image, btn_camera, btn_update, btn_cancel;
     EditText edt_id_playlist, edt_name_playlist;
     Intent intent = null;
     int id = -1;
-    final int choose_img = 1;
-    final int photo_img = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

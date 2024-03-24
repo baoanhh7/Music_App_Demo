@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#131313"
     android:orientation="vertical"
     tools:context=".fragment.main.Search_Fragment">
@@ -65,8 +65,8 @@
                 android:layout_height="match_parent" />
 
             <TextView
-                android:layout_width="match_parent"
                 android:id="@+id/txt_searchlibrary1"
+                android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:gravity="left|center"
                 android:text="Khám phá các thể loại của bạn"
@@ -80,8 +80,8 @@
                 android:layout_height="wrap_content" />
 
             <TextView
-                android:layout_width="match_parent"
                 android:id="@+id/txt_searchlibrary2"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:gravity="center|left"
                 android:text="Duyệt tìm tất cả"

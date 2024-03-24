@@ -31,17 +31,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Search_Fragment extends Fragment {
-    private RecyclerView rcv_search_header, rcv_search_bottom, rcv_searchItem;
-    private SearchAdapter searchAdapter_header, searchAdapter_bottom;
-    private RecyclerView rcvSearchItem;
-    private SearchItemAdapter searchItemAdapter;
     SQLiteDatabase database = null;
     TextView txt_searchlibrary2, txt_searchlibrary1;
     ThuVienAdapter thuVienAdapter;
     ArrayList<ThuVien> arr;
     ArrayList<Integer> arr1 = new ArrayList<>();
-    private SearchView searchView;
     View view;
+    private RecyclerView rcv_search_header, rcv_search_bottom, rcv_searchItem;
+    private SearchAdapter searchAdapter_header, searchAdapter_bottom;
+    private RecyclerView rcvSearchItem;
+    private SearchItemAdapter searchItemAdapter;
+    private SearchView searchView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

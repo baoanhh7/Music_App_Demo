@@ -21,8 +21,8 @@ import java.util.ArrayList;
 public class ThuVienAlbumAdapter extends RecyclerView.Adapter<ThuVienAlbumAdapter.ViewHolder> {
     //khai báo biến
     Context context;
-    private OnItemClickListener onItemClickListener;
     ArrayList<ThuVien> arr, arr1;
+    private OnItemClickListener onItemClickListener;
 
     public ThuVienAlbumAdapter(Context context, ArrayList<ThuVien> arr) {
         this.context = context;

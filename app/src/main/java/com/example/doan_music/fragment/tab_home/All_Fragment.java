@@ -32,12 +32,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class All_Fragment extends Fragment {
-    private RecyclerView rcv_all_header, rcv_all_bottom;
-    private HomeAdapter allAdapter_header;
-    private CategoryAdapter allCateAdapter_bottom;
     DbHelper dbHelper;
     SQLiteDatabase database = null;
     View view;
+    private RecyclerView rcv_all_header, rcv_all_bottom;
+    private HomeAdapter allAdapter_header;
+    private CategoryAdapter allCateAdapter_bottom;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,

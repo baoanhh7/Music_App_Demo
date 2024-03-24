@@ -24,11 +24,11 @@ import com.example.doan_music.model.Playlists;
 import java.util.List;
 
 public class PlayListAdminAdapter extends BaseAdapter {
-    private Context context;
-    private List<Playlists> list;
     ImageView img_playlist_admin;
     TextView txt_id_playlist_admin, txt_name_playplist_admin;
     Button btn_update, btn_delete;
+    private Context context;
+    private List<Playlists> list;
 
     public PlayListAdminAdapter(Context context, List<Playlists> list) {
         this.context = context;

@@ -22,9 +22,9 @@ import java.util.List;
 
 public class PlayListActivity extends AppCompatActivity {
 
+    static SQLiteDatabase database = null;
     ListView lv_playlist_admin;
     DbHelper dbHelper;
-    static SQLiteDatabase database = null;
     Button btn_add, btn_back;
 
     PlayListAdminAdapter playListAdminAdapter;

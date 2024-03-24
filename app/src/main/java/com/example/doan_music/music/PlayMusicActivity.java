@@ -54,11 +54,11 @@ public class PlayMusicActivity extends AppCompatActivity {
     Integer currentPosition = -1;
     Integer Positionshuffle = -1;
     boolean Isshuffle = false;
-    private boolean frag = true;
-    private boolean frag_heart = false;
     SQLiteDatabase database = null;
     DbHelper dbHelper;
     Animation animation;
+    private boolean frag = true;
+    private boolean frag_heart = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

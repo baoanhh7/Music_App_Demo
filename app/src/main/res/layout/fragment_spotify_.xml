@@ -14,35 +14,35 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Trải nghiệm âm nhạc đỉnh cao với Premium"
+        android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="35sp"
-        android:textAlignment="center"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
 
         />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
         android:text="Bạn không thể nâng cấp lên premium trong ứng dụng này. Chúng tôi biết điều này thật bất tiện"
-        android:textColor="#8C8C8C"
         android:textAlignment="center"
-        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="#8C8C8C"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="100dp" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:layout_width="370dp"
         android:layout_height="70dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="150dp"
         android:background="#838383"
-        android:gravity="center">
+        android:gravity="center"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:layout_width="wrap_content"
@@ -54,20 +54,20 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingLeft="100dp"
             android:text="Gói hiện tại"
             android:textAllCaps="true"
             android:textColor="@color/white"
-            android:textSize="15sp"
-            android:paddingLeft="100dp" />
+            android:textSize="15sp" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerSpotify"
         android:layout_width="409dp"
         android:layout_height="669dp"
+        tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="221dp"
-        tools:ignore="MissingConstraints" />
+        tools:layout_editor_absoluteY="221dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
