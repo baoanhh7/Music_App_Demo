@@ -67,6 +67,7 @@ public class Register_GmailActivity extends AppCompatActivity {
                     Cursor cursor = database.rawQuery("select * from Users", null);
                     while (cursor.moveToNext()) {
                         String Email = cursor.getString(2).trim();
+
                         if (email.equals(Email)) {
                             edt_email.setError("Your email has been registered");
                             break;
@@ -100,16 +101,12 @@ public class Register_GmailActivity extends AppCompatActivity {
                     }
                     cursor.close();
 
-                    String token = UUID.randomUUID().toString();
-                    String confirmLink = "https://example.com/confirm?token=" + token;
-
                     Intent intent = new Intent(Register_GmailActivity.this, ConfirmGmailActivity.class);
                     intent.putExtra("email", email);
                     intent.putExtra("password", password);
                     intent.putExtra("name", name);
 
                     startActivity(intent);
-
                 }
             }
         });
@@ -132,6 +129,5 @@ public class Register_GmailActivity extends AppCompatActivity {
         edt_confirm_password = findViewById(R.id.edt_confirm_password);
         btn_dangky = findViewById(R.id.btn_dangky);
         txt_dangnhap = findViewById(R.id.txt_dangnhap);
-
     }
 }
