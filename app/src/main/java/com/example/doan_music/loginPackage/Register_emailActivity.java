@@ -99,9 +99,8 @@ public class Register_emailActivity extends AppCompatActivity {
                 }
             }
             cursor.close();
+            onClickverifyPhone(phone);
         }
-
-        onClickverifyPhone(phone);
     }
 
 

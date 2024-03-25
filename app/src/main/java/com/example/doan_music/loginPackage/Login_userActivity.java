@@ -65,6 +65,7 @@ public class Login_userActivity extends AppCompatActivity {
         } else {
             database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
             Cursor cursor = database.rawQuery("select * from Users", null);
+            Intent intent = null;
             while (cursor.moveToNext()) {
                 Integer ma = cursor.getInt(0);
                 String Name = cursor.getString(1);
@@ -75,7 +76,6 @@ public class Login_userActivity extends AppCompatActivity {
                     // Xử lý đăng nhập thành công
                     Toast.makeText(Login_userActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
 
-                    Intent intent;
                     if ("admin".equalsIgnoreCase(Role)) {
                         // Nếu là admin, chuyển đến AdminActivity
                         intent = new Intent(Login_userActivity.this, AdminActivity.class);
@@ -98,7 +98,8 @@ public class Login_userActivity extends AppCompatActivity {
                 }
             }
             cursor.close();
-            Toast.makeText(Login_userActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
+            if(intent == null)
+                Toast.makeText(Login_userActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
         }
     }
 
