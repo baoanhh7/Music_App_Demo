@@ -80,7 +80,7 @@ public class Register_emailActivity extends AppCompatActivity {
 
         if (username.isEmpty()) {
             showError(EdtUsername, "Your username is not valid!");
-        } else if (email.isEmpty() || !email.contains("@")) {
+        } else if (email.isEmpty() || !email.contains("@gmail.com")) {
             showError(EdtEmail, "Your Email is not valid!");
         } else if (password.isEmpty() || password.length() < 7) {
             showError(EdtPassword, "Your password must be at least 8 character");
@@ -95,7 +95,7 @@ public class Register_emailActivity extends AppCompatActivity {
                 String Email = cursor.getString(2);
                 if (email.equals(Email)) {
                     showError(EdtEmail, "This email has been registered");
-                    break;
+                    return;
                 }
             }
             cursor.close();

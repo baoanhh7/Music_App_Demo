@@ -95,11 +95,10 @@ public class Login_userActivity extends AppCompatActivity {
                     }
                     startActivity(intent);
                     break;
-                } else if (!password.equals(Password)) {
-                    showError(EdtPassword, "Your password not valid");
                 }
             }
             cursor.close();
+            Toast.makeText(Login_userActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
         }
     }
 
