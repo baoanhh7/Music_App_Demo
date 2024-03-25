@@ -129,7 +129,7 @@
             android:layout_gravity="center"
             android:layout_marginStart="5dp"
             android:text="lượt xem"
-            android:textColor="#B8B8B8"
+            android:textColor="#94EAB3"
             android:textSize="16sp"
             android:textStyle="bold" />
 
