@@ -1,5 +1,7 @@
 package com.example.doan_music.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -74,8 +76,26 @@ public class MainActivity extends AppCompatActivity {
                 if (id == R.id.allSongs) {
                     replace(new AllSongs_Fragment());
                 } else if (id == R.id.logout) {
-                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                    finish();
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    builder.setTitle("Xác nhận đăng xuất");
+                    builder.setMessage("Bạn có muốn đăng xuất không ?");
+
+                    builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                            finish();
+                        }
+                    });
+                    builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    builder.create().show();
+
                 } else if (id == R.id.home) {
                     replace(new Home_Fragment());
                 }
@@ -99,7 +119,6 @@ public class MainActivity extends AppCompatActivity {
     private void addControls() {
         bottom_navigation = findViewById(R.id.bottomNavigationView);
         replace(new Home_Fragment());
-
 
         toolbar = findViewById(R.id.toolbar);
         drawerLayout = findViewById(R.id.drawer_layout);

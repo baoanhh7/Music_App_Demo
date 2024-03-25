@@ -19,7 +19,7 @@
 
         <item
             android:id="@+id/logout"
-            android:icon="@drawable/ic_settings"
+            android:icon="@drawable/ic_logout1"
             android:title="Đăng xuất">
 
         </item>

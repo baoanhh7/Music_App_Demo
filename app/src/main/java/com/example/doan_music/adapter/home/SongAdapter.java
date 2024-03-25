@@ -2,6 +2,7 @@ package com.example.doan_music.adapter.home;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -82,19 +83,93 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
 
             if (newState == 1) {
                 newState = 0;
+                song.setIsFavorite(newState);
+
+                removeSongFromLoveList(song.getSongID());
+
             } else {
                 newState = 1;
+                song.setIsFavorite(newState);
+
+                ContentValues values = new ContentValues();
+                values.put("StateFavorite", song.getIsFavorite());
+                database.update("Songs", values, "SongID=?", new String[]{song.getSongID() + ""});
+
+                addSongToLoveList(song.getSongID());
             }
-            song.setIsFavorite(newState);
-
-            ContentValues values = new ContentValues();
-            values.put("StateFavorite", song.getIsFavorite());
-
-            database.update("Songs", values, "SongID=?", new String[]{song.getSongID() + ""});
 
             notifyItemChanged(position); // Cập nhật lại giao diện
             cursor.close();
         });
+    }
+
+    private void removeSongFromLoveList(int songID) {
+        SharedPreferences preferences = context.getSharedPreferences("data", Context.MODE_PRIVATE);
+        int maU = preferences.getInt("maU1", -1);
+
+        DbHelper dbHelper = DatabaseManager.dbHelper(context);
+        SQLiteDatabase database = dbHelper.getWritableDatabase();
+        database.beginTransaction();
+
+        try {
+            // Xóa bài hát khỏi bảng User_SongLove dựa trên UserID và SongID
+            int kq = database.delete("User_SongLove", "UserID = ? AND SongID = ?", new String[]{String.valueOf(maU), String.valueOf(songID)});
+
+            if (kq > 0) {
+                // Cập nhật trạng thái yêu thích của bài hát trong bảng Songs
+                ContentValues values = new ContentValues();
+                values.put("StateFavorite", 0);
+
+                // Cập nhật bảng Songs dựa trên SongID
+                database.update("Songs", values, "SongID = ?", new String[]{String.valueOf(songID)});
+            }
+
+            // Đánh dấu giao dịch thành công nếu không có lỗi xảy ra
+            database.setTransactionSuccessful();
+        } finally {
+            // Kết thúc giao dịch, đảm bảo rằng dữ liệu được lưu trữ an toàn
+            database.endTransaction();
+        }
+    }
+
+    private void addSongToLoveList(int songID) {
+        SharedPreferences preferences = context.getSharedPreferences("data", Context.MODE_PRIVATE);
+        int maU = preferences.getInt("maU1", -1);
+
+        DbHelper dbHelper = DatabaseManager.dbHelper(context);
+        SQLiteDatabase database = dbHelper.getWritableDatabase();
+        database.beginTransaction();
+
+        try {
+            // Lặp qua các bản ghi trong bảng Songs
+            Cursor cursor = database.rawQuery("SELECT * FROM Songs" + " where SongID=?", new String[]{String.valueOf(songID)});
+            while (cursor.moveToNext()) {
+                int favorite = cursor.getInt(6);
+
+                // Xây dựng ContentValues mới
+                ContentValues values = new ContentValues();
+
+                // Đặt giá trị cho cột Favorite
+                values.put("Favorite", favorite);
+                // Đặt giá trị cho cột UserID
+                values.put("UserID", maU);
+                // Đặt giá trị cho cột SongID
+                values.put("SongID", songID);
+
+                // Thực hiện thêm dòng vào bảng User_SongLove
+                long kq = database.insert("User_SongLove", null, values);
+                if (kq > 0) {
+                    break;
+                }
+            }
+            cursor.close();
+
+            // Đánh dấu giao dịch thành công nếu không có lỗi xảy ra
+            database.setTransactionSuccessful();
+        } finally {
+            // Kết thúc giao dịch, đảm bảo rằng dữ liệu được lưu trữ an toàn
+            database.endTransaction();
+        }
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {

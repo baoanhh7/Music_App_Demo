@@ -66,7 +66,7 @@ public class Login_userActivity extends AppCompatActivity {
             database = openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
             Cursor cursor = database.rawQuery("select * from Users", null);
             while (cursor.moveToNext()) {
-                Integer ma = Integer.valueOf(cursor.getString(0) + "");
+                Integer ma = cursor.getInt(0);
                 String Name = cursor.getString(1);
                 String Email = cursor.getString(2);
                 String Password = cursor.getString(3);

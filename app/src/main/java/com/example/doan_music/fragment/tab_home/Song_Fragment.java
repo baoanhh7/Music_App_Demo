@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_music.R;
+import com.example.doan_music.activity.MainActivity;
 import com.example.doan_music.adapter.home.FavoriteSongAdapter;
 import com.example.doan_music.data.DbHelper;
 import com.example.doan_music.m_interface.OnItemClickListener;
@@ -77,8 +78,23 @@ public class Song_Fragment extends Fragment {
     }
 
     private void createData() {
+
+        MainActivity mainActivity = (MainActivity) getActivity();
+        Integer maU = mainActivity.getMyVariable();
+        List<Integer> listFav = new ArrayList<>();
+
         dbHelper = new DbHelper(requireContext());
         database = dbHelper.getReadableDatabase();
+
+        Cursor cursor1 = database.rawQuery("select * from User_SongLove where UserID=?", new String[]{maU + ""});
+        listFav.clear();
+
+        while (cursor1.moveToNext()) {
+            int songID = cursor1.getInt(2);
+            listFav.add(songID);
+        }
+        cursor1.close();
+
         Cursor cursor = database.rawQuery("select * from Songs", null);
         songList.clear();
 
@@ -89,7 +105,7 @@ public class Song_Fragment extends Fragment {
             String linkSong = cursor.getString(5);
             int favorite = cursor.getInt(6);
 
-            if (favorite == 1) {
+            if (listFav.contains(id)) {
                 Song song = new Song(id, songName, image, linkSong, favorite);
                 songList.add(song);
                 arr.add(id);
