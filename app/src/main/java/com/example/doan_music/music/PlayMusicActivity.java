@@ -538,12 +538,11 @@ public class PlayMusicActivity extends AppCompatActivity {
                 frag_heart = !frag_heart;
 
                 if (frag_heart) {
-
                     btn_heart.setImageResource(R.drawable.ic_red_heart);
 
                     ContentValues values = new ContentValues();
                     values.put("StateFavorite", 1);
-                    database.update("Songs", values, "SongID = ?", new String[]{String.valueOf(IDSong)});
+                    database.update("Songs", values, "SongID=?", new String[]{String.valueOf(IDSong)});
                     addSongToLoveList(IDSong);
 
                 } else {

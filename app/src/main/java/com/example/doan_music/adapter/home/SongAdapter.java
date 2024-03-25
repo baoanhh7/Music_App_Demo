@@ -86,7 +86,6 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
                 song.setIsFavorite(newState);
 
                 removeSongFromLoveList(song.getSongID());
-
             } else {
                 newState = 1;
                 song.setIsFavorite(newState);
@@ -97,7 +96,6 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
 
                 addSongToLoveList(song.getSongID());
             }
-
             notifyItemChanged(position); // Cập nhật lại giao diện
             cursor.close();
         });

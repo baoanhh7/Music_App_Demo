@@ -47,11 +47,16 @@ public class AllSongs_Fragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_allsongs, container, false);
 
         addControls();
-        createData();
-
         addEvents();
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        createData();
     }
 
     private void addEvents() {
@@ -127,6 +132,7 @@ public class AllSongs_Fragment extends Fragment {
             int songID = cursor1.getInt(2);
             listFav.add(songID);
         }
+        songAdapter.notifyDataSetChanged();
         cursor1.close();
 
 
