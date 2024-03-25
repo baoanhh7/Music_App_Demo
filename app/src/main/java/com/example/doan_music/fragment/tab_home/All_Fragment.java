@@ -142,10 +142,9 @@ public class All_Fragment extends Fragment {
         cursor.close();
         allCateAdapter_bottom.notifyDataSetChanged();
 
-
         List<Category> categoryList = new ArrayList<>();
-        categoryList.add(new Category("Danh sách phát nhiều người nghe", list));
-        categoryList.add(new Category("Danh sách phát được yêu thích", list));
+        categoryList.add(new Category("Danh sách nhiều người nghe", list));
+        categoryList.add(new Category("Danh sách được yêu thích", list));
         categoryList.add(new Category("Lựa chọn của Spotify", list));
 
         return categoryList;
