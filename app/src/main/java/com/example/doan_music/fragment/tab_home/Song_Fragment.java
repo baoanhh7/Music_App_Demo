@@ -78,7 +78,6 @@ public class Song_Fragment extends Fragment {
     }
 
     private void createData() {
-
         MainActivity mainActivity = (MainActivity) getActivity();
         Integer maU = mainActivity.getMyVariable();
         List<Integer> listFav = new ArrayList<>();

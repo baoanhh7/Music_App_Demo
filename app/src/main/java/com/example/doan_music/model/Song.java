@@ -15,6 +15,9 @@ public class Song implements Serializable {
 
     private int view;
 
+    public Song() {
+    }
+
     public Song(int songID, int albumID, String songName, byte[] songImage, int artistID, String linkSong, int playlistID) {
         SongID = songID;
         AlbumID = albumID;

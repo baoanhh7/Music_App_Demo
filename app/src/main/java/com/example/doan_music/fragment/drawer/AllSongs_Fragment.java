@@ -19,7 +19,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan_music.R;
+import com.example.doan_music.activity.MainActivity;
 import com.example.doan_music.adapter.home.SongAdapter;
+import com.example.doan_music.data.DatabaseManager;
 import com.example.doan_music.data.DbHelper;
 import com.example.doan_music.m_interface.OnItemClickListener;
 import com.example.doan_music.model.Song;
@@ -110,19 +112,39 @@ public class AllSongs_Fragment extends Fragment {
     }
 
     private void createData() {
-        dbHelper = new DbHelper(requireContext());
-        database = requireContext().openOrCreateDatabase("doanmusic.db", MODE_PRIVATE, null);
-        Cursor cursor = database.rawQuery("select * from Songs", null);
 
+        MainActivity mainActivity = (MainActivity) getActivity();
+        int maU = mainActivity.getMyVariable();
+
+        dbHelper = DatabaseManager.dbHelper(requireContext());
+        database = dbHelper.getReadableDatabase();
+
+        List<Integer> listFav = new ArrayList<>();
+        listFav.clear();
+
+        Cursor cursor1 = database.rawQuery("select * from User_SongLove where UserID=?", new String[]{maU + ""});
+        while (cursor1.moveToNext()) {
+            int songID = cursor1.getInt(2);
+            listFav.add(songID);
+        }
+        cursor1.close();
+
+
+        Cursor cursor = database.rawQuery("select * from Songs", null);
         while (cursor.moveToNext()) {
             int id = cursor.getInt(0);
             String songName = cursor.getString(2);
             int artist = cursor.getInt(4);
             byte[] image = cursor.getBlob(3);
             String linkSong = cursor.getString(5);
-            int favorite = cursor.getInt(6);
 
-            Song song = new Song(id, songName, artist, image, linkSong, favorite);
+            int fav = 0;
+
+            if (listFav.contains(id)) {
+                fav = 1;
+            }
+            Song song = new Song(id, songName, artist, image, linkSong, fav);
+
             songList.add(song);
             arr.add(id);
         }

@@ -98,7 +98,7 @@ public class Login_userActivity extends AppCompatActivity {
                 }
             }
             cursor.close();
-            if(intent == null)
+            if (intent == null)
                 Toast.makeText(Login_userActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
         }
     }
