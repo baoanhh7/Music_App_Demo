@@ -180,7 +180,6 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
         return 0;
     }
 
-
     public static class SongViewHolder extends RecyclerView.ViewHolder {
         TextView txt_song, txt_id;
         ImageView img_song, btn_heart;
